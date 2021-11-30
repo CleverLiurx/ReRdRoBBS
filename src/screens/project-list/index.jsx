@@ -5,18 +5,19 @@ import { useEffect, useState } from "react";
 import { cleanObject } from "./utils";
 import qs from "qs";
 
-const apiUrl = process.env.REACT_APP_API_URL;
-
 export const ProjectListScreen = () => {
+  const apiUrl = process.env.REACT_APP_API_URL;
+  console.log(process.env);
+
   const [users, setUsers] = useState([]);
   const [param, setParam] = useState({
     name: "",
     personId: "",
   });
   const [list, setlist] = useState([]);
-
+  const debouncedParam = useDebounce(param, 2000);
   useEffect(() => {
-    fetch(`${apiUrl}/list?${qs.stringify(cleanObject(param))}`).then(
+    fetch(`${apiUrl}/list?${qs.stringify(cleanObject(debouncedParam))}`).then(
       async (response) => {
         if (response.ok) {
           setlist(await response.json());
@@ -47,8 +48,8 @@ export const ProjectListScreen = () => {
       },
     ];
     setlist(data);
-  }, [param]);
-  useEffect(() => {
+  }, [debouncedParam]);
+  useMount(() => {
     const data = [
       {
         id: 1,
@@ -64,7 +65,7 @@ export const ProjectListScreen = () => {
       },
     ];
     setUsers(data);
-  }, []);
+  });
 
   return (
     <div>
@@ -72,4 +73,23 @@ export const ProjectListScreen = () => {
       <List users={users} list={list} />
     </div>
   );
+};
+
+export const useMount = (callback) => {
+  useEffect(() => {
+    callback();
+  }, []);
+};
+
+export const useDebounce = (value, delay) => {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    // 每次在value变化后设置一个定时器
+    const timeout = setTimeout(() => setDebouncedValue(value), delay);
+    // useEffect里的return会在上一个useEffect处理完之后在运行
+    return () => clearTimeout(timeout);
+  }, [value, delay]);
+
+  return debouncedValue;
 };
