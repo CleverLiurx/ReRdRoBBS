@@ -7,7 +7,6 @@ import qs from "qs";
 
 export const ProjectListScreen = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
-  console.log(process.env);
 
   const [users, setUsers] = useState([]);
   const [param, setParam] = useState({
@@ -17,13 +16,13 @@ export const ProjectListScreen = () => {
   const [list, setlist] = useState([]);
   const debouncedParam = useDebounce(param, 2000);
   useEffect(() => {
-    fetch(`${apiUrl}/list?${qs.stringify(cleanObject(debouncedParam))}`).then(
-      async (response) => {
-        if (response.ok) {
-          setlist(await response.json());
-        }
-      }
-    );
+    // fetch(`${apiUrl}/list?${qs.stringify(cleanObject(debouncedParam))}`).then(
+    //   async (response) => {
+    //     if (response.ok) {
+    //       setlist(await response.json());
+    //     }
+    //   }
+    // );
     const data = [
       {
         id: 1,
@@ -47,6 +46,7 @@ export const ProjectListScreen = () => {
         created: 1604989757139,
       },
     ];
+    // @ts-ignore
     setlist(data);
   }, [debouncedParam]);
   useMount(() => {
@@ -64,6 +64,7 @@ export const ProjectListScreen = () => {
         name: "网舞",
       },
     ];
+    // @ts-ignore
     setUsers(data);
   });
 
@@ -75,13 +76,13 @@ export const ProjectListScreen = () => {
   );
 };
 
-export const useMount = (callback) => {
+export const useMount = (callback: () => void) => {
   useEffect(() => {
     callback();
   }, []);
 };
 
-export const useDebounce = (value, delay) => {
+export const useDebounce = (value: any, delay?: number) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
   useEffect(() => {
