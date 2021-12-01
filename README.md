@@ -13,8 +13,8 @@ git commit -m "fix: some messag"
 [
   'feat',       #增加新功能(常用)
   'fix',        #修复bug(常用)
-  'build',      #构造工具的或者外部依赖的改动，例如webpack，npm
   'chore',      #不修改src或者test的其余修改，例如构建过程或辅助工具的变动
+  'build',      #构造工具的或者外部依赖的改动，例如webpack，npm
   'ci',         #与CI（持续集成服务）有关的改动
   'docs',       #只改动了文档相关的内容
   'perf',       #提高性能的改动

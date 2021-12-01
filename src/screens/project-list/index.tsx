@@ -2,7 +2,7 @@ import React from "react";
 import { SearchPanel } from "./search-panel";
 import { List } from "./list";
 import { useEffect, useState } from "react";
-import { cleanObject } from "./utils";
+import { cleanObject, useDebounce, useMount } from "./utils";
 import qs from "qs";
 
 export const ProjectListScreen = () => {
@@ -74,23 +74,4 @@ export const ProjectListScreen = () => {
       <List users={users} list={list} />
     </div>
   );
-};
-
-export const useMount = (callback: () => void) => {
-  useEffect(() => {
-    callback();
-  }, []);
-};
-
-export const useDebounce = (value: unknown, delay?: number): any => {
-  const [debouncedValue, setDebouncedValue] = useState(value);
-
-  useEffect(() => {
-    // 每次在value变化后设置一个定时器
-    const timeout = setTimeout(() => setDebouncedValue(value), delay);
-    // useEffect里的return会在上一个useEffect处理完之后在运行
-    return () => clearTimeout(timeout);
-  }, [value, delay]);
-
-  return debouncedValue;
 };
