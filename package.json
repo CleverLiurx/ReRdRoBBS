@@ -30,7 +30,7 @@
     "extends": [
       "react-app",
       "react-app/jest",
-      "stylelint-config-prettier"
+      "prettier"
     ]
   },
   "browserslist": {
@@ -55,6 +55,6 @@
     "stylelint-config-prettier": "^9.0.3"
   },
   "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown --allow-empty"
+    "**/*": "prettier --write --ignore-unknown"
   }
 }
