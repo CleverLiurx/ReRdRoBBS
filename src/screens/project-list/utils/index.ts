@@ -31,5 +31,5 @@ export const useDebounce = <V>(value: V, delay?: number) => {
 export const useMount = (callback: () => void) => {
   useEffect(() => {
     callback();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 };

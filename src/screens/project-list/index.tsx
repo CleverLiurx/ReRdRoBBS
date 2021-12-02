@@ -16,13 +16,13 @@ export const ProjectListScreen = () => {
   const [list, setlist] = useState([]);
   const debouncedParam = useDebounce(param, 2000);
   useEffect(() => {
-    fetch(`${apiUrl}/list?${qs.stringify(cleanObject(debouncedParam))}`).then(
-      async (response) => {
-        if (response.ok) {
-          setlist(await response.json());
-        }
-      }
-    );
+    // fetch(`${apiUrl}/list?${qs.stringify(cleanObject(debouncedParam))}`).then(
+    //   async (response) => {
+    //     if (response.ok) {
+    //       setlist(await response.json());
+    //     }
+    //   }
+    // );
     const data = [
       {
         id: 1,
