@@ -45,7 +45,18 @@ export const http = async (
 
 export const useHttp = () => {
   const { user } = useAuth();
+  // type uid = string | number // 类型别名  大多数情况和interface一样
   // return ([endpoint, config]: [string, Config]) => http(endpoint, {...config, token: user?.token})
+  // ts 的 typeof 是静态运行 js的是在runtime运行的
   return (...[endpoint, config]: Parameters<typeof http>) =>
     http(endpoint, { ...config, token: user?.token });
 };
+
+// type Person = {
+//   name: string,
+//   age: number
+// }
+
+// const xiaoMing: Partial<Person> = {name: 'xiaoming'}
+// const shenMiRen1: Omit<Person, 'name'> = {age:13}
+// const shenMiRen2: Omit<Person, 'name' | 'age'> = {}
