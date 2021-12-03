@@ -17,7 +17,6 @@ export const login = async (data: { username: string; password: string }) => {
     token: "xxxx",
   };
   // return fetch(`${apiUrl}/login`, {
-  //     method: 'POST',
   //     headers: {
   //         'content-type': 'application/json'
   //     },
