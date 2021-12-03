@@ -18,7 +18,7 @@ export const login = async (data: { username: string; password: string }) => {
   };
   // return fetch(`${apiUrl}/login`, {
   //     headers: {
-  //         'content-type': 'application/json'
+  //         'Content-Type': 'application/json'
   //     },
   //     body: JSON.stringify(data)
   // }).then(
