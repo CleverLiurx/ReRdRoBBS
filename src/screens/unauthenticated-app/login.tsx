@@ -1,7 +1,11 @@
 import { useAuth } from "context/auth-context";
 import React, { FormEvent } from "react";
 
-export const LoginScreen = () => {
+export const LoginScreen = ({
+  onError,
+}: {
+  onError: (error: Error) => void;
+}) => {
   const apiUrl = process.env.REACT_APP_API_URL;
   const { login, user } = useAuth();
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -10,7 +14,7 @@ export const LoginScreen = () => {
       .value;
     const password = (event.currentTarget.elements[1] as HTMLInputElement)
       .value;
-    login({ username, password });
+    login({ username, password }).catch((e) => onError(e));
   };
 
   return (

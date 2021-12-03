@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Card, Divider } from "antd";
+import { Card, Divider, Typography } from "antd";
 import React from "react";
 import { useState } from "react";
 import { LoginScreen } from "./login";
@@ -7,10 +7,19 @@ import { RegisterScreen } from "./register";
 
 export const UnauthentictedApp = () => {
   const [isRegister, setIsRegister] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+
   return (
     <Container>
       <ShodowCard>
-        {isRegister ? <RegisterScreen /> : <LoginScreen />}
+        {error ? (
+          <Typography.Text type={"danger"}>{error.message}</Typography.Text>
+        ) : null}
+        {isRegister ? (
+          <RegisterScreen onError={setError} />
+        ) : (
+          <LoginScreen onError={setError} />
+        )}
         <Divider></Divider>
         <button onClick={() => setIsRegister(!isRegister)}>
           切换到{isRegister ? "登录" : "注册"}

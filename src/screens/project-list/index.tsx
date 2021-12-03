@@ -1,10 +1,11 @@
 import React from "react";
 import { SearchPanel } from "./search-panel";
-import { List } from "./list";
+import { List, Project } from "./list";
 import { useEffect, useState } from "react";
 import { cleanObject, useDebounce, useMount } from "../../utils";
 import qs from "qs";
 import { useHttp } from "utils/http";
+import { useAsync } from "utils/use-async";
 
 export const ProjectListScreen = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
@@ -15,17 +16,12 @@ export const ProjectListScreen = () => {
     personId: "",
   });
   const debouncedParam = useDebounce(param, 2000);
-  const [list, setlist] = useState([]);
   const client = useHttp();
+  const { run, isLoading, error, data: list } = useAsync<Project[]>();
+
   useEffect(() => {
-    // client('list', {data: cleanObject(debouncedParam)}).then(setlist)
-    // fetch(`${apiUrl}/list?${qs.stringify(cleanObject(debouncedParam))}`).then(
-    //   async (response) => {
-    //     if (response.ok) {
-    //       setlist(await response.json());
-    //     }
-    //   }
-    // );
+    run(client("list", { data: cleanObject(debouncedParam) }));
+
     const data = [
       {
         id: 1,
@@ -49,9 +45,8 @@ export const ProjectListScreen = () => {
         created: 1604989757139,
       },
     ];
-    // @ts-ignore
-    setlist(data);
   }, [debouncedParam]);
+
   useMount(() => {
     // client('users').then(setUsers)
     const data = [
@@ -75,7 +70,7 @@ export const ProjectListScreen = () => {
   return (
     <div>
       <SearchPanel users={users} param={param} setParam={setParam} />
-      <List users={users} list={list} />
+      <List users={users} list={list || []} />
     </div>
   );
 };
