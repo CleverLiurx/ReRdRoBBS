@@ -10,7 +10,6 @@ export const handleUserResponse = ({ user }: { user: User }) => {
 };
 
 export const login = async (data: { username: string; password: string }) => {
-  const apiUrl = process.env.REACT_APP_API_URL;
   return {
     id: "1",
     name: "章三",
