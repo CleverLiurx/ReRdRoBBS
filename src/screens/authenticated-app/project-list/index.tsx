@@ -2,14 +2,11 @@ import React from "react";
 import { SearchPanel } from "./search-panel";
 import { List, Project } from "./list";
 import { useEffect, useState } from "react";
-import { cleanObject, useDebounce, useMount } from "../../utils";
-import qs from "qs";
+import { cleanObject, useDebounce, useMount } from "../../../utils";
 import { useHttp } from "utils/http";
 import { useAsync } from "utils/use-async";
 
 export const ProjectListScreen = () => {
-  const apiUrl = process.env.REACT_APP_API_URL;
-
   const [users, setUsers] = useState([]);
   const [param, setParam] = useState({
     name: "",
@@ -20,7 +17,7 @@ export const ProjectListScreen = () => {
   const { run, isLoading, error, data: list } = useAsync<Project[]>();
 
   useEffect(() => {
-    run(client("list", { data: cleanObject(debouncedParam) }));
+    // run(client("list", { data: cleanObject(debouncedParam) }));
 
     const data = [
       {

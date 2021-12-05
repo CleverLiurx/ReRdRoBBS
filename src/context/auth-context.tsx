@@ -1,6 +1,6 @@
 import React, { ReactNode, useState } from "react";
-import * as auth from "auth-provider";
-import { User } from "screens/project-list/search-panel";
+import * as auth from "utils/auth-provider";
+import { User } from "screens/authenticated-app/project-list/search-panel";
 import { http } from "utils/http";
 import { useMount } from "utils";
 import { useAsync } from "utils/use-async";
@@ -18,12 +18,12 @@ const bootstrapUser = async () => {
     const data = await http("me", { token });
     user = data.user;
   }
-  return user;
-  // return {
-  //   id: "1",
-  //   name: "章三",
-  //   token: "xxxx",
-  // }
+  // return user;
+  return {
+    id: "1",
+    name: "章三",
+    token: "xxxx",
+  };
 };
 
 const AuthContext = React.createContext<
