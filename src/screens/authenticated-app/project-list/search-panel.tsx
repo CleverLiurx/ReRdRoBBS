@@ -1,8 +1,4 @@
-export interface User {
-  id: string;
-  name: string;
-  token: string;
-}
+import { User } from "types";
 
 interface SearchPanelProps {
   users: User[];
@@ -38,8 +34,8 @@ export const SearchPanel = ({ users, param, setParam }: SearchPanelProps) => {
         >
           <option value={""}>负责人</option>
           {users.map((user) => (
-            <option key={user.id} value={user.id}>
-              {user.name}
+            <option key={user._id} value={user._id}>
+              {user.username}
             </option>
           ))}
         </select>

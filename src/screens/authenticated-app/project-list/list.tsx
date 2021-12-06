@@ -1,5 +1,5 @@
 import React from "react";
-import { User } from "./search-panel";
+import { User } from "types";
 
 export interface Project {
   id: string;
@@ -27,7 +27,7 @@ export const List = ({ list, users }: ListProps) => {
             <td>{project.name}</td>
             {/* undefined.name */}
             <td>
-              {users.find((user) => user.id === project.personId)?.name ||
+              {users.find((user) => user._id === project.personId)?.username ||
                 "未知"}
             </td>
           </tr>

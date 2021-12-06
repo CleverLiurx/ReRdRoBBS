@@ -1,15 +1,13 @@
-// import { User } from "screens/authenticated-app/project-list/search-panel";
 import { User } from "types";
+import NodeRSA from "node-rsa";
 
-const localStorageKey = "__auth_provider_token__";
 const apiUrl = process.env.REACT_APP_API_URL;
 
-export const getToken = () => window.localStorage.getItem(localStorageKey);
-
-// export const handleUserResponse = ({ user }: { user: User }) => {
-//   window.localStorage.setItem(localStorageKey, user.token || "");
-//   return user;
-// };
+const _encrypt = (data: NodeRSA.Data, publicKey: NodeRSA.KeyBits) => {
+  const nodersa = new NodeRSA(publicKey);
+  const encrypted = nodersa.encrypt(data, "base64");
+  return encrypted;
+};
 
 interface Response {
   errmsg: string;
@@ -26,7 +24,7 @@ const handleUserResponse = (res: Response) => {
 };
 
 export const login = async (data: { phone: string; code: string }) => {
-  return fetch(`${apiUrl}/api/v1/un_auth/login`, {
+  return fetch(`${apiUrl}/un_auth/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -40,6 +38,7 @@ export const login = async (data: { phone: string; code: string }) => {
     }
   });
 };
+
 export const register = (data: { phone: string; code: string }) => {
   return fetch(`${apiUrl}/register`, {
     method: "POST",
@@ -56,5 +55,18 @@ export const register = (data: { phone: string; code: string }) => {
   });
 };
 
-export const logout = async () =>
-  window.localStorage.removeItem(localStorageKey);
+export const logout = async () => {
+  fetch(`${apiUrl}/user/logout`, { credentials: "include" });
+};
+
+export const getUserInfo = async () => {
+  return fetch(`${apiUrl}/user`, { credentials: "include" }).then(
+    async (response) => {
+      if (response.ok) {
+        return handleUserResponse(await response.json());
+      } else {
+        return Promise.reject(await response.json());
+      }
+    }
+  );
+};

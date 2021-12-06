@@ -48,16 +48,16 @@ export const ProjectListScreen = () => {
     // client('users').then(setUsers)
     const data = [
       {
-        id: 1,
-        name: "章三",
+        _id: "1",
+        username: "章三",
       },
       {
-        id: 2,
-        name: "莉丝",
+        _id: "2",
+        username: "莉丝",
       },
       {
-        id: 3,
-        name: "网舞",
+        _id: "3",
+        username: "网舞",
       },
     ];
     // @ts-ignore
