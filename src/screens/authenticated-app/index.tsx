@@ -66,7 +66,7 @@ const PageHeader = () => {
           }
         >
           <Button type={"link"} onClick={(e) => e.preventDefault()}>
-            Hi, {user?.name}
+            Hi, {user?.username}
           </Button>
         </Dropdown>
       </HeaderRight>

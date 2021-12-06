@@ -1,29 +1,25 @@
 import React, { ReactNode, useState } from "react";
 import * as auth from "utils/auth-provider";
-import { User } from "screens/authenticated-app/project-list/search-panel";
+// import { User } from "screens/authenticated-app/project-list/search-panel";
+import { User } from "types";
 import { http } from "utils/http";
 import { useMount } from "utils";
 import { useAsync } from "utils/use-async";
 import { FullPageLoading } from "components/lib";
 
 interface AuthForm {
-  username: string;
-  password: string;
+  phone: string;
+  code: string;
 }
 
 const bootstrapUser = async () => {
   let user = null;
   const token = auth.getToken();
   if (token) {
-    const data = await http("me", { token });
+    const data = await http("/getUserInfo", { token });
     user = data.user;
   }
-  // return user;
-  return {
-    id: "1",
-    name: "章三",
-    token: "xxxx",
-  };
+  return user;
 };
 
 const AuthContext = React.createContext<

@@ -34,7 +34,7 @@ export const UnauthenticatedApp = () => {
           onClick={() => setIsRegister(!isRegister)}
           style={{ userSelect: "none" }}
         >
-          {isRegister ? "已经有账号了？直接登录" : "没有账号？注册新账号"}
+          {isRegister ? "已经有账号了？去登录" : "没有账号？注册新账号"}
         </Button>
       </ShadowCard>
     </Container>

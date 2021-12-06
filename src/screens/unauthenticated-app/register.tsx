@@ -27,10 +27,7 @@ export const RegisterScreen = ({
   const { run, isLoading } = useAsync(undefined, { throwOnError: true });
 
   // HTMLFormElement extends Element
-  const handleSubmit = async (values: {
-    username: string;
-    password: string;
-  }) => {
+  const handleSubmit = async (values: { phone: string; code: string }) => {
     // try {
     //     await run(register(values));
     // } catch (error) {
@@ -42,20 +39,20 @@ export const RegisterScreen = ({
   return (
     <Form onFinish={handleSubmit}>
       <Form.Item
-        name={"username"}
+        name={"phone"}
         rules={[{ required: true, message: "请输入用户名" }]}
       >
-        <Input placeholder={"用户名"} type="text" id={"username"} />
+        <Input placeholder={"用户名"} type="text" id={"phone"} />
       </Form.Item>
       <Form.Item
-        name={"password"}
+        name={"code"}
         rules={[{ required: true, message: "请输入密码" }]}
       >
-        <Input placeholder={"密码"} type="password" id={"password"} />
+        <Input placeholder={"密码"} type="password" id={"code"} />
       </Form.Item>
       <Form.Item>
         <LongButton loading={isLoading} htmlType={"submit"} type={"primary"}>
-          注册
+          注册并登录
         </LongButton>
       </Form.Item>
     </Form>

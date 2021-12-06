@@ -27,12 +27,10 @@ export const LoginScreen = ({
   const { run, isLoading } = useAsync(undefined, { throwOnError: true });
 
   // HTMLFormElement extends Element
-  const handleSubmit = async (values: {
-    username: string;
-    password: string;
-  }) => {
+  const handleSubmit = async (values: { phone: string; code: string }) => {
     // try {
-    //     await run(login(values));
+    // await run(login(values));
+    // login(values)
     // } catch (error) {
     //     onError(error)
     // }
@@ -42,16 +40,16 @@ export const LoginScreen = ({
   return (
     <Form onFinish={handleSubmit}>
       <Form.Item
-        name={"username"}
-        rules={[{ required: true, message: "请输入用户名" }]}
+        name={"phone"}
+        rules={[{ required: true, message: "请输入手机号" }]}
       >
-        <Input placeholder={"用户名"} type="text" id={"username"} />
+        <Input placeholder={"手机号"} type="text" id={"phone"} />
       </Form.Item>
       <Form.Item
-        name={"password"}
+        name={"code"}
         rules={[{ required: true, message: "请输入密码" }]}
       >
-        <Input placeholder={"密码"} type="password" id={"password"} />
+        <Input placeholder={"密码"} type="password" id={"code"} />
       </Form.Item>
       <Form.Item>
         <LongButton loading={isLoading} htmlType={"submit"} type={"primary"}>

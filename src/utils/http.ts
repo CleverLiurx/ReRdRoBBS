@@ -49,7 +49,7 @@ export const useHttp = () => {
   // return ([endpoint, config]: [string, Config]) => http(endpoint, {...config, token: user?.token})
   // ts 的 typeof 是静态运行 js的是在runtime运行的
   return (...[endpoint, config]: Parameters<typeof http>) =>
-    http(endpoint, { ...config, token: user?.token });
+    http(endpoint, { ...config });
 };
 
 // type Person = {
