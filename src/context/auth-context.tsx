@@ -5,9 +5,15 @@ import { useMount } from "utils";
 import { useAsync } from "utils/use-async";
 import { FullPageLoading } from "components/lib";
 
-interface AuthForm {
+interface LoginForm {
   phone: string;
   password: string;
+}
+
+interface RegisterForm {
+  phone: string;
+  password: string;
+  code: string;
 }
 
 const bootstrapUser = async () => {
@@ -18,8 +24,8 @@ const bootstrapUser = async () => {
 const AuthContext = React.createContext<
   | {
       user: User | null;
-      register: (form: AuthForm) => Promise<void>;
-      login: (form: AuthForm) => Promise<void>;
+      register: (form: RegisterForm) => Promise<void>;
+      login: (form: LoginForm) => Promise<void>;
       logout: () => Promise<void>;
     }
   | undefined
@@ -38,8 +44,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setData: setUser,
   } = useAsync<User | null>();
 
-  const login = (form: AuthForm) => auth.login(form).then(setUser);
-  const register = (form: AuthForm) => auth.register(form).then(setUser);
+  const login = (form: LoginForm) => auth.login(form).then(setUser);
+  const register = (form: RegisterForm) => auth.register(form).then(setUser);
   const logout = () => auth.logout().then(() => setUser(null));
 
   useMount(() => {

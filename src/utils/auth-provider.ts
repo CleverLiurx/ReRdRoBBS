@@ -54,8 +54,12 @@ export const login = async (data: { phone: string; password: string }) => {
   });
 };
 
-export const register = (data: { phone: string; password: string }) => {
-  return fetch(`${apiUrl}/register`, {
+export const register = (data: {
+  phone: string;
+  code: string;
+  password: string;
+}) => {
+  return fetch(`${apiUrl}/un_auth/register`, {
     method: "POST",
     headers: {
       "content-type": "application/json",
