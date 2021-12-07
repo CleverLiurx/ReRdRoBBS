@@ -23,13 +23,28 @@ const handleUserResponse = (res: Response) => {
   }
 };
 
-export const login = async (data: { phone: string; code: string }) => {
+const getLoginPack = async () => {
+  return fetch(`${apiUrl}/un_auth/loginPack`).then(async (response) => {
+    const json = await response.json();
+    const { ticket, publicKey } = json.data;
+    return { ticket, publicKey: Buffer.from(publicKey.data) };
+  });
+};
+
+export const login = async (data: { phone: string; password: string }) => {
+  // 获取加密数据
+  const pack = await getLoginPack();
+
+  // 加密要传输的数据
+  // @ts-ignore
+  const text = _encrypt({ ...data, ticket: pack.ticket }, pack.publicKey);
+
   return fetch(`${apiUrl}/un_auth/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify({ text }),
   }).then(async (response) => {
     if (response.ok) {
       return handleUserResponse(await response.json());
@@ -39,7 +54,7 @@ export const login = async (data: { phone: string; code: string }) => {
   });
 };
 
-export const register = (data: { phone: string; code: string }) => {
+export const register = (data: { phone: string; password: string }) => {
   return fetch(`${apiUrl}/register`, {
     method: "POST",
     headers: {

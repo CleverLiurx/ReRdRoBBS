@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode } from "react";
 import * as auth from "utils/auth-provider";
 import { User } from "types";
 import { useMount } from "utils";
@@ -7,7 +7,7 @@ import { FullPageLoading } from "components/lib";
 
 interface AuthForm {
   phone: string;
-  code: string;
+  password: string;
 }
 
 const bootstrapUser = async () => {
@@ -30,10 +30,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // const [user, setUser] = useState<User | null>(null);
   const {
     data: user,
-    error,
+    // error,
     isLoading,
     isIdle,
-    isError,
+    // isError,
     run,
     setData: setUser,
   } = useAsync<User | null>();

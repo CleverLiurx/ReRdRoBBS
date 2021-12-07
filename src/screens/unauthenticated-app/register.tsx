@@ -3,21 +3,6 @@ import { useAuth } from "context/auth-context";
 import { LongButton } from "screens/unauthenticated-app";
 import { useAsync } from "utils/use-async";
 
-// interface Base {
-//   id: number
-// }
-//
-// interface Advance extends Base {
-//   name: string
-// }
-//
-// const test = (p: Base) => {
-// }
-//
-// // 鸭子类型(duck typing)：面向接口编程 而不是 面向对象编程
-// const a = {id: 1, name: 'jack'}
-// test(a)
-
 export const RegisterScreen = ({
   onError,
 }: {
@@ -27,12 +12,7 @@ export const RegisterScreen = ({
   const { run, isLoading } = useAsync(undefined, { throwOnError: true });
 
   // HTMLFormElement extends Element
-  const handleSubmit = async (values: { phone: string; code: string }) => {
-    // try {
-    //     await run(register(values));
-    // } catch (error) {
-    //     onError(error)
-    // }
+  const handleSubmit = async (values: { phone: string; password: string }) => {
     await run(register(values)).catch((error) => onError(error));
   };
 
@@ -45,10 +25,10 @@ export const RegisterScreen = ({
         <Input placeholder={"用户名"} type="text" id={"phone"} />
       </Form.Item>
       <Form.Item
-        name={"code"}
+        name={"password"}
         rules={[{ required: true, message: "请输入密码" }]}
       >
-        <Input placeholder={"密码"} type="password" id={"code"} />
+        <Input placeholder={"密码"} type="password" id={"password"} />
       </Form.Item>
       <Form.Item>
         <LongButton loading={isLoading} htmlType={"submit"} type={"primary"}>
