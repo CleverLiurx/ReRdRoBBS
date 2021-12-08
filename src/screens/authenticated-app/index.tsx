@@ -1,14 +1,24 @@
-import React from "react";
-import { ProjectListScreen } from "screens/authenticated-app/project-list";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "context/auth-context";
-import { ReactComponent as SoftwareLogo } from "assets/img/software-logo.svg";
+import { ReactComponent as SoftwareLogo } from "assets/img/logo-name.svg";
 import styled from "@emotion/styled";
 import { Row } from "components/lib";
-import { Button, Dropdown, Menu } from "antd";
+import { Button, Dropdown, Input, Menu } from "antd";
 import { Navigate, Route, Routes } from "react-router";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Link, useLocation } from "react-router-dom";
 import { resetRoute } from "utils";
-
+import { HomePage } from "./home";
+import { HotSearchPage } from "./hot-search";
+import { AnonymousPage } from "./anonymous";
+import { SearchOutlined } from "@ant-design/icons";
+const suffix = (
+  <SearchOutlined
+    style={{
+      fontSize: 16,
+      color: "#ccc",
+    }}
+  />
+);
 /**
  * grid 和 flex 各自的应用场景
  * 1. 要考虑，是一维布局 还是 二维布局
@@ -24,43 +34,72 @@ import { resetRoute } from "utils";
 export const AuthenticatedApp = () => {
   return (
     <Container>
-      <PageHeader />
-      <Main>
-        <Router>
+      <Router>
+        <PageHeader />
+        <Main>
           <Routes>
-            <Route path={"/"} element={<ProjectListScreen />} />
-            {/* <Route
-              path={'/projects/:projectId/*'}
-              element={<Other />}
-            /> */}
-            <Route path="*" element={<Navigate to="/" />} />
+            <Route path={"/home"} element={<HomePage />} />
+            <Route path={"/hot-search"} element={<HotSearchPage />} />
+            <Route path={"/anonymous"} element={<AnonymousPage />} />
+            <Route path="*" element={<Navigate to="/home" />} />
           </Routes>
-        </Router>
-      </Main>
+        </Main>
+      </Router>
     </Container>
   );
 };
 
+const usePath = (callback: (name: string) => void) => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    const name = pathname.split("/")[1] || "";
+    callback(name);
+    // eslint-disable-next-line
+  }, [pathname]);
+};
+
 const PageHeader = () => {
   const { logout, user } = useAuth();
-
+  const [path, setPath] = useState("");
+  usePath(setPath);
   return (
     <Header between={true}>
       <HeaderLeft gap={true}>
-        <Button type={"link"} onClick={resetRoute}>
-          <SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
-        </Button>
-        <h2>项目</h2>
-        <h2>用户</h2>
+        <SoftwareLogo
+          onClick={resetRoute}
+          width={"18rem"}
+          color={"rgb(38, 132, 255)"}
+          cursor={"pointer"}
+        />
+        <Link
+          to={"home"}
+          style={{ color: path === "home" ? "#0052cc" : "#000000" }}
+        >
+          全部
+        </Link>
+        <Link
+          to={"hot-search"}
+          style={{ color: path === "hot-search" ? "#0052cc" : "#000000" }}
+        >
+          热榜
+        </Link>
+        <Link
+          to={"anonymous"}
+          style={{ color: path === "anonymous" ? "#0052cc" : "#000000" }}
+        >
+          匿名
+        </Link>
       </HeaderLeft>
       <HeaderRight>
+        <CircleInput placeholder="搜索" suffix={suffix} />
         <Dropdown
           overlay={
             <Menu>
+              <Menu.Item key={"userpage"}>
+                <DrowItem>个人主页</DrowItem>
+              </Menu.Item>
               <Menu.Item key={"logout"}>
-                <Button onClick={logout} type={"link"}>
-                  登出
-                </Button>
+                <DrowItem onClick={logout}>退出登录</DrowItem>
               </Menu.Item>
             </Menu>
           }
@@ -86,6 +125,23 @@ const Header = styled(Row)`
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
   z-index: 1;
 `;
+
+const DrowItem = styled.div`
+  font-size: 1rem;
+  text-align: center;
+`;
+
+const CircleInput = styled(Input)`
+  border-radius: 17px;
+  width: 120px;
+  &:hover {
+    width: 200px;
+  }
+  & > input {
+    font-size: 1rem;
+  }
+`;
+
 const HeaderLeft = styled(Row)``;
-const HeaderRight = styled.div``;
+const HeaderRight = styled(Row)``;
 const Main = styled.main``;
