@@ -17,6 +17,7 @@ const suffix = (
       fontSize: 16,
       color: "#ccc",
     }}
+    className="btn"
   />
 );
 /**
@@ -71,24 +72,21 @@ const PageHeader = () => {
           color={"rgb(38, 132, 255)"}
           cursor={"pointer"}
         />
-        <Link
-          to={"home"}
-          style={{ color: path === "home" ? "#0052cc" : "#000000" }}
-        >
+        <LinkItem to={"home"} className={path === "home" ? "active" : ""}>
           全部
-        </Link>
-        <Link
+        </LinkItem>
+        <LinkItem
           to={"hot-search"}
-          style={{ color: path === "hot-search" ? "#0052cc" : "#000000" }}
+          className={path === "hot-search" ? "active" : ""}
         >
           热榜
-        </Link>
-        <Link
+        </LinkItem>
+        <LinkItem
           to={"anonymous"}
-          style={{ color: path === "anonymous" ? "#0052cc" : "#000000" }}
+          className={path === "anonymous" ? "active" : ""}
         >
           匿名
-        </Link>
+        </LinkItem>
       </HeaderLeft>
       <HeaderRight>
         <CircleInput placeholder="搜索" suffix={suffix} />
@@ -136,9 +134,24 @@ const CircleInput = styled(Input)`
   width: 120px;
   &:hover {
     width: 200px;
+    .btn {
+      color: #fff !important;
+      padding: 5px;
+      border-radius: 50%;
+      background-color: #666;
+      cursor: pointer;
+    }
   }
   & > input {
     font-size: 1rem;
+  }
+`;
+
+const LinkItem = styled(Link)`
+  color: #000;
+  &.active {
+    color: #0052cc;
+    font-weight: 600;
   }
 `;
 
