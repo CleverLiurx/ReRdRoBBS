@@ -85,69 +85,75 @@ const PageHeader = () => {
   const [path, setPath] = useState("");
   usePath(setPath);
   return (
-    <Header between={true}>
-      <HeaderLeft gap={true}>
-        <SoftwareLogo
-          onClick={resetRoute}
-          width={"18rem"}
-          color={"rgb(38, 132, 255)"}
-          cursor={"pointer"}
-        />
-        <LinkItem to={"home"} className={path === "home" ? "active" : ""}>
-          全部
-        </LinkItem>
-        <LinkItem
-          to={"hot-search"}
-          className={path === "hot-search" ? "active" : ""}
-        >
-          热榜
-        </LinkItem>
-        <LinkItem
-          to={"anonymous"}
-          className={path === "anonymous" ? "active" : ""}
-        >
-          匿名
-        </LinkItem>
-      </HeaderLeft>
-      <HeaderRight>
-        <CircleInput placeholder="搜索" suffix={suffix} />
-        {user ? (
-          <Dropdown
-            overlay={
-              <Menu>
-                <Menu.Item key={"userpage"}>
-                  <DrowItem>个人主页</DrowItem>
-                </Menu.Item>
-                <Menu.Item key={"logout"}>
-                  <ToLogout />
-                </Menu.Item>
-              </Menu>
-            }
+    <div style={{ height: "64px" }}>
+      <Header between={true}>
+        <HeaderLeft gap={true}>
+          <SoftwareLogo
+            onClick={resetRoute}
+            width={"18rem"}
+            color={"rgb(38, 132, 255)"}
+            cursor={"pointer"}
+          />
+          <LinkItem to={"home"} className={path === "home" ? "active" : ""}>
+            全部
+          </LinkItem>
+          <LinkItem
+            to={"hot-search"}
+            className={path === "hot-search" ? "active" : ""}
           >
-            <Button type={"link"} onClick={(e) => e.preventDefault()}>
-              Hi, {user?.username}
-            </Button>
-          </Dropdown>
-        ) : (
-          <ToLogin />
-        )}
-      </HeaderRight>
-    </Header>
+            热榜
+          </LinkItem>
+          <LinkItem
+            to={"anonymous"}
+            className={path === "anonymous" ? "active" : ""}
+          >
+            匿名
+          </LinkItem>
+        </HeaderLeft>
+        <HeaderRight>
+          <CircleInput placeholder="搜索" suffix={suffix} />
+          {user ? (
+            <Dropdown
+              overlay={
+                <Menu>
+                  <Menu.Item key={"userpage"}>
+                    <DrowItem>个人主页</DrowItem>
+                  </Menu.Item>
+                  <Menu.Item key={"logout"}>
+                    <ToLogout />
+                  </Menu.Item>
+                </Menu>
+              }
+            >
+              <Button type={"link"} onClick={(e) => e.preventDefault()}>
+                Hi, {user?.username}
+              </Button>
+            </Dropdown>
+          ) : (
+            <ToLogin />
+          )}
+        </HeaderRight>
+      </Header>
+    </div>
   );
 };
 
 const Container = styled.div`
   display: grid;
   grid-template-rows: 6rem 1fr;
-  height: 100vh;
 `;
 
 // grid-area 用来给grid子元素起名字
 const Header = styled(Row)`
+  width: 100%;
+  height: 64px;
   padding: 3.2rem;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
   z-index: 1;
   background-color: #fff;
+  position: fixed;
+  left: 0;
+  top: 0;
 `;
 
 const DrowItem = styled.div`
