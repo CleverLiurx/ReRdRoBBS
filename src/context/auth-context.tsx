@@ -4,7 +4,6 @@ import { User } from "types";
 import { useMount } from "utils";
 import { useAsync } from "utils/use-async";
 import { FullPageLoading } from "components/lib";
-import { useNavigate } from "react-router";
 
 interface LoginForm {
   phone: string;

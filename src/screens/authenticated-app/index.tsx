@@ -5,12 +5,7 @@ import styled from "@emotion/styled";
 import { Row } from "components/lib";
 import { Button, Dropdown, Input, Menu } from "antd";
 import { Navigate, Route, Routes } from "react-router";
-import {
-  BrowserRouter as Router,
-  Link,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { resetRoute } from "utils";
 import { HomePage } from "./home";
 import { HotSearchPage } from "./hot-search";
