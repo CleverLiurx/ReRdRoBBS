@@ -1,5 +1,6 @@
 import { Button, Col, Form, Input, Row } from "antd";
 import { useAuth } from "context/auth-context";
+import { useNavigate } from "react-router";
 import { LongButton } from "screens/unauthenticated-app";
 import { useHttp } from "utils/http";
 import { useAsync } from "utils/use-async";
@@ -13,6 +14,7 @@ export const RegisterScreen = ({
   const { run, isLoading } = useAsync(undefined, { throwOnError: true });
   const client = useHttp();
   const [form] = Form.useForm();
+  let navigate = useNavigate();
 
   // HTMLFormElement extends Element
   const handleSubmit = async (values: {
@@ -20,7 +22,11 @@ export const RegisterScreen = ({
     code: string;
     password: string;
   }) => {
-    await run(register(values)).catch((error) => onError(error));
+    await run(register(values))
+      .then(() => {
+        navigate("/");
+      })
+      .catch((error) => onError(error));
   };
 
   const sendSMS = () => {

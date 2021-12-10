@@ -1,5 +1,6 @@
 import { Form, Input } from "antd";
 import { useAuth } from "context/auth-context";
+import { useNavigate } from "react-router";
 import { LongButton } from "screens/unauthenticated-app/index";
 import { useAsync } from "utils/use-async";
 
@@ -25,11 +26,29 @@ export const LoginScreen = ({
 }) => {
   const { login } = useAuth();
   const { run, isLoading } = useAsync(undefined, { throwOnError: true });
+  let navigate = useNavigate();
 
   // HTMLFormElement extends Element
   const handleSubmit = async (values: { phone: string; password: string }) => {
-    await run(login(values)).catch((error) => onError(error));
+    await run(login(values))
+      .then(() => {
+        navigate("/");
+      })
+      .catch((error) => onError(error));
+    // console.log(data)
+    // if (isSuccess) {
+    //   navigate('/');
+    // }
   };
+
+  // const FormContainer = () => {
+  //   let navigate = useNavigate();
+  //   const handleClick = (values) => {
+  //     handleSubmit(values)
+  //     navigate('/auth');
+  //   };
+  //   return <Form onFinish={handleClick}></Form>
+  // }
 
   return (
     <Form onFinish={handleSubmit}>

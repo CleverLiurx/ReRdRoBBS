@@ -4,6 +4,7 @@ import { User } from "types";
 import { useMount } from "utils";
 import { useAsync } from "utils/use-async";
 import { FullPageLoading } from "components/lib";
+import { useNavigate } from "react-router";
 
 interface LoginForm {
   phone: string;
@@ -43,7 +44,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     run,
     setData: setUser,
   } = useAsync<User | null>();
-
   const login = (form: LoginForm) => auth.login(form).then(setUser);
   const register = (form: RegisterForm) => auth.register(form).then(setUser);
   const logout = () => auth.logout().then(() => setUser(null));

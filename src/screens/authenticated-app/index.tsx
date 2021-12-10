@@ -5,7 +5,12 @@ import styled from "@emotion/styled";
 import { Row } from "components/lib";
 import { Button, Dropdown, Input, Menu } from "antd";
 import { Navigate, Route, Routes } from "react-router";
-import { BrowserRouter as Router, Link, useLocation } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Link,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { resetRoute } from "utils";
 import { HomePage } from "./home";
 import { HotSearchPage } from "./hot-search";
@@ -35,17 +40,17 @@ const suffix = (
 export const AuthenticatedApp = () => {
   return (
     <Container>
-      <Router>
-        <PageHeader />
-        <Main>
-          <Routes>
-            <Route path={"/home"} element={<HomePage />} />
-            <Route path={"/hot-search"} element={<HotSearchPage />} />
-            <Route path={"/anonymous"} element={<AnonymousPage />} />
-            <Route path="*" element={<Navigate to="/home" />} />
-          </Routes>
-        </Main>
-      </Router>
+      {/* <Router> */}
+      <PageHeader />
+      <Main>
+        <Routes>
+          <Route path={"home"} element={<HomePage />} />
+          <Route path={"hot-search"} element={<HotSearchPage />} />
+          <Route path={"anonymous"} element={<AnonymousPage />} />
+          <Route path="*" element={<Navigate to="home" />} />
+        </Routes>
+      </Main>
+      {/* </Router> */}
     </Container>
   );
 };
@@ -59,8 +64,29 @@ const usePath = (callback: (name: string) => void) => {
   }, [pathname]);
 };
 
+const ToLogin = () => {
+  let navigate = useNavigate();
+  const handleClick = () => {
+    navigate("/auth");
+  };
+  return (
+    <Button onClick={handleClick} type="primary" style={{ marginLeft: "20px" }}>
+      登录
+    </Button>
+  );
+};
+
+const ToLogout = () => {
+  let navigate = useNavigate();
+  const { logout } = useAuth();
+  const handleClick = () => {
+    logout();
+    navigate("/auth");
+  };
+  return <DrowItem onClick={handleClick}>退出登录</DrowItem>;
+};
 const PageHeader = () => {
-  const { logout, user } = useAuth();
+  const { user } = useAuth();
   const [path, setPath] = useState("");
   usePath(setPath);
   return (
@@ -90,22 +116,26 @@ const PageHeader = () => {
       </HeaderLeft>
       <HeaderRight>
         <CircleInput placeholder="搜索" suffix={suffix} />
-        <Dropdown
-          overlay={
-            <Menu>
-              <Menu.Item key={"userpage"}>
-                <DrowItem>个人主页</DrowItem>
-              </Menu.Item>
-              <Menu.Item key={"logout"}>
-                <DrowItem onClick={logout}>退出登录</DrowItem>
-              </Menu.Item>
-            </Menu>
-          }
-        >
-          <Button type={"link"} onClick={(e) => e.preventDefault()}>
-            Hi, {user?.username}
-          </Button>
-        </Dropdown>
+        {user ? (
+          <Dropdown
+            overlay={
+              <Menu>
+                <Menu.Item key={"userpage"}>
+                  <DrowItem>个人主页</DrowItem>
+                </Menu.Item>
+                <Menu.Item key={"logout"}>
+                  <ToLogout />
+                </Menu.Item>
+              </Menu>
+            }
+          >
+            <Button type={"link"} onClick={(e) => e.preventDefault()}>
+              Hi, {user?.username}
+            </Button>
+          </Dropdown>
+        ) : (
+          <ToLogin />
+        )}
       </HeaderRight>
     </Header>
   );

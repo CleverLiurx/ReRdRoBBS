@@ -75,7 +75,15 @@ export const register = (data: {
 };
 
 export const logout = async () => {
-  fetch(`${apiUrl}/user/logout`, { credentials: "include" });
+  fetch(`${apiUrl}/user/logout`, { credentials: "include" }).then(
+    async (response) => {
+      if (response.ok) {
+        return handleUserResponse(await response.json());
+      } else {
+        return Promise.reject(await response.json());
+      }
+    }
+  );
 };
 
 export const getUserInfo = async () => {
