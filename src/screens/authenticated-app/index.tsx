@@ -65,7 +65,7 @@ const ToLogin = () => {
     navigate("/auth");
   };
   return (
-    <Button onClick={handleClick} type="primary" style={{ marginLeft: "20px" }}>
+    <Button onClick={handleClick} type="primary" style={{ marginLeft: "30px" }}>
       登录
     </Button>
   );
