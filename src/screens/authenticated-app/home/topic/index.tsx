@@ -2,33 +2,22 @@ import React from "react";
 import { Card, Dropdown, Menu } from "antd";
 import styled from "@emotion/styled";
 import { DownOutlined } from "@ant-design/icons";
+import { TopicItem } from "./topic-item";
+import { Topic } from "types/topic";
 
-interface topic {
-  title: string;
-  createBy: string;
-  content: string;
-  topicImage: string;
-  hitsCount: number;
-  praiseCount: number;
-  starCount: number;
-  replyCount: number;
-}
-
-export const Topic = ({ topicList }: { topicList: topic[] }) => {
+export const TopicList = ({ topicList }: { topicList: Topic[] }) => {
   return (
     <div style={{ width: "740px", margin: "20px 0" }}>
       {topicList.map((topic, idx) => {
         if (idx === 0) {
           return (
             <Card
-              key={topic.title}
+              key={topic._id}
               size="small"
               extra={HandleBtn}
               style={{ width: "100%" }}
             >
-              <p>Card content</p>
-              <p>Card content</p>
-              <p>Card content</p>
+              <TopicItem topicItem={topic} />
             </Card>
           );
         } else {
@@ -38,9 +27,7 @@ export const Topic = ({ topicList }: { topicList: topic[] }) => {
               size="small"
               style={{ width: "100%", marginTop: "10px" }}
             >
-              <p>Card content</p>
-              <p>Card content</p>
-              <p>Card content</p>
+              <TopicItem topicItem={topic} />
             </Card>
           );
         }

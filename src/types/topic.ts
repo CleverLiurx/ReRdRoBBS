@@ -8,6 +8,7 @@ interface UserMini {
   _id: string;
   username: string;
   sex: number;
+  avator: string;
 }
 interface ClassMini {
   _id: string;
@@ -23,6 +24,7 @@ export interface Reply {
 
 export interface Topic {
   _id: string;
+  createBy: UserMini;
   title: string;
   content: string;
   topicImage: Img[];
@@ -34,4 +36,5 @@ export interface Topic {
   hadParise: boolean;
   status: boolean;
   classFrom: ClassMini;
+  createTime: string;
 }

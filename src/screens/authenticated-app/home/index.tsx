@@ -1,97 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { EditAction } from "./edit-action";
 import { Banner } from "./banner";
-import { Topic } from "./topic";
+import { TopicList } from "./topic";
+import { useAsync } from "utils/use-async";
+import { useHttp } from "utils/http";
+import { cleanObject } from "utils";
+import { Topic } from "types/topic";
 
-const list = [
-  {
-    title: "title",
-    createBy: "Liurx",
-    content: "test",
-    topicImage: "",
-    hitsCount: 0,
-    praiseCount: 11,
-    starCount: 22,
-    replyCount: 100,
-  },
-  {
-    title: "哈哈哈",
-    createBy: "Liurx",
-    content: "test",
-    topicImage: "",
-    hitsCount: 0,
-    praiseCount: 11,
-    starCount: 22,
-    replyCount: 100,
-  },
-  {
-    title: "11",
-    createBy: "Liurx",
-    content: "test",
-    topicImage: "",
-    hitsCount: 0,
-    praiseCount: 11,
-    starCount: 22,
-    replyCount: 100,
-  },
-  {
-    title: "22",
-    createBy: "Liurx",
-    content: "test",
-    topicImage: "",
-    hitsCount: 0,
-    praiseCount: 11,
-    starCount: 22,
-    replyCount: 100,
-  },
-  {
-    title: "rr",
-    createBy: "Liurx",
-    content: "test",
-    topicImage: "",
-    hitsCount: 0,
-    praiseCount: 11,
-    starCount: 22,
-    replyCount: 100,
-  },
-  {
-    title: "hh",
-    createBy: "Liurx",
-    content: "test",
-    topicImage: "",
-    hitsCount: 0,
-    praiseCount: 11,
-    starCount: 22,
-    replyCount: 100,
-  },
-  {
-    title: "nn",
-    createBy: "Liurx",
-    content: "test",
-    topicImage: "",
-    hitsCount: 0,
-    praiseCount: 11,
-    starCount: 22,
-    replyCount: 100,
-  },
-  {
-    title: "mm",
-    createBy: "Liurx",
-    content: "test",
-    topicImage: "",
-    hitsCount: 0,
-    praiseCount: 11,
-    starCount: 22,
-    replyCount: 100,
-  },
-];
+const useProjects = () => {
+  const client = useHttp();
+  const { run, ...result } = useAsync<Topic[]>();
+
+  useEffect(() => {
+    run(client("/topic"));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return result;
+};
+
 export const HomePage = () => {
+  const { data: list } = useProjects();
+
   return (
     <Main>
       <MainContainterLeft>
         <Banner></Banner>
-        <Topic topicList={list}></Topic>
+        <TopicList topicList={list || []} />
       </MainContainterLeft>
       <MainContainterRight>
         <EditAction />
