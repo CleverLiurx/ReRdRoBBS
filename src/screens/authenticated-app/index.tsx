@@ -3,7 +3,7 @@ import { useAuth } from "context/auth-context";
 import { ReactComponent as SoftwareLogo } from "assets/img/logo-name.svg";
 import styled from "@emotion/styled";
 import { Row } from "components/lib";
-import { Button, Dropdown, Input, Menu } from "antd";
+import { Button, Dropdown, Input, Menu, BackTop } from "antd";
 import { Navigate, Route, Routes } from "react-router";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { resetRoute } from "utils";
@@ -35,7 +35,6 @@ const suffix = (
 export const AuthenticatedApp = () => {
   return (
     <Container>
-      {/* <Router> */}
       <PageHeader />
       <Main>
         <Routes>
@@ -45,7 +44,6 @@ export const AuthenticatedApp = () => {
           <Route path="*" element={<Navigate to="home" />} />
         </Routes>
       </Main>
-      {/* </Router> */}
     </Container>
   );
 };

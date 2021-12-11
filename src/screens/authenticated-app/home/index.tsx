@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 import { EditAction } from "./edit-action";
 import { Banner } from "./banner";
 import { TopicList } from "./topic";
 import { useAsync } from "utils/use-async";
 import { useHttp } from "utils/http";
-import { cleanObject } from "utils";
 import { Topic } from "types/topic";
 
 const useProjects = () => {
