@@ -1,4 +1,4 @@
-import { User } from "types";
+import { User } from "types/user";
 import NodeRSA from "node-rsa";
 
 const apiUrl = process.env.REACT_APP_API_URL;

@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import * as auth from "utils/auth-provider";
-import { User } from "types";
+import { User } from "types/user";
 import { useMount } from "utils";
 import { useAsync } from "utils/use-async";
 import { FullPageLoading } from "components/lib";
