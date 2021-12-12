@@ -8,10 +8,18 @@ import { useHttp } from "utils/http";
 import { useAsync } from "utils/use-async";
 // import VirtualList from 'rc-virtual-list';
 
+enum Sort {
+  createTime = "createTime",
+  repliedTime = "repliedTime",
+  replyCount = "replyCount",
+  praiseCount = "praiseCount",
+  starCount = "starCount",
+}
+
 interface ParamType {
   classFrom: string;
   createBy: string;
-  sort: string;
+  sort: Sort;
   page: number;
   limit: number;
 }
@@ -28,10 +36,10 @@ const useProjects = (param: ParamType) => {
 };
 
 export const TopicList = () => {
-  let [param, setParam] = useState({
+  let [param, setParam] = useState<ParamType>({
     classFrom: "",
     createBy: "",
-    sort: "createTime",
+    sort: Sort.createTime,
     page: 1,
     limit: 10,
   });
@@ -41,37 +49,52 @@ export const TopicList = () => {
   const menu = (
     <Menu>
       <Menu.Item key={"k1"}>
-        <DrowItem onClick={() => setParam({ ...param, sort: "repliedTime" })}>
+        <DrowItem
+          onClick={() => setParam({ ...param, sort: Sort.repliedTime })}
+        >
           最新回复
         </DrowItem>
       </Menu.Item>
       <Menu.Item key={"k2"}>
-        <DrowItem onClick={() => setParam({ ...param, sort: "createTime" })}>
+        <DrowItem onClick={() => setParam({ ...param, sort: Sort.createTime })}>
           发布时间
         </DrowItem>
       </Menu.Item>
       <Menu.Item key={"k3"}>
-        <DrowItem onClick={() => setParam({ ...param, sort: "replyCount" })}>
+        <DrowItem onClick={() => setParam({ ...param, sort: Sort.replyCount })}>
           回复数
         </DrowItem>
       </Menu.Item>
       <Menu.Item key={"k4"}>
-        <DrowItem onClick={() => setParam({ ...param, sort: "praiseCount" })}>
+        <DrowItem
+          onClick={() => setParam({ ...param, sort: Sort.praiseCount })}
+        >
           点赞数
         </DrowItem>
       </Menu.Item>
       <Menu.Item key={"k5"}>
-        <DrowItem onClick={() => setParam({ ...param, sort: "starCount" })}>
+        <DrowItem
+          onClick={() => setParam({ ...param, sort: Sort.praiseCount })}
+        >
           收藏数
         </DrowItem>
       </Menu.Item>
     </Menu>
   );
 
+  const sortName = {
+    repliedTime: "最新回复",
+    createTime: "发布时间",
+    replyCount: "回复数",
+    praiseCount: "点赞数",
+    starCount: "收藏数",
+  };
+
   const HandleBtn = (
     <Dropdown overlay={menu}>
       <div style={{ fontSize: "1.4rem", cursor: "pointer", color: "#666" }}>
-        发布时间
+        {/* @ts-ignore */}
+        {sortName[param.sort]}
         <DownOutlined />
       </div>
     </Dropdown>
