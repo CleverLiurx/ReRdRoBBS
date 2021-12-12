@@ -1,32 +1,18 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "@emotion/styled";
 import { EditAction } from "./edit-action";
 import { Banner } from "./banner";
 import { TopicList } from "./topic";
-import { useAsync } from "utils/use-async";
-import { useHttp } from "utils/http";
-import { Topic } from "types/topic";
-
-const useProjects = () => {
-  const client = useHttp();
-  const { run, ...result } = useAsync<Topic[]>();
-
-  useEffect(() => {
-    run(client("/topic"));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  return result;
-};
+import { useDocumentTitle } from "utils";
 
 export const HomePage = () => {
-  const { data: list } = useProjects();
+  useDocumentTitle("全部文章");
 
   return (
     <Main>
       <MainContainterLeft>
         <Banner></Banner>
-        <TopicList topicList={list || []} />
+        <TopicList />
       </MainContainterLeft>
       <MainContainterRight>
         <EditAction />

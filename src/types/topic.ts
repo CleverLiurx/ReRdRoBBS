@@ -25,16 +25,19 @@ export interface Reply {
 export interface Topic {
   _id: string;
   createBy: UserMini;
+  classFrom: ClassMini;
   title: string;
   content: string;
   topicImage: Img[];
+
   hitsCount: number;
   praiseCount: number;
   starCount: number;
   replyCount: number;
+
   hadStar: boolean;
   hadParise: boolean;
+
   status: boolean;
-  classFrom: ClassMini;
   createTime: string;
 }

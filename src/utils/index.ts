@@ -94,7 +94,7 @@ export const useDocumentTitle = (title: string, keepOnUnmount = true) => {
   const oldTitle = document.title;
 
   useEffect(() => {
-    document.title = title;
+    document.title = title + "-Liurx";
   }, [title]);
 
   useEffect(() => {

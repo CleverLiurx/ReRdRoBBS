@@ -1,37 +1,111 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Dropdown, Menu } from "antd";
 import styled from "@emotion/styled";
 import { DownOutlined } from "@ant-design/icons";
 import { TopicItem } from "./topic-item";
 import { Topic } from "types/topic";
+import { useHttp } from "utils/http";
+import { useAsync } from "utils/use-async";
+// import VirtualList from 'rc-virtual-list';
 
-export const TopicList = ({ topicList }: { topicList: Topic[] }) => {
+interface ParamType {
+  classFrom: string;
+  createBy: string;
+  sort: string;
+  page: number;
+  limit: number;
+}
+const useProjects = (param: ParamType) => {
+  const client = useHttp();
+  const { run, ...result } = useAsync<Topic[]>();
+
+  useEffect(() => {
+    run(client("/topic", { data: param }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [param]);
+
+  return result;
+};
+
+export const TopicList = () => {
+  let [param, setParam] = useState({
+    classFrom: "",
+    createBy: "",
+    sort: "createTime",
+    page: 1,
+    limit: 10,
+  });
+
+  let { data: topicList } = useProjects(param);
+
+  const menu = (
+    <Menu>
+      <Menu.Item key={"k1"}>
+        <DrowItem onClick={() => setParam({ ...param, sort: "repliedTime" })}>
+          最新回复
+        </DrowItem>
+      </Menu.Item>
+      <Menu.Item key={"k2"}>
+        <DrowItem onClick={() => setParam({ ...param, sort: "createTime" })}>
+          发布时间
+        </DrowItem>
+      </Menu.Item>
+      <Menu.Item key={"k3"}>
+        <DrowItem onClick={() => setParam({ ...param, sort: "replyCount" })}>
+          回复数
+        </DrowItem>
+      </Menu.Item>
+      <Menu.Item key={"k4"}>
+        <DrowItem onClick={() => setParam({ ...param, sort: "praiseCount" })}>
+          点赞数
+        </DrowItem>
+      </Menu.Item>
+      <Menu.Item key={"k5"}>
+        <DrowItem onClick={() => setParam({ ...param, sort: "starCount" })}>
+          收藏数
+        </DrowItem>
+      </Menu.Item>
+    </Menu>
+  );
+
+  const HandleBtn = (
+    <Dropdown overlay={menu}>
+      <div style={{ fontSize: "1.4rem", cursor: "pointer", color: "#666" }}>
+        发布时间
+        <DownOutlined />
+      </div>
+    </Dropdown>
+  );
+
   return (
     <div style={{ width: "740px", margin: "20px 0" }}>
-      {topicList.map((topic, idx) => {
-        if (idx === 0) {
-          return (
-            <Card
-              key={topic._id}
-              size="small"
-              extra={HandleBtn}
-              style={{ width: "100%" }}
-            >
-              <TopicItem topicItem={topic} />
-            </Card>
-          );
-        } else {
-          return (
-            <Card
-              key={topic.title}
-              size="small"
-              style={{ width: "100%", marginTop: "10px" }}
-            >
-              <TopicItem topicItem={topic} />
-            </Card>
-          );
-        }
-      })}
+      {topicList &&
+        topicList.map((topic, idx) => {
+          if (idx === 0) {
+            return (
+              <Card
+                key={topic._id}
+                size="small"
+                extra={HandleBtn}
+                style={{ width: "100%" }}
+              >
+                <TopicItem topicItem={topic} />
+              </Card>
+            );
+          } else {
+            return (
+              <Card
+                key={topic.title}
+                size="small"
+                style={{ width: "100%", marginTop: "10px" }}
+              >
+                <TopicItem topicItem={topic} />
+              </Card>
+            );
+          }
+        })}
+      {/* <LoadTip onClick={() => setParam({...param, page: param.page + 1})}>点击加载更多</LoadTip> */}
+      <LoadTip>没有更多内容啦～</LoadTip>
     </div>
   );
 };
@@ -42,28 +116,10 @@ const DrowItem = styled.div`
   color: #666;
 `;
 
-const menu = (
-  <Menu>
-    <Menu.Item key={"k1"}>
-      <DrowItem>最新回复</DrowItem>
-    </Menu.Item>
-    <Menu.Item key={"k2"}>
-      <DrowItem>发布时间</DrowItem>
-    </Menu.Item>
-    <Menu.Item key={"k3"}>
-      <DrowItem>回复数</DrowItem>
-    </Menu.Item>
-    <Menu.Item key={"k4"}>
-      <DrowItem>点赞数</DrowItem>
-    </Menu.Item>
-  </Menu>
-);
-
-const HandleBtn = (
-  <Dropdown overlay={menu}>
-    <div style={{ fontSize: "1.4rem", cursor: "pointer", color: "#666" }}>
-      发布时间
-      <DownOutlined />
-    </div>
-  </Dropdown>
-);
+const LoadTip = styled.div`
+  font-size: 1.2rem;
+  color: #0052cc;
+  text-align: center;
+  margin: 10px;
+  cursor: pointer;
+`;
