@@ -1,13 +1,14 @@
 import React, { ReactNode, useEffect } from "react";
 import styled from "@emotion/styled";
 import { useDocumentTitle } from "utils";
-import { Comment, Avatar, Tooltip, Image } from "antd";
+import { Comment, Avatar, Tooltip, Image, Form, Button } from "antd";
 import { useHttp } from "utils/http";
 import moment from "moment";
 import { useAsync } from "utils/use-async";
 import { Reply, Topic } from "types/topic";
 import { LikeOutlined, StarOutlined } from "@ant-design/icons";
 import { useAuth } from "context/auth-context";
+import TextArea from "antd/lib/input/TextArea";
 
 interface ParamType {
   topicId: string | undefined;
@@ -112,6 +113,8 @@ export const TopicDetail = () => {
               />
             ) : null}
           </div>
+          <div style={{ borderBottom: "1px solid #DDD" }}></div>
+          <Editor></Editor>
           <ReplyCart replys={topicItem?.reply || []} />
         </ContainerLeft>
       </MainContainterLeft>
@@ -174,10 +177,18 @@ const ReplyCart = ({ replys }: { replys: Reply[] }) => {
       }
       author={<span>{reply?.createBy.username}</span>}
       avatar={
-        <Avatar
-          size={!reply?.hasChild ? 20 : 32}
+        // <Avatar
+        //   size={!reply?.hasChild ? 20 : 32}
+        //   src={reply?.createBy.avator}
+        //   alt="Han Solo"
+        // />
+        <img
           src={reply?.createBy.avator}
-          alt="Han Solo"
+          style={
+            !reply?.hasChild
+              ? { width: "20px", height: "20px", borderRadius: "50%" }
+              : { width: "32px", height: "32px", borderRadius: "50%" }
+          }
         />
       }
       content={<p style={{ fontSize: "1.3rem" }}>{reply?.content}</p>}
@@ -197,6 +208,21 @@ const ReplyCart = ({ replys }: { replys: Reply[] }) => {
         );
       })}
     </div>
+  );
+};
+
+const Editor = () => {
+  return (
+    <>
+      <Form.Item>
+        <TextArea style={{ height: 70 }} rows={3} placeholder="添加评论" />
+      </Form.Item>
+      <Form.Item style={{ textAlign: "right" }}>
+        <Button htmlType="submit" type="primary">
+          发布
+        </Button>
+      </Form.Item>
+    </>
   );
 };
 

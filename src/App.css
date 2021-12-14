@@ -9,3 +9,13 @@ html body #root .App {
   min-height: 100vh;
   background: #f7f7f7 !important;
 }
+
+p {
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-size: 14px;
+  color: #333;
+}
