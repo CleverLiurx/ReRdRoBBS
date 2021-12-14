@@ -19,6 +19,7 @@ export interface Reply {
   createBy: UserMini;
   content: string;
   hadParise: boolean;
+  hasChild: boolean;
   reply: Reply[];
 }
 

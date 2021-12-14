@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React, { ReactElement, ReactNode, useEffect } from "react";
 import styled from "@emotion/styled";
 import { useDocumentTitle } from "utils";
-import { Comment, Avatar, Tooltip, Image } from "antd";
+import { Comment, Avatar, Tooltip, Image, CommentProps } from "antd";
 import { useHttp } from "utils/http";
 import moment from "moment";
 import { useAsync } from "utils/use-async";
-import { Topic } from "types/topic";
+import { Reply, Topic } from "types/topic";
 import { LikeOutlined, StarOutlined } from "@ant-design/icons";
 import { useAuth } from "context/auth-context";
 
@@ -81,33 +81,38 @@ export const TopicDetail = () => {
     <Main>
       <MainContainterLeft>
         <ContainerLeft>
-          {topicItem ? (
-            <Comment
-              actions={actions}
-              author={<span>{topicItem.createBy.username}</span>}
-              avatar={<Avatar src={topicItem.createBy.avator} alt="Han Solo" />}
-              content={
-                <div>
-                  <h2 style={{ fontSize: "18px" }}>{topicItem.title}</h2>
-                  <p>{topicItem.content}</p>
-                  {topicItem.topicImage.map((img) => (
-                    <Image key={img._id} src={img.url} preview={false} />
-                  ))}
-                </div>
-              }
-              datetime={
-                <span>
-                  <span style={{ paddingRight: "10px" }}>
-                    {moment(topicItem.createTime).fromNow()}
+          <div>
+            {topicItem ? (
+              <Comment
+                actions={actions}
+                author={<span>{topicItem.createBy.username}</span>}
+                avatar={
+                  <Avatar src={topicItem.createBy.avator} alt="Han Solo" />
+                }
+                content={
+                  <div>
+                    <h2 style={{ fontSize: "18px" }}>{topicItem.title}</h2>
+                    <p>{topicItem.content}</p>
+                    {topicItem.topicImage.map((img) => (
+                      <Image key={img._id} src={img.url} preview={false} />
+                    ))}
+                  </div>
+                }
+                datetime={
+                  <span>
+                    <span style={{ paddingRight: "10px" }}>
+                      {moment(topicItem.createTime).fromNow()}
+                    </span>
+                    来自
+                    <span style={{ color: "#0052cc" }}>
+                      {topicItem.classFrom.classname}
+                    </span>
                   </span>
-                  来自
-                  <span style={{ color: "#0052cc" }}>
-                    {topicItem.classFrom.classname}
-                  </span>
-                </span>
-              }
-            />
-          ) : null}
+                }
+              />
+            ) : null}
+          </div>
+          <ReplyCart replys={topicItem?.reply || []} />
         </ContainerLeft>
       </MainContainterLeft>
       <MainContainterRight>
@@ -152,6 +157,46 @@ const Author = () => {
         </div>
       </div>
     </ContainerRight>
+  );
+};
+
+const ReplyCart = ({ replys }: { replys: Reply[] }) => {
+  const ExampleComment = ({
+    children,
+    reply,
+  }: {
+    children?: ReactNode;
+    reply?: Reply;
+  }) => (
+    <Comment
+      actions={
+        reply?.hasChild ? [<span key="comment-nested-reply-to">回复</span>] : []
+      }
+      author={<span>{reply?.createBy.username}</span>}
+      avatar={
+        <Avatar
+          size={!reply?.hasChild ? 20 : 32}
+          src={reply?.createBy.avator}
+          alt="Han Solo"
+        />
+      }
+      content={<p style={{ fontSize: "1.3rem" }}>{reply?.content}</p>}
+    >
+      {children}
+    </Comment>
+  );
+  return (
+    <div>
+      {replys.map((r1) => {
+        return (
+          <ExampleComment reply={r1}>
+            {r1.reply.map((r2) => {
+              return <ExampleComment reply={r2} />;
+            })}
+          </ExampleComment>
+        );
+      })}
+    </div>
   );
 };
 
