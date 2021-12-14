@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 import { useDocumentTitle } from "utils";
 import { Comment, Avatar, Tooltip, Image } from "antd";
@@ -15,7 +15,6 @@ interface ParamType {
 }
 
 const useDetails = (param: string) => {
-  const { user } = useAuth();
   const client = useHttp();
   const { run, ...result } = useAsync<Topic>();
 
@@ -101,7 +100,10 @@ export const TopicDetail = () => {
                   <span style={{ paddingRight: "10px" }}>
                     {moment(topicItem.createTime).fromNow()}
                   </span>
-                  来自<a>{topicItem.classFrom.classname}</a>
+                  来自
+                  <span style={{ color: "#0052cc" }}>
+                    {topicItem.classFrom.classname}
+                  </span>
                 </span>
               }
             />
@@ -116,7 +118,41 @@ export const TopicDetail = () => {
 };
 
 const Author = () => {
-  return <ContainerRight>关于作者</ContainerRight>;
+  const { user } = useAuth();
+  return (
+    <ContainerRight>
+      <img
+        style={{
+          width: "90px",
+          height: "90px",
+          borderRadius: "50%",
+          margin: "20px",
+        }}
+        src={user?.avator}
+        alt={user?.username}
+      />
+      <div style={{ color: "#9B9B9B", fontSize: "1.2rem", margin: "5px" }}>
+        {user?.username}
+      </div>
+      <div style={{ color: "#9B9B9B", fontSize: "1.2rem", margin: "5px" }}>
+        {user?.email || "13131451002@163.com"}
+      </div>
+      <div style={{ marginTop: "20px" }}>
+        <div style={{ width: "33.33%", display: "inline-block" }}>
+          <div style={{ color: "#0052cc" }}>{user?.record.topicCount}</div>
+          <div>文章</div>
+        </div>
+        <div style={{ width: "33.33%", display: "inline-block" }}>
+          <div style={{ color: "#0052cc" }}>{user?.record.bePraiseCount}</div>
+          <div>被点赞</div>
+        </div>
+        <div style={{ width: "33.33%", display: "inline-block" }}>
+          <div style={{ color: "#0052cc" }}>{user?.record.beStarCount}</div>
+          <div>被收藏</div>
+        </div>
+      </div>
+    </ContainerRight>
+  );
 };
 
 const Main = styled.div`
@@ -135,14 +171,15 @@ const MainContainterRight = styled.div`
 const ContainerRight = styled.div`
   margin-bottom: 20px;
   width: 360px;
-  padding: 20px 0;
+  padding: 20px;
   background-color: #fff;
   border-radius: 4px;
   padding-left: 20px;
+  text-align: center;
 `;
 const ContainerLeft = styled.div`
   width: 740px;
-  padding: 20px 0;
+  padding: 20px;
   background-color: #fff;
   border-radius: 4px;
   padding: 15px;

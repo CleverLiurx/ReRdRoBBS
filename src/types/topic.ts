@@ -35,7 +35,7 @@ export interface Topic {
   starCount: number;
   replyCount: number;
 
-  reply: Reply;
+  reply: Reply[];
 
   hadStar: boolean;
   hadParise: boolean;
