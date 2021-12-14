@@ -5,6 +5,7 @@ import { Topic } from "types/topic";
 import styled from "@emotion/styled";
 import { LikeOutlined, StarOutlined } from "@ant-design/icons";
 import { useHttp } from "utils/http";
+import { useNavigate } from "react-router";
 
 interface ParamType {
   topicId: string;
@@ -53,6 +54,8 @@ export const TopicItem = ({ topicItem: topic }: { topicItem: Topic }) => {
     </span>,
   ];
 
+  let navigate = useNavigate();
+
   return (
     <Comment
       actions={actions}
@@ -61,10 +64,16 @@ export const TopicItem = ({ topicItem: topic }: { topicItem: Topic }) => {
       content={
         <div>
           <h2 style={{ fontSize: "18px" }}>{topicItem.title}</h2>
-          <ElliP>{topicItem.content}</ElliP>
+          <ElliP
+            onClick={() => {
+              navigate(`/topic/${topicItem._id}`);
+            }}
+          >
+            {topicItem.content}
+          </ElliP>
           <Image.PreviewGroup>
             {topicItem.topicImage.map((img) => (
-              <Image key={img._id} width={100} height={100} src={img.url} />
+              <Image key={img._id} width={140} height={140} src={img.url} />
             ))}
           </Image.PreviewGroup>
         </div>

@@ -11,6 +11,7 @@ import { HomePage } from "./home";
 import { HotSearchPage } from "./hot-search";
 import { AnonymousPage } from "./anonymous";
 import { SearchOutlined } from "@ant-design/icons";
+import { TopicDetail } from "./topic-detail";
 const suffix = (
   <SearchOutlined
     style={{
@@ -41,6 +42,7 @@ export const AuthenticatedApp = () => {
           <Route path={"home"} element={<HomePage />} />
           <Route path={"hot-search"} element={<HotSearchPage />} />
           <Route path={"anonymous"} element={<AnonymousPage />} />
+          <Route path={"topic/:id"} element={<TopicDetail />} />
           <Route path="*" element={<Navigate to="home" />} />
         </Routes>
       </Main>
