@@ -1,4 +1,4 @@
-interface UserRecord {
+export interface UserRecord {
   topicCount: number;
   commentCount: number;
   beCommentCount: number;

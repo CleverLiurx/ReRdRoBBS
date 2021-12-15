@@ -1,14 +1,18 @@
+import { UserRecord } from "./user";
+
 interface Img {
   _id: string;
   name: string;
   url: string;
 }
 
-interface UserMini {
+export interface UserMini {
   _id: string;
   username: string;
   sex: number;
   avator: string;
+  email: string;
+  record: UserRecord;
 }
 interface ClassMini {
   _id: string;

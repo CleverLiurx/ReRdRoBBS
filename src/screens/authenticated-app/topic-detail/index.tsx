@@ -5,10 +5,11 @@ import { Comment, Avatar, Tooltip, Image, Form, Button } from "antd";
 import { useHttp } from "utils/http";
 import moment from "moment";
 import { useAsync } from "utils/use-async";
-import { Reply, Topic } from "types/topic";
+import { Reply, Topic, UserMini } from "types/topic";
 import { LikeOutlined, StarOutlined } from "@ant-design/icons";
 import { useAuth } from "context/auth-context";
 import TextArea from "antd/lib/input/TextArea";
+import { User, UserRecord } from "types/user";
 
 interface ParamType {
   topicId: string | undefined;
@@ -115,18 +116,18 @@ export const TopicDetail = () => {
           </div>
           <div style={{ borderBottom: "1px solid #DDD" }}></div>
           <Editor></Editor>
-          <ReplyCart replys={topicItem?.reply || []} />
+          <ReplyCart key={topicItem?._id} replys={topicItem?.reply || []} />
         </ContainerLeft>
       </MainContainterLeft>
       <MainContainterRight>
-        <Author />
+        <Author user={topicItem?.createBy} />
       </MainContainterRight>
     </Main>
   );
 };
 
-const Author = () => {
-  const { user } = useAuth();
+const Author = ({ user }: { user?: UserMini }) => {
+  // const { user } = useAuth();
   return (
     <ContainerRight>
       <img
