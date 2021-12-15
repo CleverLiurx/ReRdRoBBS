@@ -4,6 +4,7 @@ import { EditAction } from "./edit-action";
 import { Banner } from "./banner";
 import { TopicList } from "./topic";
 import { useDocumentTitle } from "utils";
+import { ClassContainer } from "./classes";
 
 export const HomePage = () => {
   useDocumentTitle("全部文章");
@@ -16,6 +17,7 @@ export const HomePage = () => {
       </MainContainterLeft>
       <MainContainterRight>
         <EditAction />
+        <ClassContainer />
       </MainContainterRight>
     </Main>
   );

@@ -73,7 +73,13 @@ export const TopicItem = ({ topicItem: topic }: { topicItem: Topic }) => {
           </ElliP>
           <Image.PreviewGroup>
             {topicItem.topicImage.map((img) => (
-              <Image key={img._id} width={140} height={140} src={img.url} />
+              <Image
+                key={img._id}
+                width={120}
+                height={120}
+                style={{ padding: "5px", borderRadius: "12px" }}
+                src={img.url}
+              />
             ))}
           </Image.PreviewGroup>
         </div>

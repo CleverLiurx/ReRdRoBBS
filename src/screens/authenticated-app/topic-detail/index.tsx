@@ -7,9 +7,7 @@ import moment from "moment";
 import { useAsync } from "utils/use-async";
 import { Reply, Topic, UserMini } from "types/topic";
 import { LikeOutlined, StarOutlined } from "@ant-design/icons";
-import { useAuth } from "context/auth-context";
 import TextArea from "antd/lib/input/TextArea";
-import { User, UserRecord } from "types/user";
 
 interface ParamType {
   topicId: string | undefined;
@@ -178,11 +176,6 @@ const ReplyCart = ({ replys }: { replys: Reply[] }) => {
       }
       author={<span>{reply?.createBy.username}</span>}
       avatar={
-        // <Avatar
-        //   size={!reply?.hasChild ? 20 : 32}
-        //   src={reply?.createBy.avator}
-        //   alt="Han Solo"
-        // />
         <img
           src={reply?.createBy.avator}
           style={
@@ -190,6 +183,7 @@ const ReplyCart = ({ replys }: { replys: Reply[] }) => {
               ? { width: "20px", height: "20px", borderRadius: "50%" }
               : { width: "32px", height: "32px", borderRadius: "50%" }
           }
+          alt="Avactor"
         />
       }
       content={<p style={{ fontSize: "1.3rem" }}>{reply?.content}</p>}
