@@ -1,4 +1,5 @@
-import { UserRecord } from "./user";
+import { ClassMini } from "./classes";
+import { UserMini } from "./user";
 
 interface Img {
   _id: string;
@@ -6,18 +7,6 @@ interface Img {
   url: string;
 }
 
-export interface UserMini {
-  _id: string;
-  username: string;
-  sex: number;
-  avator: string;
-  email: string;
-  record: UserRecord;
-}
-interface ClassMini {
-  _id: string;
-  classname: string;
-}
 export interface Reply {
   _id: string;
   createBy: UserMini;

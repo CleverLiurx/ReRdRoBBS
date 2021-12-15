@@ -23,3 +23,12 @@ export interface User {
   status: boolean;
   delFlag: boolean;
 }
+
+export interface UserMini {
+  _id: string;
+  username: string;
+  sex: number;
+  avator: string;
+  email: string;
+  record: UserRecord;
+}

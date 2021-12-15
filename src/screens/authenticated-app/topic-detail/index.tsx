@@ -5,7 +5,8 @@ import { Comment, Avatar, Tooltip, Image, Form, Button } from "antd";
 import { useHttp } from "utils/http";
 import moment from "moment";
 import { useAsync } from "utils/use-async";
-import { Reply, Topic, UserMini } from "types/topic";
+import { Reply, Topic } from "types/topic";
+import { UserMini } from "types/user";
 import { LikeOutlined, StarOutlined } from "@ant-design/icons";
 import TextArea from "antd/lib/input/TextArea";
 
@@ -195,9 +196,9 @@ const ReplyCart = ({ replys }: { replys: Reply[] }) => {
     <div>
       {replys.map((r1) => {
         return (
-          <ExampleComment reply={r1}>
+          <ExampleComment key={r1._id} reply={r1}>
             {r1.reply.map((r2) => {
-              return <ExampleComment reply={r2} />;
+              return <ExampleComment key={r2._id} reply={r2} />;
             })}
           </ExampleComment>
         );
