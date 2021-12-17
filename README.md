@@ -1,3 +1,15 @@
+## TODO LIST
+
+- 首页基本布局 ✅
+- 文章列表 ✅
+- 快速发布 ✅
+- 完整发布
+- 主题色统一变量管理
+- API 统一管理
+- 评论功能以及评论框 style
+- 热榜
+- 匿名
+
 ## commit 规范
 
 commit 规范遵循[@commitlint/config-conventional](https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional)
