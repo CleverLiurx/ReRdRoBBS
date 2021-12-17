@@ -141,7 +141,7 @@ const DrowItem = styled.div`
 
 const LoadTip = styled.div`
   font-size: 1.2rem;
-  color: #0052cc;
+  color: #ea540b;
   text-align: center;
   margin: 10px;
   cursor: pointer;

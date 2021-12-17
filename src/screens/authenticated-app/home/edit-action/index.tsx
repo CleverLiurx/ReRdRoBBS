@@ -2,8 +2,16 @@ import React from "react";
 import styled from "@emotion/styled";
 import { Button } from "antd";
 import { EditOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router";
+import { useAuth } from "context/auth-context";
 
 export const EditAction = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const link2Publish = () => {
+    user ? navigate("/publish") : navigate("/auth");
+  };
   return (
     <Container>
       <Button
@@ -11,7 +19,8 @@ export const EditAction = () => {
         shape="round"
         icon={<EditOutlined />}
         size={"large"}
-        style={{ width: "320px" }}
+        style={{ width: "320px", backgroundColor: "#EA540B", border: "none" }}
+        onClick={link2Publish}
       >
         发布
       </Button>

@@ -52,7 +52,7 @@ export const TopicDetail = () => {
             }}
           >
             <LikeOutlined
-              style={{ color: topicItem.hadParise ? "#0052cc" : "" }}
+              style={{ color: topicItem.hadParise ? "#EA540B" : "" }}
             />
             <span style={{ padding: "0 14px 0 2px" }}>
               {topicItem.praiseCount}
@@ -69,7 +69,7 @@ export const TopicDetail = () => {
             }}
           >
             <StarOutlined
-              style={{ color: topicItem.hadStar ? "#0052cc" : "" }}
+              style={{ color: topicItem.hadStar ? "#EA540B" : "" }}
             />
             <span style={{ padding: "0 14px 0 2px" }}>
               {topicItem.starCount}
@@ -105,7 +105,7 @@ export const TopicDetail = () => {
                       {moment(topicItem.createTime).fromNow()}
                     </span>
                     来自
-                    <span style={{ color: "#0052cc" }}>
+                    <span style={{ color: "#EA540B" }}>
                       {topicItem.classFrom.classname}
                     </span>
                   </span>
@@ -147,15 +147,15 @@ const Author = ({ user }: { user?: UserMini }) => {
       </div>
       <div style={{ marginTop: "20px" }}>
         <div style={{ width: "33.33%", display: "inline-block" }}>
-          <div style={{ color: "#0052cc" }}>{user?.record.topicCount}</div>
+          <div style={{ color: "#EA540B" }}>{user?.record.topicCount}</div>
           <div>文章</div>
         </div>
         <div style={{ width: "33.33%", display: "inline-block" }}>
-          <div style={{ color: "#0052cc" }}>{user?.record.bePraiseCount}</div>
+          <div style={{ color: "#EA540B" }}>{user?.record.bePraiseCount}</div>
           <div>被点赞</div>
         </div>
         <div style={{ width: "33.33%", display: "inline-block" }}>
-          <div style={{ color: "#0052cc" }}>{user?.record.beStarCount}</div>
+          <div style={{ color: "#EA540B" }}>{user?.record.beStarCount}</div>
           <div>被收藏</div>
         </div>
       </div>

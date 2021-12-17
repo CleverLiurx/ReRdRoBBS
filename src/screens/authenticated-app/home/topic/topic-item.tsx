@@ -31,7 +31,7 @@ export const TopicItem = ({ topicItem: topic }: { topicItem: Topic }) => {
           TopicHandle({ topicId: topicItem._id, type: "parise" });
         }}
       >
-        <LikeOutlined style={{ color: topicItem.hadParise ? "#0052cc" : "" }} />
+        <LikeOutlined style={{ color: topicItem.hadParise ? "#EA540B" : "" }} />
         <span style={{ padding: "0 14px 0 2px" }}>{topicItem.praiseCount}</span>
       </span>
     </Tooltip>,
@@ -44,7 +44,7 @@ export const TopicItem = ({ topicItem: topic }: { topicItem: Topic }) => {
           TopicHandle({ topicId: topicItem._id, type: "star" });
         }}
       >
-        <StarOutlined style={{ color: topicItem.hadStar ? "#0052cc" : "" }} />
+        <StarOutlined style={{ color: topicItem.hadStar ? "#EA540B" : "" }} />
         <span style={{ padding: "0 14px 0 2px" }}>{topicItem.starCount}</span>
       </span>
     </Tooltip>,

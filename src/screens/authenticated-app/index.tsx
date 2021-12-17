@@ -12,6 +12,7 @@ import { HotSearchPage } from "./hot-search";
 import { AnonymousPage } from "./anonymous";
 import { SearchOutlined } from "@ant-design/icons";
 import { TopicDetail } from "./topic-detail";
+import { PublishPage } from "./publish";
 const suffix = (
   <SearchOutlined
     style={{
@@ -43,6 +44,7 @@ export const AuthenticatedApp = () => {
           <Route path={"hot-search"} element={<HotSearchPage />} />
           <Route path={"anonymous"} element={<AnonymousPage />} />
           <Route path={"topic/:id"} element={<TopicDetail />} />
+          <Route path={"publish"} element={<PublishPage />} />
           <Route path="*" element={<Navigate to="home" />} />
         </Routes>
       </Main>
@@ -182,7 +184,7 @@ const CircleInput = styled(Input)`
 const LinkItem = styled(Link)`
   color: #000;
   &.active {
-    color: #0052cc;
+    color: #ea540b;
     font-weight: 600;
   }
 `;
