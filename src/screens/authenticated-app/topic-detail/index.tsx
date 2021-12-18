@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { useDocumentTitle } from "utils";
 import { Comment, Avatar, Tooltip, Image, Form, Button } from "antd";
@@ -7,7 +7,12 @@ import moment from "moment";
 import { useAsync } from "utils/use-async";
 import { Reply, Topic } from "types/topic";
 import { UserMini } from "types/user";
-import { LikeOutlined, StarOutlined } from "@ant-design/icons";
+import {
+  LikeOutlined,
+  StarOutlined,
+  SmileOutlined,
+  PictureOutlined,
+} from "@ant-design/icons";
 import TextArea from "antd/lib/input/TextArea";
 
 interface ParamType {
@@ -113,9 +118,14 @@ export const TopicDetail = () => {
               />
             ) : null}
           </div>
-          <div style={{ borderBottom: "1px solid #DDD" }}></div>
-          <Editor></Editor>
-          <ReplyCart key={topicItem?._id} replys={topicItem?.reply || []} />
+          {/* <div style={{ borderBottom: "1px solid #DDD" }}></div> */}
+          {/* <Editor></Editor> */}
+          {topicItem?._id ? (
+            <ReplyCart
+              topicId={topicItem?._id || ""}
+              replys={topicItem?.reply || []}
+            />
+          ) : null}
         </ContainerLeft>
       </MainContainterLeft>
       <MainContainterRight>
@@ -163,7 +173,19 @@ const Author = ({ user }: { user?: UserMini }) => {
   );
 };
 
-const ReplyCart = ({ replys }: { replys: Reply[] }) => {
+const ReplyCart = ({
+  replys,
+  topicId,
+}: {
+  replys: Reply[];
+  topicId: string;
+}) => {
+  let [activeReply, setActiveReply] = useState({
+    topicId,
+    pid: "",
+    // centent: ""
+  });
+
   const ExampleComment = ({
     children,
     reply,
@@ -173,7 +195,18 @@ const ReplyCart = ({ replys }: { replys: Reply[] }) => {
   }) => (
     <Comment
       actions={
-        reply?.hasChild ? [<span key="comment-nested-reply-to">回复</span>] : []
+        reply?.hasChild
+          ? [
+              <span
+                key="comment-nested-reply-to"
+                onClick={() =>
+                  setActiveReply({ ...activeReply, pid: reply?._id })
+                }
+              >
+                回复
+              </span>,
+            ]
+          : []
       }
       author={<span>{reply?.createBy.username}</span>}
       avatar={
@@ -189,11 +222,19 @@ const ReplyCart = ({ replys }: { replys: Reply[] }) => {
       }
       content={<p style={{ fontSize: "1.3rem" }}>{reply?.content}</p>}
     >
+      {activeReply.pid === reply?._id ? (
+        <Editor
+          topicId={activeReply.topicId}
+          pid={activeReply.pid}
+          callback={() => setActiveReply({ ...activeReply, pid: "" })}
+        />
+      ) : null}
       {children}
     </Comment>
   );
   return (
     <div>
+      <Editor topicId={activeReply.topicId} pid={""} />
       {replys.map((r1) => {
         return (
           <ExampleComment key={r1._id} reply={r1}>
@@ -207,18 +248,44 @@ const ReplyCart = ({ replys }: { replys: Reply[] }) => {
   );
 };
 
-const Editor = () => {
+const Editor = ({
+  topicId,
+  pid,
+  callback,
+}: {
+  topicId: string;
+  pid: string;
+  callback?: () => void;
+}) => {
+  let [value, setValue] = useState("");
+  const client = useHttp();
+  const publishReply = () => {
+    client("/reply", {
+      data: { topicId, pid, content: value },
+      method: "POST",
+    }).then(() => {
+      setValue("");
+      callback && callback();
+    });
+  };
   return (
-    <>
-      <Form.Item>
-        <TextArea style={{ height: 70 }} rows={3} placeholder="添加评论" />
-      </Form.Item>
-      <Form.Item style={{ textAlign: "right" }}>
-        <Button htmlType="submit" type="primary">
+    <TextBody>
+      <TextArea
+        autoSize={{ minRows: 2, maxRows: 2 }}
+        bordered={false}
+        placeholder="评论一下～"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      />
+      <Contral>
+        <SmileOutlined style={{ paddingRight: "20px" }} />
+        <PictureOutlined />
+        <ReplyBtn onClick={publishReply} type="primary" shape="round">
           发布
-        </Button>
-      </Form.Item>
-    </>
+        </ReplyBtn>
+      </Contral>
+      <div style={{ clear: "both" }}></div>
+    </TextBody>
   );
 };
 
@@ -250,4 +317,27 @@ const ContainerLeft = styled.div`
   background-color: #fff;
   border-radius: 4px;
   padding: 15px;
+`;
+
+const TextBody = styled.div`
+  border-radius: 5px;
+  height: 95px;
+  border: 1px solid #eee;
+  &:hover {
+    border: 1px solid #ea540b;
+  }
+`;
+
+const Contral = styled.div`
+  margin: 8px 0 5px 10px;
+  color: #666;
+`;
+
+const ReplyBtn = styled(Button)`
+  background: #ea540b;
+  border: none;
+  height: 25px;
+  font-size: 1.4rem;
+  float: right;
+  margin-right: 20px;
 `;
