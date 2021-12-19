@@ -118,7 +118,7 @@ export const TopicList = () => {
           } else {
             return (
               <Card
-                key={topic.title}
+                key={topic._id}
                 size="small"
                 style={{ width: "100%", marginTop: "10px" }}
               >
