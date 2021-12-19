@@ -172,7 +172,7 @@ const CircleInput = styled(Input)`
       color: #fff !important;
       padding: 5px;
       border-radius: 50%;
-      background-color: #666;
+      background-color: #f77c34;
       cursor: pointer;
     }
   }
