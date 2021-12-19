@@ -19,7 +19,7 @@ export const EditAction = () => {
         shape="round"
         icon={<EditOutlined />}
         size={"large"}
-        style={{ width: "320px", backgroundColor: "#EA540B", border: "none" }}
+        style={{ width: "320px" }}
         onClick={link2Publish}
       >
         发布

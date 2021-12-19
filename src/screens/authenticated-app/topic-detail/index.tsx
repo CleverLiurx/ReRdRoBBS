@@ -334,7 +334,6 @@ const Contral = styled.div`
 `;
 
 const ReplyBtn = styled(Button)`
-  background: #ea540b;
   border: none;
   height: 25px;
   font-size: 1.4rem;
