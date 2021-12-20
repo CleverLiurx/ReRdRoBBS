@@ -7,7 +7,7 @@ import styled from "@emotion/styled";
 import { Button, Select } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { SmileOutlined, PictureOutlined } from "@ant-design/icons";
-import { useDebounce, useDocumentTitle } from "utils";
+import { useDocumentTitle } from "utils";
 
 const { Option } = Select;
 
@@ -23,8 +23,8 @@ const useData = () => {
   return result;
 };
 
-export const PublishPage = () => {
-  useDocumentTitle("写文章");
+export const ReleaseRapidly = () => {
+  useDocumentTitle("极速发布");
   const client = useHttp();
   const navigate = useNavigate();
   const { data: classList } = useData();
@@ -51,6 +51,7 @@ export const PublishPage = () => {
           shape="round"
           size="small"
           style={{ float: "right", fontSize: "10px" }}
+          onClick={() => navigate("/release-complete")}
         >
           完整发布模式{">"}
         </Button>
@@ -125,10 +126,3 @@ const Contral = styled.div`
   margin: 8px 0 5px 30px;
   color: #666;
 `;
-
-function run(arg0: any) {
-  throw new Error("Function not implemented.");
-}
-function client() {
-  throw new Error("Function not implemented.");
-}

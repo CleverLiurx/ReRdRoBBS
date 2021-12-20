@@ -1,7 +1,7 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { useDocumentTitle } from "utils";
-import { Comment, Avatar, Tooltip, Image, Form, Button } from "antd";
+import { Comment, Avatar, Tooltip, Image, Button } from "antd";
 import { useHttp } from "utils/http";
 import moment from "moment";
 import { useAsync } from "utils/use-async";

@@ -2127,6 +2127,13 @@
   resolved "https://registry.yarnpkg.com/@types/qs/-/qs-6.9.7.tgz#63bb7d067db107cc1e457c303bc25d511febf6cb"
   integrity "sha1-Y7t9Bn2xB8weRXwwO8JdUR/r9ss= sha512-FGa1F62FT09qcrueBA6qYTrJPVDzah9a+493+o2PCXsesWHIn27G98TsSMs3WPNbZIEj4+VJf6saSFpvD+3Zsw=="
 
+"@types/quill@1.3.10":
+  version "1.3.10"
+  resolved "http://artifactory.intra.xiaojukeji.com/artifactory/api/npm/npm/@types/quill/download/@types/quill-1.3.10.tgz?dl=https%3A%2F%2Fregistry.npmmirror.com%2F%40types%2Fquill%2Fdownload%2F%40types%2Fquill-1.3.10.tgz#dc1f7b6587f7ee94bdf5291bc92289f6f0497613"
+  integrity sha1-3B97ZYf37pS99SkbySKJ9vBJdhM=
+  dependencies:
+    parchment "^1.1.2"
+
 "@types/react-dom@^17.0.0":
   version "17.0.11"
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-17.0.11.tgz#e1eadc3c5e86bdb5f7684e00274ae228e7bcc466"
@@ -2625,6 +2632,11 @@ alphanum-sort@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/alphanum-sort/-/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
   integrity sha1-l6ERlkmyEa0zaR2fn0hqjsn74KM=
+
+amdefine@>=0.0.4:
+  version "1.0.1"
+  resolved "http://artifactory.intra.xiaojukeji.com/artifactory/api/npm/npm/amdefine/download/amdefine-1.0.1.tgz?dl=https%3A%2F%2Fregistry.npmmirror.com%2Famdefine%2Fdownload%2Famdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
+  integrity sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=
 
 ansi-colors@^3.0.0:
   version "3.2.4"
@@ -3757,6 +3769,14 @@ classnames@2.x, classnames@^2.2.1, classnames@^2.2.3, classnames@^2.2.5, classna
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.3.1.tgz#dfcfa3891e306ec1dad105d0e88f4417b8535e8e"
   integrity sha512-OlQdbZ7gLfGarSqxesMesDa5uz7KFbID8Kpq/SxIoNGDqY8lSYs0D+hhtBXhcdB3rcbXArFr7vlHheLk1voeNA==
 
+clean-css@^3.4.20:
+  version "3.4.28"
+  resolved "http://artifactory.intra.xiaojukeji.com/artifactory/api/npm/npm/clean-css/download/clean-css-3.4.28.tgz?dl=https%3A%2F%2Fregistry.npmmirror.com%2Fclean-css%2Fdownload%2Fclean-css-3.4.28.tgz#bf1945e82fc808f55695e6ddeaec01400efd03ff"
+  integrity sha1-vxlF6C/ICPVWlebd6uwBQA79A/8=
+  dependencies:
+    commander "2.8.x"
+    source-map "0.4.x"
+
 clean-css@^4.2.3:
   version "4.2.4"
   resolved "https://registry.yarnpkg.com/clean-css/-/clean-css-4.2.4.tgz#733bf46eba4e607c6891ea57c24a989356831178"
@@ -3818,6 +3838,11 @@ cliui@^7.0.2:
     string-width "^4.2.0"
     strip-ansi "^6.0.0"
     wrap-ansi "^7.0.0"
+
+clone@^2.1.1:
+  version "2.1.2"
+  resolved "http://artifactory.intra.xiaojukeji.com/artifactory/api/npm/npm/clone/download/clone-2.1.2.tgz?dl=https%3A%2F%2Fregistry.npmmirror.com%2Fclone%2Fdownload%2Fclone-2.1.2.tgz#1b7f4b9f591f1e8f83670401600345a02887435f"
+  integrity sha1-G39Ln1kfHo+DZwQBYANFoCiHQ18=
 
 co@^4.6.0:
   version "4.6.0"
@@ -3897,6 +3922,13 @@ combined-stream@^1.0.8:
   integrity sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==
   dependencies:
     delayed-stream "~1.0.0"
+
+commander@2.8.x:
+  version "2.8.1"
+  resolved "http://artifactory.intra.xiaojukeji.com/artifactory/api/npm/npm/commander/download/commander-2.8.1.tgz?dl=https%3A%2F%2Fregistry.npmmirror.com%2Fcommander%2Fdownload%2Fcommander-2.8.1.tgz#06be367febfda0c330aa1e2a072d3dc9762425d4"
+  integrity sha1-Br42f+v9oMMwqh4qBy09yXYkJdQ=
+  dependencies:
+    graceful-readlink ">= 1.0.0"
 
 commander@^2.20.0:
   version "2.20.3"
@@ -4210,6 +4242,14 @@ create-hmac@^1.1.0, create-hmac@^1.1.4, create-hmac@^1.1.7:
     ripemd160 "^2.0.0"
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
+
+create-react-class@^15.6.0:
+  version "15.7.0"
+  resolved "http://artifactory.intra.xiaojukeji.com/artifactory/api/npm/npm/create-react-class/download/create-react-class-15.7.0.tgz?dl=https%3A%2F%2Fregistry.npmmirror.com%2Fcreate-react-class%2Fdownload%2Fcreate-react-class-15.7.0.tgz#7499d7ca2e69bb51d13faf59bd04f0c65a1d6c1e"
+  integrity sha1-dJnXyi5pu1HRP69ZvQTwxlodbB4=
+  dependencies:
+    loose-envify "^1.3.1"
+    object-assign "^4.1.1"
 
 create-require@^1.1.0:
   version "1.1.1"
@@ -4926,6 +4966,19 @@ emittery@^0.7.1:
   resolved "https://registry.yarnpkg.com/emittery/-/emittery-0.7.2.tgz#25595908e13af0f5674ab419396e2fb394cdfa82"
   integrity sha512-A8OG5SR/ij3SsJdWDJdkkSYUjQdCUx6APQXem0SaEePBSRg4eymGYwBkKo1Y6DU+af/Jn2dBQqDBvjnr9Vi8nQ==
 
+emoji-data-css@^1.0.1:
+  version "1.0.1"
+  resolved "http://artifactory.intra.xiaojukeji.com/artifactory/api/npm/npm/emoji-data-css/download/emoji-data-css-1.0.1.tgz?dl=https%3A%2F%2Fregistry.npmmirror.com%2Femoji-data-css%2Fdownload%2Femoji-data-css-1.0.1.tgz#4f95b48394b58571ed3284acfa709ea511875f8f"
+  integrity sha1-T5W0g5S1hXHtMoSs+nCepRGHX48=
+  dependencies:
+    clean-css "^3.4.20"
+    emoji-datasource "^2.4.4"
+
+emoji-datasource@^2.4.4:
+  version "2.4.4"
+  resolved "http://artifactory.intra.xiaojukeji.com/artifactory/api/npm/npm/emoji-datasource/download/emoji-datasource-2.4.4.tgz?dl=https%3A%2F%2Fregistry.npmmirror.com%2Femoji-datasource%2Fdownload%2Femoji-datasource-2.4.4.tgz#b97ac1896bc208ecf1833564a20687a5215d0389"
+  integrity sha1-uXrBiWvCCOzxgzVkogaHpSFdA4k=
+
 emoji-regex@^7.0.1:
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-7.0.3.tgz#933a04052860c85e83c122479c4748a8e4c72156"
@@ -5381,6 +5434,11 @@ etag@~1.8.1:
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
   integrity sha1-Qa4u62XvpiJorr/qg6x9eSmbCIc=
 
+eventemitter3@^2.0.3:
+  version "2.0.3"
+  resolved "http://artifactory.intra.xiaojukeji.com/artifactory/api/npm/npm/eventemitter3/download/eventemitter3-2.0.3.tgz?dl=https%3A%2F%2Fregistry.npmmirror.com%2Feventemitter3%2Fdownload%2Feventemitter3-2.0.3.tgz#b5e1079b59fb5e1ba2771c0a993be060a58c99ba"
+  integrity sha1-teEHm1n7XhuidxwKmTvgYKWMmbo=
+
 eventemitter3@^4.0.0:
   version "4.0.7"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-4.0.7.tgz#2de9b68f6528d5644ef5c59526a1b4a07306169f"
@@ -5542,6 +5600,11 @@ extend-shallow@^3.0.0, extend-shallow@^3.0.2:
     assign-symbols "^1.0.0"
     is-extendable "^1.0.1"
 
+extend@^3.0.2:
+  version "3.0.2"
+  resolved "http://artifactory.intra.xiaojukeji.com/artifactory/api/npm/npm/extend/download/extend-3.0.2.tgz?dl=https%3A%2F%2Fregistry.npmmirror.com%2Fextend%2Fdownload%2Fextend-3.0.2.tgz#f8b1136b4071fbd8eb140aff858b1019ec2915fa"
+  integrity sha1-+LETa0Bx+9jrFAr/hYsQGewpFfo=
+
 extglob@^2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/extglob/-/extglob-2.0.4.tgz#ad00fe4dc612a9232e8718711dc5cb5ab0285543"
@@ -5560,6 +5623,11 @@ fast-deep-equal@^3.1.1, fast-deep-equal@^3.1.3:
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz#3a7d56b559d6cbc3eb512325244e619a65c6c525"
   integrity sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==
+
+fast-diff@1.1.2:
+  version "1.1.2"
+  resolved "http://artifactory.intra.xiaojukeji.com/artifactory/api/npm/npm/fast-diff/download/fast-diff-1.1.2.tgz?dl=https%3A%2F%2Fregistry.npmmirror.com%2Ffast-diff%2Fdownload%2Ffast-diff-1.1.2.tgz#4b62c42b8e03de3f848460b639079920695d0154"
+  integrity sha1-S2LEK44D3j+EhGC2OQeZIGldAVQ=
 
 fast-glob@^3.1.1:
   version "3.2.7"
@@ -5881,6 +5949,11 @@ functional-red-black-tree@^1.0.1:
   resolved "https://registry.yarnpkg.com/functional-red-black-tree/-/functional-red-black-tree-1.0.1.tgz#1b0ab3bd553b2a0d6399d29c0e3ea0b252078327"
   integrity sha1-GwqzvVU7Kg1jmdKcDj6gslIHgyc=
 
+fuse.js@^3.3.0:
+  version "3.6.1"
+  resolved "http://artifactory.intra.xiaojukeji.com/artifactory/api/npm/npm/fuse.js/download/fuse.js-3.6.1.tgz?dl=https%3A%2F%2Fregistry.npmmirror.com%2Ffuse.js%2Fdownload%2Ffuse.js-3.6.1.tgz#7de85fdd6e1b3377c23ce010892656385fd9b10c"
+  integrity sha1-fehf3W4bM3fCPOAQiSZWOF/ZsQw=
+
 gensync@^1.0.0-beta.1, gensync@^1.0.0-beta.2:
   version "1.0.0-beta.2"
   resolved "https://registry.yarnpkg.com/gensync/-/gensync-1.0.0-beta.2.tgz#32a6ee76c3d7f52d46b2b1ae5d93fea8580a25e0"
@@ -6054,6 +6127,11 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6
   version "4.2.8"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.8.tgz#e412b8d33f5e006593cbd3cee6df9f2cebbe802a"
   integrity "sha1-5BK40z9eAGWTy9PO5t+fLOu+gCo= sha512-qkIilPUYcNhJpd33n0GBXTB1MMPp14TxEsEs0pTrsSVucApsYzW5V+Q8Qxhik6KU3evy+qkAAowTByymK0avdg=="
+
+"graceful-readlink@>= 1.0.0":
+  version "1.0.1"
+  resolved "http://artifactory.intra.xiaojukeji.com/artifactory/api/npm/npm/graceful-readlink/download/graceful-readlink-1.0.1.tgz?dl=https%3A%2F%2Fregistry.npmmirror.com%2Fgraceful-readlink%2Fdownload%2Fgraceful-readlink-1.0.1.tgz#4cafad76bc62f02fa039b2f94e9a3dd3a391a725"
+  integrity sha1-TK+tdrxi8C+gObL5Tpo906ORpyU=
 
 growly@^1.3.0:
   version "1.3.0"
@@ -7876,7 +7954,7 @@ lodash.uniq@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
-"lodash@>=3.5 <5", lodash@^4, lodash@^4.17.11, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.20, lodash@^4.17.21, lodash@^4.17.5, lodash@^4.7.0:
+"lodash@>=3.5 <5", lodash@^4, lodash@^4.17.11, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.20, lodash@^4.17.21, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.7.0:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
@@ -7904,7 +7982,7 @@ loglevel@^1.4.1, loglevel@^1.6.8:
   resolved "https://registry.yarnpkg.com/loglevel/-/loglevel-1.8.0.tgz#e7ec73a57e1e7b419cb6c6ac06bf050b67356114"
   integrity "sha1-5+xzpX4ee0GctsasBr8FC2c1YRQ= sha512-G6A/nJLRgWOuuwdNuA6koovfEV1YpqqAG4pRUlFaz3jj2QNZ8M4vBqnVA+HBTmU/AMNUtlOsMmSpF6NyOjztbA=="
 
-loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.4.0:
+loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.3.1, loose-envify@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/loose-envify/-/loose-envify-1.4.0.tgz#71ee51fa7be4caec1a63839f7e682d8132d30caf"
   integrity sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==
@@ -8838,6 +8916,11 @@ param-case@^3.0.3:
   dependencies:
     dot-case "^3.0.4"
     tslib "^2.0.3"
+
+parchment@^1.1.2, parchment@^1.1.4:
+  version "1.1.4"
+  resolved "http://artifactory.intra.xiaojukeji.com/artifactory/api/npm/npm/parchment/download/parchment-1.1.4.tgz?dl=https%3A%2F%2Fregistry.npmmirror.com%2Fparchment%2Fdownload%2Fparchment-1.1.4.tgz#aeded7ab938fe921d4c34bc339ce1168bc2ffde5"
+  integrity sha1-rt7Xq5OP6SHUw0vDOc4RaLwv/eU=
 
 parent-module@^1.0.0:
   version "1.0.1"
@@ -9858,7 +9941,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.7.2:
+prop-types@^15.5.10, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -9991,6 +10074,35 @@ quick-lru@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/quick-lru/-/quick-lru-4.0.1.tgz#5b8878f113a58217848c6482026c73e1ba57727f"
   integrity "sha1-W4h48ROlgheEjGSCAmxz4bpXcn8= sha512-ARhCpm70fzdcvNQfPoy49IaanKkTlRWF2JMzqhcJbhSFRZv7nPTvZJdcY7301IPmvW+/p0RgIWnQDLJxifsQ7g=="
+
+quill-delta@^3.6.2:
+  version "3.6.3"
+  resolved "http://artifactory.intra.xiaojukeji.com/artifactory/api/npm/npm/quill-delta/download/quill-delta-3.6.3.tgz?dl=https%3A%2F%2Fregistry.npmmirror.com%2Fquill-delta%2Fdownload%2Fquill-delta-3.6.3.tgz#b19fd2b89412301c60e1ff213d8d860eac0f1032"
+  integrity sha1-sZ/SuJQSMBxg4f8hPY2GDqwPEDI=
+  dependencies:
+    deep-equal "^1.0.1"
+    extend "^3.0.2"
+    fast-diff "1.1.2"
+
+quill-emoji@^0.2.0:
+  version "0.2.0"
+  resolved "http://artifactory.intra.xiaojukeji.com/artifactory/api/npm/npm/quill-emoji/download/quill-emoji-0.2.0.tgz?dl=https%3A%2F%2Fregistry.npmmirror.com%2Fquill-emoji%2Fdownload%2Fquill-emoji-0.2.0.tgz#2d8b830cfd3389a408100f3b7de8d656da74d06f"
+  integrity sha1-LYuDDP0ziaQIEA87fejWVtp00G8=
+  dependencies:
+    emoji-data-css "^1.0.1"
+    fuse.js "^3.3.0"
+
+quill@^1.3.7:
+  version "1.3.7"
+  resolved "http://artifactory.intra.xiaojukeji.com/artifactory/api/npm/npm/quill/download/quill-1.3.7.tgz?dl=https%3A%2F%2Fregistry.npmmirror.com%2Fquill%2Fdownload%2Fquill-1.3.7.tgz#da5b2f3a2c470e932340cdbf3668c9f21f9286e8"
+  integrity sha1-2lsvOixHDpMjQM2/NmjJ8h+Shug=
+  dependencies:
+    clone "^2.1.1"
+    deep-equal "^1.0.1"
+    eventemitter3 "^2.0.3"
+    extend "^3.0.2"
+    parchment "^1.1.4"
+    quill-delta "^3.6.2"
 
 raf@^3.4.1:
   version "3.4.1"
@@ -10417,6 +10529,11 @@ react-dev-utils@^11.0.3:
     strip-ansi "6.0.0"
     text-table "0.2.0"
 
+react-dom-factories@^1.0.0:
+  version "1.0.2"
+  resolved "http://artifactory.intra.xiaojukeji.com/artifactory/api/npm/npm/react-dom-factories/download/react-dom-factories-1.0.2.tgz?dl=https%3A%2F%2Fregistry.npmmirror.com%2Freact-dom-factories%2Fdownload%2Freact-dom-factories-1.0.2.tgz#eb7705c4db36fb501b3aa38ff759616aa0ff96e0"
+  integrity sha1-63cFxNs2+1AbOqOP91lhaqD/luA=
+
 react-dom@^17.0.2:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-17.0.2.tgz#ecffb6845e3ad8dbfcdc498f0d0a939736502c23"
@@ -10440,6 +10557,18 @@ react-is@^17.0.1:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity "sha1-5pHUqOnHiTZWVVOas3J2Kw77VPA= sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w=="
+
+react-quill@^1.3.5:
+  version "1.3.5"
+  resolved "http://artifactory.intra.xiaojukeji.com/artifactory/api/npm/npm/react-quill/download/react-quill-1.3.5.tgz?dl=https%3A%2F%2Fregistry.npmmirror.com%2Freact-quill%2Fdownload%2Freact-quill-1.3.5.tgz#8c4ad759da03365b17c79c6c52afa9772259844e"
+  integrity sha1-jErXWdoDNlsXx5xsUq+pdyJZhE4=
+  dependencies:
+    "@types/quill" "1.3.10"
+    create-react-class "^15.6.0"
+    lodash "^4.17.4"
+    prop-types "^15.5.10"
+    quill "^1.3.7"
+    react-dom-factories "^1.0.0"
 
 react-refresh@^0.8.3:
   version "0.8.3"
@@ -11397,6 +11526,13 @@ source-map-url@^0.4.0:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/source-map-url/-/source-map-url-0.4.1.tgz#0af66605a745a5a2f91cf1bbf8a7afbc283dec56"
   integrity sha512-cPiFOTLUKvJFIg4SKVScy4ilPPW6rFgMgfuZJPNoDuMs3nC1HbMUycBoJw77xFIp6z1UJQJOfx6C9GMH80DiTw==
+
+source-map@0.4.x:
+  version "0.4.4"
+  resolved "http://artifactory.intra.xiaojukeji.com/artifactory/api/npm/npm/source-map/download/source-map-0.4.4.tgz?dl=https%3A%2F%2Fregistry.npmmirror.com%2Fsource-map%2Fdownload%2Fsource-map-0.4.4.tgz#eba4f5da9c0dc999de68032d8b4f76173652036b"
+  integrity sha1-66T12pwNyZneaAMti092FzZSA2s=
+  dependencies:
+    amdefine ">=0.0.4"
 
 source-map@0.6.1, source-map@^0.6.0, source-map@^0.6.1, source-map@~0.6.0, source-map@~0.6.1:
   version "0.6.1"

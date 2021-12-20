@@ -10,7 +10,7 @@ export const EditAction = () => {
   const navigate = useNavigate();
 
   const link2Publish = () => {
-    user ? navigate("/publish") : navigate("/auth");
+    user ? navigate("/release-rapidly") : navigate("/auth");
   };
   return (
     <Container>

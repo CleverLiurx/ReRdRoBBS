@@ -12,7 +12,8 @@ import { HotSearchPage } from "./hot-search";
 import { AnonymousPage } from "./anonymous";
 import { SearchOutlined } from "@ant-design/icons";
 import { TopicDetail } from "./topic-detail";
-import { PublishPage } from "./publish";
+import { ReleaseRapidly } from "./release-rapidly";
+import { ReleaseComplete } from "./release-complete";
 const suffix = (
   <SearchOutlined
     style={{
@@ -44,7 +45,8 @@ export const AuthenticatedApp = () => {
           <Route path={"hot-search"} element={<HotSearchPage />} />
           <Route path={"anonymous"} element={<AnonymousPage />} />
           <Route path={"topic/:id"} element={<TopicDetail />} />
-          <Route path={"publish"} element={<PublishPage />} />
+          <Route path={"release-rapidly"} element={<ReleaseRapidly />} />
+          <Route path={"release-complete"} element={<ReleaseComplete />} />
           <Route path="*" element={<Navigate to="home" />} />
         </Routes>
       </Main>
