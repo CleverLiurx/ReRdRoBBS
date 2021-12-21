@@ -22,6 +22,7 @@ export interface Topic {
   classFrom: ClassMini;
   title: string;
   content: string;
+  richContent: string;
   topicImage: Img[];
 
   hitsCount: number;

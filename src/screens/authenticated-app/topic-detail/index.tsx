@@ -14,6 +14,9 @@ import {
   PictureOutlined,
 } from "@ant-design/icons";
 import TextArea from "antd/lib/input/TextArea";
+import E from "wangeditor";
+
+let editor: E | null = null;
 
 interface ParamType {
   topicId: string | undefined;
@@ -44,6 +47,25 @@ export const TopicDetail = () => {
       method: "PATCH",
     }).then(setData);
   };
+
+  useEffect(() => {
+    // 注：class写法需要在componentDidMount 创建编辑器
+    if (!topicItem?.richContent) return;
+    editor = new E("#editor");
+
+    editor.config.menus = [];
+    editor.config.showFullScreen = false;
+
+    /**一定要创建 */
+    editor.create();
+
+    editor.txt.html(topicItem?.richContent);
+
+    return () => {
+      // 组件销毁时销毁编辑器  注：class写法需要在componentWillUnmount中调用
+      editor?.destroy();
+    };
+  }, [topicItem]);
 
   const actions = topicItem
     ? [
@@ -96,13 +118,23 @@ export const TopicDetail = () => {
                   <Avatar src={topicItem.createBy.avator} alt="Han Solo" />
                 }
                 content={
-                  <div>
-                    <h2 style={{ fontSize: "18px" }}>{topicItem.title}</h2>
-                    <p>{topicItem.content}</p>
-                    {topicItem.topicImage.map((img) => (
-                      <Image key={img._id} src={img.url} preview={false} />
-                    ))}
-                  </div>
+                  <>
+                    {topicItem.richContent ? (
+                      <>
+                        <h2 style={{ fontSize: "20px", marginTop: "20px" }}>
+                          {topicItem.title}
+                        </h2>
+                        <WEditor id="editor" />
+                      </>
+                    ) : (
+                      <>
+                        <p>{topicItem.content}</p>
+                        {topicItem.topicImage.map((img) => (
+                          <Image key={img._id} src={img.url} preview={false} />
+                        ))}
+                      </>
+                    )}
+                  </>
                 }
                 datetime={
                   <span>
@@ -339,4 +371,17 @@ const ReplyBtn = styled(Button)`
   font-size: 1.4rem;
   float: right;
   margin-right: 20px;
+`;
+
+const WEditor = styled.div`
+  /* margin-top: 20px; */
+  & > .w-e-toolbar {
+    z-index: auto !important;
+    border: none !important;
+  }
+  & > .w-e-text-container {
+    border: none !important;
+    z-index: auto !important;
+    height: auto !important;
+  }
 `;

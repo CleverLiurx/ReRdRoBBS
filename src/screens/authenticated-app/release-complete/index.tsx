@@ -6,139 +6,39 @@ import { useAsync } from "utils/use-async";
 import styled from "@emotion/styled";
 import { Button, Input, Select } from "antd";
 import { useDocumentTitle } from "utils";
-import ReactQuill, { Quill } from "react-quill";
-import "react-quill/dist/quill.snow.css";
-// @ts-ignore
-import quillEmoji from "quill-emoji";
-import "quill-emoji/dist/quill-emoji.css";
-const { EmojiBlot, ShortNameEmoji, ToolbarEmoji, TextAreaEmoji } = quillEmoji;
+import E from "wangeditor";
 
-// Quill.register({
-//     'formats/emoji': EmojiBlot,
-//     // 'formats/video': VideoBlot,
-//     'modules/emoji-shortname': ShortNameEmoji,
-//     'modules/emoji-toolbar': ToolbarEmoji,
-//     'modules/emoji-textarea': TextAreaEmoji,
-//     // 'modules/ImageExtend': ImageExtend, //拖拽图片扩展组件
-//     // 'modules/ImageDrop': ImageDrop, //复制粘贴组件
-//   }, true);
-const modules = {
-  toolbar: {
-    container: [
-      [{ size: ["small", false, "large", "huge"] }], //字体设置
-      // [{ 'header': [1, 2, 3, 4, 5, 6, false] }], //标题字号，不能设置单个字大小
-      ["bold", "italic", "underline", "strike"],
-      [
-        { list: "ordered" },
-        { list: "bullet" },
-        { indent: "-1" },
-        { indent: "+1" },
-      ],
-      ["link", "image"], // a链接和图片的显示
-      [{ align: [] }],
-      [
-        {
-          background: [
-            "rgb(  0,   0,   0)",
-            "rgb(230,   0,   0)",
-            "rgb(255, 153,   0)",
-            "rgb(255, 255,   0)",
-            "rgb(  0, 138,   0)",
-            "rgb(  0, 102, 204)",
-            "rgb(153,  51, 255)",
-            "rgb(255, 255, 255)",
-            "rgb(250, 204, 204)",
-            "rgb(255, 235, 204)",
-            "rgb(255, 255, 204)",
-            "rgb(204, 232, 204)",
-            "rgb(204, 224, 245)",
-            "rgb(235, 214, 255)",
-            "rgb(187, 187, 187)",
-            "rgb(240, 102, 102)",
-            "rgb(255, 194, 102)",
-            "rgb(255, 255, 102)",
-            "rgb(102, 185, 102)",
-            "rgb(102, 163, 224)",
-            "rgb(194, 133, 255)",
-            "rgb(136, 136, 136)",
-            "rgb(161,   0,   0)",
-            "rgb(178, 107,   0)",
-            "rgb(178, 178,   0)",
-            "rgb(  0,  97,   0)",
-            "rgb(  0,  71, 178)",
-            "rgb(107,  36, 178)",
-            "rgb( 68,  68,  68)",
-            "rgb( 92,   0,   0)",
-            "rgb(102,  61,   0)",
-            "rgb(102, 102,   0)",
-            "rgb(  0,  55,   0)",
-            "rgb(  0,  41, 102)",
-            "rgb( 61,  20,  10)",
-          ],
-        },
-      ],
-      [
-        {
-          color: [
-            "rgb(  0,   0,   0)",
-            "rgb(230,   0,   0)",
-            "rgb(255, 153,   0)",
-            "rgb(255, 255,   0)",
-            "rgb(  0, 138,   0)",
-            "rgb(  0, 102, 204)",
-            "rgb(153,  51, 255)",
-            "rgb(255, 255, 255)",
-            "rgb(250, 204, 204)",
-            "rgb(255, 235, 204)",
-            "rgb(255, 255, 204)",
-            "rgb(204, 232, 204)",
-            "rgb(204, 224, 245)",
-            "rgb(235, 214, 255)",
-            "rgb(187, 187, 187)",
-            "rgb(240, 102, 102)",
-            "rgb(255, 194, 102)",
-            "rgb(255, 255, 102)",
-            "rgb(102, 185, 102)",
-            "rgb(102, 163, 224)",
-            "rgb(194, 133, 255)",
-            "rgb(136, 136, 136)",
-            "rgb(161,   0,   0)",
-            "rgb(178, 107,   0)",
-            "rgb(178, 178,   0)",
-            "rgb(  0,  97,   0)",
-            "rgb(  0,  71, 178)",
-            "rgb(107,  36, 178)",
-            "rgb( 68,  68,  68)",
-            "rgb( 92,   0,   0)",
-            "rgb(102,  61,   0)",
-            "rgb(102, 102,   0)",
-            "rgb(  0,  55,   0)",
-            "rgb(  0,  41, 102)",
-            "rgb( 61,  20,  10)",
-          ],
-        },
-      ],
-      ["clean"], //清空
-      ["emoji"], //emoji表情，设置了才能显示
-      ["video2"], //我自定义的视频图标，和插件提供的不一样，所以设置为video2
-    ],
-    //   handlers: {
-    //     'image': this.imageHandler.bind(this), //点击图片标志会调用的方法
-    //     'video2': this.showVideoModal.bind(this),
-    //   },
-  },
-  // ImageExtend: {
-  //   loading: true,
-  //   name: 'img',
-  //   action: RES_URL + "connector?isRelativePath=true",
-  //   response: res => FILE_URL + res.info.url
-  // },
-  // ImageDrop: true,
-  "emoji-toolbar": true, //是否展示出来
-  "emoji-textarea": false, //我不需要emoji展示在文本框所以设置为false
-  "emoji-shortname": true,
-};
 const { Option } = Select;
+let editor: E | null = null;
+const editorConfig = {
+  menus: [
+    "head",
+    "bold",
+    "fontSize",
+    "fontName",
+    "italic",
+    "underline",
+    "strikeThrough",
+    "indent",
+    "lineHeight",
+    "foreColor",
+    "backColor",
+    "link",
+    "list",
+    "todo",
+    "justify",
+    "quote",
+    "emoticon",
+    "image",
+    // 'video',
+    "table",
+    "code",
+    "splitLine",
+    "undo",
+    "redo",
+  ],
+  showFullScreen: false,
+};
 
 const useData = () => {
   const client = useHttp();
@@ -159,18 +59,41 @@ export const ReleaseComplete = () => {
   const { data: classList } = useData();
 
   let [params, setParams] = useState({
+    anon: false,
+    title: "",
     classFrom: "",
+    richContent: "",
     content: "",
   });
 
   const handleSubmit = async () => {
     client("/topic", {
-      data: { ...params },
+      data: {
+        ...params,
+        richContent: editor?.txt.html(),
+        content: editor?.txt.text(),
+      },
       method: "POST",
     }).then(() => {
       navigate("/home");
     });
   };
+
+  useEffect(() => {
+    // 注：class写法需要在componentDidMount 创建编辑器
+    editor = new E("#editor");
+
+    editor.config.menus = editorConfig.menus;
+    editor.config.showFullScreen = editorConfig.showFullScreen;
+
+    /**一定要创建 */
+    editor.create();
+
+    return () => {
+      // 组件销毁时销毁编辑器  注：class写法需要在componentWillUnmount中调用
+      editor?.destroy();
+    };
+  }, []);
 
   return (
     <Container>
@@ -181,12 +104,16 @@ export const ReleaseComplete = () => {
           border: "none",
           outline: "none",
           boxShadow: "none",
+          marginBottom: "10px",
+        }}
+        value={params.title}
+        onChange={(e) => {
+          console.log(e);
+          setParams({ ...params, title: e.target.value });
         }}
       />
 
-      <div style={{ minHeight: "300px" }}>
-        <TextBody id="content" theme="snow" modules={modules} />
-      </div>
+      <Editor id="editor" />
       <div style={{ margin: "12px 5px" }}>
         <span style={{ color: "#333", fontSize: "1.4rem", marginRight: "5px" }}>
           选择板块
@@ -227,8 +154,13 @@ const Container = styled.div`
   padding: 30px 20px;
 `;
 
-const TextBody = styled(ReactQuill)`
-  & > .ql-container {
-    min-height: 230px;
+const Editor = styled.div`
+  & > .w-e-toolbar {
+    z-index: auto !important;
+  }
+  & > .w-e-text-container {
+    z-index: auto !important;
+    height: auto !important;
+    min-height: 300px !important;
   }
 `;

@@ -30,6 +30,7 @@ export const ReleaseRapidly = () => {
   const { data: classList } = useData();
 
   let [params, setParams] = useState({
+    anon: false,
     classFrom: "",
     content: "",
   });
