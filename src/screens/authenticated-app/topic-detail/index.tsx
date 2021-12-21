@@ -58,6 +58,7 @@ export const TopicDetail = () => {
 
     /**一定要创建 */
     editor.create();
+    editor.disable();
 
     editor.txt.html(topicItem?.richContent);
 
