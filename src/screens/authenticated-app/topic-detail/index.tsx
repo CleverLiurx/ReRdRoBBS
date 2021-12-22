@@ -28,7 +28,7 @@ const useDetails = (param: string) => {
   const { run, ...result } = useAsync<Topic>();
 
   useEffect(() => {
-    run(client(`topic/${param}`));
+    run(client(`/topic/${param}`));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [param]);
 
