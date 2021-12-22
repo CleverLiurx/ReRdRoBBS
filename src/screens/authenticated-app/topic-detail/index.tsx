@@ -153,12 +153,7 @@ export const TopicDetail = () => {
           </div>
           {/* <div style={{ borderBottom: "1px solid #DDD" }}></div> */}
           {/* <Editor></Editor> */}
-          {topicItem?._id ? (
-            <ReplyCart
-              topicId={topicItem?._id || ""}
-              replys={topicItem?.reply || []}
-            />
-          ) : null}
+          {topicItem?._id ? <ReplyCart topicId={topicItem?._id || ""} /> : null}
         </ContainerLeft>
       </MainContainterLeft>
       <MainContainterRight>
@@ -206,18 +201,28 @@ const Author = ({ user }: { user?: UserMini }) => {
   );
 };
 
-const ReplyCart = ({
-  replys,
-  topicId,
-}: {
-  replys: Reply[];
-  topicId: string;
-}) => {
+const ReplyCart = ({ topicId }: { topicId: string }) => {
   let [activeReply, setActiveReply] = useState({
     topicId,
     pid: "",
     // centent: ""
   });
+
+  // const [replyArr, setReplayArr] = useState(replys)
+
+  const useReply = () => {
+    const client = useHttp();
+    const { run, ...result } = useAsync<Reply[]>();
+
+    useEffect(() => {
+      run(client(`/reply/${topicId}`));
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    return result;
+  };
+
+  const { data: replys, setData } = useReply();
 
   const ExampleComment = ({
     children,
@@ -259,7 +264,10 @@ const ReplyCart = ({
         <Editor
           topicId={activeReply.topicId}
           pid={activeReply.pid}
-          callback={() => setActiveReply({ ...activeReply, pid: "" })}
+          callback={(data) => {
+            setActiveReply({ ...activeReply, pid: "" });
+            setData(data);
+          }}
         />
       ) : null}
       {children}
@@ -267,8 +275,14 @@ const ReplyCart = ({
   );
   return (
     <div>
-      <Editor topicId={activeReply.topicId} pid={""} />
-      {replys.map((r1) => {
+      <Editor
+        topicId={activeReply.topicId}
+        pid={""}
+        callback={(data) => {
+          setData(data);
+        }}
+      />
+      {replys?.map((r1) => {
         return (
           <ExampleComment key={r1._id} reply={r1}>
             {r1.reply.map((r2) => {
@@ -288,7 +302,7 @@ const Editor = ({
 }: {
   topicId: string;
   pid: string;
-  callback?: () => void;
+  callback?: (replys: Reply[]) => void;
 }) => {
   let [value, setValue] = useState("");
   const client = useHttp();
@@ -296,9 +310,9 @@ const Editor = ({
     client("/reply", {
       data: { topicId, pid, content: value },
       method: "POST",
-    }).then(() => {
+    }).then((data) => {
       setValue("");
-      callback && callback();
+      callback && callback(data);
     });
   };
   return (
