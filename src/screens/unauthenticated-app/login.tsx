@@ -35,20 +35,7 @@ export const LoginScreen = ({
         navigate("/");
       })
       .catch((error) => onError(error));
-    // console.log(data)
-    // if (isSuccess) {
-    //   navigate('/');
-    // }
   };
-
-  // const FormContainer = () => {
-  //   let navigate = useNavigate();
-  //   const handleClick = (values) => {
-  //     handleSubmit(values)
-  //     navigate('/auth');
-  //   };
-  //   return <Form onFinish={handleClick}></Form>
-  // }
 
   return (
     <Form onFinish={handleSubmit}>

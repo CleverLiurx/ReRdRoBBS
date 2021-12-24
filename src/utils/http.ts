@@ -35,10 +35,10 @@ export const http = async (
       return Promise.reject({ message: "请重新登录" });
     }
     const data = await response.json();
-    if (response.ok) {
+    if (response.ok && data.errno === "0") {
       return data.data;
     } else {
-      return Promise.reject(data);
+      return Promise.reject({ message: data.errmsg });
     }
   });
 };

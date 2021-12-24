@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import styled from "@emotion/styled";
-import { Button, Card, Divider, Typography } from "antd";
+import { Button, Card, Divider } from "antd";
 import left from "assets/img/left.svg";
 import logo from "assets/img/logo.svg";
 import right from "assets/img/right.svg";
@@ -20,22 +20,16 @@ export const UnauthenticatedApp = () => {
       <Background />
       <ShadowCard>
         <Title>{isRegister ? "请注册" : "请登录"}</Title>
-        {error ? (
-          <Typography.Text type={"danger"}>{error.message}</Typography.Text>
-        ) : null}
+        <ErrorTip>{error?.message}</ErrorTip>
         {isRegister ? (
           <RegisterScreen onError={setError} />
         ) : (
           <LoginScreen onError={setError} />
         )}
         <Divider />
-        <Button
-          type={"link"}
-          onClick={() => setIsRegister(!isRegister)}
-          style={{ userSelect: "none" }}
-        >
+        <SwitchBtn onClick={() => setIsRegister(!isRegister)}>
           {isRegister ? "已经有账号了？去登录" : "没有账号？注册新账号"}
-        </Button>
+        </SwitchBtn>
       </ShadowCard>
     </Container>
   );
@@ -46,7 +40,8 @@ export const LongButton = styled(Button)`
 `;
 
 const Title = styled.h2`
-  margin-bottom: 2.4rem;
+  /* margin-bottom: 1em; */
+  text-align: center;
   color: rgb(94, 108, 132);
 `;
 
@@ -76,7 +71,7 @@ const ShadowCard = styled(Card)`
   border-radius: 0.3rem;
   box-sizing: border-box;
   box-shadow: rgba(0, 0, 0, 0.1) 0 0 10px;
-  text-align: center;
+  /* text-align: center; */
 `;
 
 const Container = styled.div`
@@ -84,4 +79,17 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
+`;
+
+const ErrorTip = styled.div`
+  color: #ff4d4f;
+  text-align: center;
+  height: 26px;
+  margin: 1rem 0;
+`;
+
+const SwitchBtn = styled.div`
+  text-align: center;
+  color: #ea540b;
+  cursor: pointer;
 `;
