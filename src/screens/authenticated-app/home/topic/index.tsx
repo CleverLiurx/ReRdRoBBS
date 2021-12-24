@@ -7,6 +7,7 @@ import { Topic } from "types/topic";
 import { useHttp } from "utils/http";
 import { useAsync } from "utils/use-async";
 // import VirtualList from 'rc-virtual-list';
+import { isElInViewport, useDebounce } from "utils";
 
 enum Sort {
   createTime = "createTime",
@@ -22,13 +23,18 @@ interface ParamType {
   sort: Sort;
   page: number;
   limit: number;
+  key: number;
 }
+let limit = 0;
 const useProjects = (param: ParamType) => {
   const client = useHttp();
   const { run, ...result } = useAsync<Topic[]>();
 
   useEffect(() => {
-    run(client("/topic", { data: param }));
+    if (!result.isLoading) {
+      limit += 10;
+      run(client("/topic", { data: { ...param, limit } }));
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [param]);
 
@@ -42,39 +48,68 @@ export const TopicList = () => {
     sort: Sort.createTime,
     page: 1,
     limit: 10,
+    key: 1,
   });
+  const debouncedParam = useDebounce(param, 500);
+  let { data: topicList, isLoading } = useProjects(debouncedParam);
+  const [dom, setDom] = useState<HTMLDivElement | null>(null);
 
-  let { data: topicList } = useProjects(param);
+  const handleOnScroll = () => {
+    if (dom && isElInViewport(dom)) {
+      setParam({ ...param, key: param.key + 1 });
+    }
+  };
+  useEffect(() => {
+    document.addEventListener("scroll", handleOnScroll);
+    return () => {
+      document.removeEventListener("scroll", handleOnScroll);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dom]);
 
   const menu = (
     <Menu>
       <Menu.Item key={"k1"}>
         <DrowItem
-          onClick={() => setParam({ ...param, sort: Sort.repliedTime })}
+          onClick={() =>
+            setParam({ ...param, limit: 10, sort: Sort.repliedTime })
+          }
         >
           最新回复
         </DrowItem>
       </Menu.Item>
       <Menu.Item key={"k2"}>
-        <DrowItem onClick={() => setParam({ ...param, sort: Sort.createTime })}>
+        <DrowItem
+          onClick={() =>
+            setParam({ ...param, limit: 10, sort: Sort.createTime })
+          }
+        >
           发布时间
         </DrowItem>
       </Menu.Item>
       <Menu.Item key={"k3"}>
-        <DrowItem onClick={() => setParam({ ...param, sort: Sort.replyCount })}>
+        <DrowItem
+          onClick={() =>
+            setParam({ ...param, limit: 10, sort: Sort.replyCount })
+          }
+        >
           回复数
         </DrowItem>
       </Menu.Item>
       <Menu.Item key={"k4"}>
         <DrowItem
-          onClick={() => setParam({ ...param, sort: Sort.praiseCount })}
+          onClick={() =>
+            setParam({ ...param, limit: 10, sort: Sort.praiseCount })
+          }
         >
           点赞数
         </DrowItem>
       </Menu.Item>
       <Menu.Item key={"k5"}>
         <DrowItem
-          onClick={() => setParam({ ...param, sort: Sort.praiseCount })}
+          onClick={() =>
+            setParam({ ...param, limit: 10, sort: Sort.praiseCount })
+          }
         >
           收藏数
         </DrowItem>
@@ -101,7 +136,7 @@ export const TopicList = () => {
   );
 
   return (
-    <div style={{ width: "740px", margin: "20px 0" }}>
+    <div id="topic-list" style={{ width: "740px", margin: "20px 0" }}>
       {topicList &&
         topicList.map((topic, idx) => {
           if (idx === 0) {
@@ -128,7 +163,9 @@ export const TopicList = () => {
           }
         })}
       {/* <LoadTip onClick={() => setParam({...param, page: param.page + 1})}>点击加载更多</LoadTip> */}
-      <LoadTip>没有更多内容啦～</LoadTip>
+      <LoadTip id="load-more" ref={(dom) => setDom(dom)}>
+        {isLoading ? "加载中～" : "没有更多啦"}
+      </LoadTip>
     </div>
   );
 };

@@ -59,7 +59,7 @@ export const RegisterScreen = ({
         downTime(120 - passTime);
       }
     }
-    // let smgTip =  ? '发送验证码' : '倒计时'
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // HTMLFormElement extends Element

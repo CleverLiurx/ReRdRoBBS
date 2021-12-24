@@ -126,3 +126,15 @@ export const subset = <
   );
   return Object.fromEntries(filteredEntries) as Pick<O, K>;
 };
+
+//获取元素是否在可视区域
+export const isElInViewport = (el: HTMLDivElement) => {
+  var rect = el.getBoundingClientRect();
+  return (
+    rect.top >= 0 &&
+    rect.left >= 0 &&
+    rect.bottom <=
+      (window.innerHeight || document.documentElement.clientHeight) &&
+    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+  );
+};
