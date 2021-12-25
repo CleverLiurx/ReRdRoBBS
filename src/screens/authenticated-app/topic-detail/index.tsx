@@ -146,7 +146,9 @@ export const TopicDetail = () => {
                     来自
                     <span
                       style={{ color: "#EA540B", cursor: "pointer" }}
-                      onClick={() => navigate(`/class/${topicItem?._id}`)}
+                      onClick={() =>
+                        navigate(`/class/${topicItem?.classFrom._id}`)
+                      }
                     >
                       {topicItem.classFrom.classname}
                     </span>
