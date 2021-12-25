@@ -3,8 +3,10 @@ import { Classes } from "types/classes";
 import styled from "@emotion/styled";
 import { useHttp } from "utils/http";
 import { useAsync } from "utils/use-async";
+import { useNavigate } from "react-router";
 
 export const ClassContainer = () => {
+  let navigate = useNavigate();
   const client = useHttp();
   const { run, ...result } = useAsync<Classes[]>();
 
@@ -19,7 +21,12 @@ export const ClassContainer = () => {
     <Container>
       {classList?.map((c) => {
         return (
-          <Block key={c._id}>
+          <Block
+            key={c._id}
+            onClick={() =>
+              navigate(`/class/${c._id}`, { state: { classes: c } })
+            }
+          >
             <img
               src={c.icon}
               style={{ width: "70px", height: "70px", borderRadius: "5px" }}
@@ -51,7 +58,11 @@ const Block = styled.div`
   display: inline-block;
   width: 100px;
   margin: 3.33px;
+  padding-top: 3.33px;
   height: 120px;
   text-align: center;
   cursor: pointer;
+  &:hover {
+    background: #f7f7f7;
+  }
 `;

@@ -14,6 +14,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { TopicDetail } from "./topic-detail";
 import { ReleaseRapidly } from "./release-rapidly";
 import { ReleaseComplete } from "./release-complete";
+import { ClassPage } from "./class";
 const suffix = (
   <SearchOutlined
     style={{
@@ -47,6 +48,7 @@ export const AuthenticatedApp = () => {
           <Route path={"topic/:id"} element={<TopicDetail />} />
           <Route path={"release-rapidly"} element={<ReleaseRapidly />} />
           <Route path={"release-complete"} element={<ReleaseComplete />} />
+          <Route path={"class/:id"} element={<ClassPage />} />
           <Route path="*" element={<Navigate to="home" />} />
         </Routes>
       </Main>
@@ -107,12 +109,12 @@ const PageHeader = () => {
           >
             热榜
           </LinkItem>
-          <LinkItem
+          {/* <LinkItem
             to={"anonymous"}
             className={path === "anonymous" ? "active" : ""}
           >
             匿名
-          </LinkItem>
+          </LinkItem> */}
         </HeaderLeft>
         <HeaderRight>
           <CircleInput placeholder="搜索" suffix={suffix} />

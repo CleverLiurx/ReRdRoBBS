@@ -90,10 +90,6 @@ export const TopicItem = ({ topicItem: topic }: { topicItem: Topic }) => {
             {moment(topicItem.createTime).fromNow()}
           </span>
           {/* eslint-disable-next-line */}
-          来自
-          <a onClick={() => navigate(`/class/${topicItem._id}`)}>
-            {topicItem.classFrom.classname}
-          </a>
         </span>
       }
     />

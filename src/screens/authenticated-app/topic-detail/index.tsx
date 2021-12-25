@@ -15,6 +15,7 @@ import {
 } from "@ant-design/icons";
 import TextArea from "antd/lib/input/TextArea";
 import E from "wangeditor";
+import { useNavigate } from "react-router";
 
 let editor: E | null = null;
 
@@ -67,7 +68,7 @@ export const TopicDetail = () => {
       editor?.destroy();
     };
   }, [topicItem]);
-
+  let navigate = useNavigate();
   const actions = topicItem
     ? [
         <Tooltip
@@ -143,7 +144,10 @@ export const TopicDetail = () => {
                       {moment(topicItem.createTime).fromNow()}
                     </span>
                     来自
-                    <span style={{ color: "#EA540B" }}>
+                    <span
+                      style={{ color: "#EA540B", cursor: "pointer" }}
+                      onClick={() => navigate(`/class/${topicItem?._id}`)}
+                    >
                       {topicItem.classFrom.classname}
                     </span>
                   </span>
@@ -151,7 +155,6 @@ export const TopicDetail = () => {
               />
             ) : null}
           </div>
-          {/* <div style={{ borderBottom: "1px solid #DDD" }}></div> */}
           {/* <Editor></Editor> */}
           {topicItem?._id ? <ReplyCart topicId={topicItem?._id || ""} /> : null}
         </ContainerLeft>
