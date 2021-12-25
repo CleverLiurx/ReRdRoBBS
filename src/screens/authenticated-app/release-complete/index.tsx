@@ -108,7 +108,6 @@ export const ReleaseComplete = () => {
         }}
         value={params.title}
         onChange={(e) => {
-          console.log(e);
           setParams({ ...params, title: e.target.value });
         }}
       />

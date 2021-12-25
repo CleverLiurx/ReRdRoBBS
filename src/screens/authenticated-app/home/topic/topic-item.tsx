@@ -91,7 +91,7 @@ export const TopicItem = ({ topicItem: topic }: { topicItem: Topic }) => {
           </span>
           来自
           {/* eslint-disable-next-line */}
-          <a onClick={() => navigate(`/class/${topicItem._id}`)}>
+          <a onClick={() => navigate(`/class/${topicItem.classFrom._id}`)}>
             {topicItem.classFrom.classname}
           </a>
         </span>
