@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 import { Classes } from "types/classes";
 import { EditAction } from "./edit-action";
+import { Banner } from "./banner";
 import { TopicList } from "./topic";
 import { useDocumentTitle } from "utils";
-import { useLocation } from "react-router";
 import { useHttp } from "utils/http";
 import { useAsync } from "utils/use-async";
 
@@ -21,24 +21,24 @@ const useDetails = (param: string) => {
 };
 
 export const ClassPage = () => {
-  const location = useLocation();
   // @ts-ignore
-  let classes = location.state?.classes;
   const classId = window.location.pathname.split("class/")[1];
-  const { data } = useDetails(classId);
-  if (!classes) {
-    classes = data;
-  }
+  const { data: classes } = useDetails(classId);
   useDocumentTitle(classes?.classname || "");
 
   return (
     <Main>
-      <MainContainterLeft>
-        <TopicList classFrom={classes?._id} />
-      </MainContainterLeft>
-      <MainContainterRight>
-        <EditAction />
-      </MainContainterRight>
+      {classes ? (
+        <>
+          <Banner classes={classes} />
+          <MainContainterLeft>
+            <TopicList classFrom={classes?._id} />
+          </MainContainterLeft>
+          <MainContainterRight>
+            <EditAction />
+          </MainContainterRight>
+        </>
+      ) : null}
     </Main>
   );
 };

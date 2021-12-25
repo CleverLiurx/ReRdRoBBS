@@ -89,8 +89,8 @@ export const TopicItem = ({ topicItem: topic }: { topicItem: Topic }) => {
           <span style={{ paddingRight: "10px" }}>
             {moment(topicItem.createTime).fromNow()}
           </span>
-          {/* eslint-disable-next-line */}
           来自
+          {/* eslint-disable-next-line */}
           <a onClick={() => navigate(`/class/${topicItem._id}`)}>
             {topicItem.classFrom.classname}
           </a>
