@@ -12,7 +12,13 @@ interface ParamType {
   type: string;
 }
 
-export const TopicItem = ({ topicItem: topic }: { topicItem: Topic }) => {
+export const TopicItem = ({
+  topicItem: topic,
+  showFrom = true,
+}: {
+  topicItem: Topic;
+  showFrom: boolean;
+}) => {
   let [topicItem, setTopicItem] = useState(topic);
   const TopicHandle = (param: ParamType) => {
     const client = useHttp();
@@ -89,7 +95,15 @@ export const TopicItem = ({ topicItem: topic }: { topicItem: Topic }) => {
           <span style={{ paddingRight: "10px" }}>
             {moment(topicItem.createTime).fromNow()}
           </span>
-          {/* eslint-disable-next-line */}
+          {showFrom ? (
+            <>
+              来自
+              {/* eslint-disable-next-line */}
+              <a onClick={() => navigate(`/class/${topicItem.classFrom._id}`)}>
+                {topicItem.classFrom.classname}
+              </a>
+            </>
+          ) : null}
         </span>
       }
     />

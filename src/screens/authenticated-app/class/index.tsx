@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 import { Classes } from "types/classes";
-import { EditAction } from "./edit-action";
+import { EditAction } from "components/edit-action";
 import { Banner } from "./banner";
-import { TopicList } from "./topic";
+import { TopicList } from "components/topic";
 import { useDocumentTitle } from "utils";
 import { useHttp } from "utils/http";
 import { useAsync } from "utils/use-async";

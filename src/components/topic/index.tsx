@@ -41,7 +41,7 @@ const useProjects = (param: ParamType) => {
   return result;
 };
 
-export const TopicList = ({ classFrom }: { classFrom: string }) => {
+export const TopicList = ({ classFrom = "" }: { classFrom: string }) => {
   let [param, setParam] = useState<ParamType>({
     classFrom,
     createBy: "",
@@ -136,7 +136,7 @@ export const TopicList = ({ classFrom }: { classFrom: string }) => {
   );
 
   return (
-    <div id="topic-list" style={{ width: "740px" }}>
+    <div id="topic-list" style={{ width: "740px", margin: "20px 0" }}>
       {topicList &&
         topicList.map((topic, idx) => {
           if (idx === 0) {
@@ -147,7 +147,7 @@ export const TopicList = ({ classFrom }: { classFrom: string }) => {
                 extra={HandleBtn}
                 style={{ width: "100%" }}
               >
-                <TopicItem topicItem={topic} />
+                <TopicItem topicItem={topic} showFrom={classFrom === ""} />
               </Card>
             );
           } else {
@@ -157,7 +157,7 @@ export const TopicList = ({ classFrom }: { classFrom: string }) => {
                 size="small"
                 style={{ width: "100%", marginTop: "10px" }}
               >
-                <TopicItem topicItem={topic} />
+                <TopicItem topicItem={topic} showFrom={classFrom === ""} />
               </Card>
             );
           }

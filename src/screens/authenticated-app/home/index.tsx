@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { EditAction } from "./edit-action";
+import { EditAction } from "components/edit-action";
 import { Banner } from "./banner";
-import { TopicList } from "./topic";
+import { TopicList } from "components/topic";
 import { useDocumentTitle } from "utils";
 import { ClassContainer } from "./classes";
 
@@ -13,7 +13,7 @@ export const HomePage = () => {
     <Main>
       <MainContainterLeft>
         <Banner></Banner>
-        <TopicList />
+        <TopicList classFrom="" />
       </MainContainterLeft>
       <MainContainterRight>
         <EditAction />

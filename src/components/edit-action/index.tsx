@@ -5,12 +5,14 @@ import { EditOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router";
 import { useAuth } from "context/auth-context";
 
-export const EditAction = () => {
+export const EditAction = ({ classId }: { classId?: string }) => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
   const link2Publish = () => {
-    user ? navigate("/release-rapidly") : navigate("/auth");
+    user
+      ? navigate("/release-rapidly", { state: { classId } })
+      : navigate("/auth");
   };
   return (
     <Container>
