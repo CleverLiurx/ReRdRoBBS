@@ -7,6 +7,7 @@ import { StarOutlined } from "@ant-design/icons";
 import { useHttp } from "utils/http";
 import { useNavigate } from "react-router";
 import PariseImg from "assets/img/parise.png";
+import starImg from "assets/img/star.png";
 
 interface ParamType {
   topicId: string;
@@ -63,8 +64,19 @@ export const TopicItem = ({
           TopicHandle({ topicId: topicItem._id, type: "star" });
         }}
       >
-        <StarOutlined style={{ color: topicItem.hadStar ? "#EA540B" : "" }} />
-        <span style={{ padding: "0 14px 0 2px" }}>{topicItem.starCount}</span>
+        <PImg
+          style={
+            topicItem.hadStar
+              ? {
+                  border: "1px solid #EA540B",
+                  background: "rgba(255,125,65,.1)",
+                }
+              : {}
+          }
+        >
+          <img src={starImg} alt="" />
+          <span>{topicItem.starCount}</span>
+        </PImg>
       </span>
     </Tooltip>,
     <span key="comment-basic-reply-to">
