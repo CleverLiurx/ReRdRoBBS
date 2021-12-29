@@ -3,9 +3,10 @@ import { Comment, Avatar, Tooltip, Image } from "antd";
 import moment from "moment";
 import { Topic } from "types/topic";
 import styled from "@emotion/styled";
-import { LikeOutlined, StarOutlined } from "@ant-design/icons";
+import { StarOutlined } from "@ant-design/icons";
 import { useHttp } from "utils/http";
 import { useNavigate } from "react-router";
+import PariseImg from "assets/img/parise.png";
 
 interface ParamType {
   topicId: string;
@@ -37,8 +38,20 @@ export const TopicItem = ({
           TopicHandle({ topicId: topicItem._id, type: "parise" });
         }}
       >
-        <LikeOutlined style={{ color: topicItem.hadParise ? "#EA540B" : "" }} />
-        <span style={{ padding: "0 14px 0 2px" }}>{topicItem.praiseCount}</span>
+        {/* <LikeOutlined style={{ color: topicItem.hadParise ? "#EA540B" : "" }} /> */}
+        <PImg
+          style={
+            topicItem.hadParise
+              ? {
+                  border: "1px solid #EA540B",
+                  background: "rgba(255,125,65,.1)",
+                }
+              : {}
+          }
+        >
+          <img src={PariseImg} alt="" />
+          <span>{topicItem.praiseCount}</span>
+        </PImg>
       </span>
     </Tooltip>,
     <Tooltip
@@ -116,4 +129,29 @@ const ElliP = styled.p`
   -webkit-line-clamp: 3;
   overflow: hidden;
   cursor: pointer;
+`;
+
+const PImg = styled.div`
+  width: 60px;
+  height: 32px;
+  display: inline-block;
+  margin-right: 12px;
+  border: 1px solid #eee;
+  border-radius: 16px;
+  padding: 0px 9px;
+  &:hover {
+    border: 1px solid #ea540b;
+  }
+
+  img {
+    width: 24px;
+    height: 24px;
+    margin: 3px 4px 0 0;
+  }
+
+  span {
+    color: #999;
+    float: right;
+    line-height: 32px;
+  }
 `;
