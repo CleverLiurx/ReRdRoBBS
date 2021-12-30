@@ -70,7 +70,13 @@ export const TopicDetail = () => {
                   actions={actions}
                   author={<span>{topicItem.createBy.username}</span>}
                   avatar={
-                    <Avatar src={topicItem.createBy.avator} alt="Han Solo" />
+                    <span
+                      onClick={() =>
+                        navigate(`/personal/${topicItem?.createBy._id}`)
+                      }
+                    >
+                      <Avatar src={topicItem.createBy.avator} alt="Han Solo" />
+                    </span>
                   }
                   content={
                     <>
@@ -194,6 +200,7 @@ const HandleBtn = ({ topicItem }: { topicItem: Topic }) => {
 
 const Author = ({ user }: { user?: UserMini }) => {
   // const { user } = useAuth();
+  let navigate = useNavigate();
   return (
     <ContainerRight>
       <img
@@ -202,7 +209,9 @@ const Author = ({ user }: { user?: UserMini }) => {
           height: "90px",
           borderRadius: "50%",
           margin: "20px",
+          cursor: "pointer",
         }}
+        onClick={() => navigate(`/personal/${user?._id}`)}
         src={user?.avator}
         alt={user?.username}
       />
@@ -250,7 +259,7 @@ const ReplyCart = ({ topicId }: { topicId: string }) => {
 
     return result;
   };
-
+  let navigate = useNavigate();
   const { data: replys, setData } = useReply();
 
   const ExampleComment = ({
@@ -284,6 +293,7 @@ const ReplyCart = ({ topicId }: { topicId: string }) => {
               ? { width: "20px", height: "20px", borderRadius: "50%" }
               : { width: "32px", height: "32px", borderRadius: "50%" }
           }
+          onClick={() => navigate(`/personal/${reply?.createBy._id}`)}
           alt="Avactor"
         />
       }

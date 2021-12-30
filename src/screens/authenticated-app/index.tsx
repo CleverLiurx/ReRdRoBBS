@@ -15,6 +15,7 @@ import { TopicDetail } from "./topic-detail";
 import { ReleaseRapidly } from "./release-rapidly";
 import { ReleaseComplete } from "./release-complete";
 import { ClassPage } from "./class";
+import { PersonalPage } from "./personal";
 const suffix = (
   <SearchOutlined
     style={{
@@ -49,6 +50,7 @@ export const AuthenticatedApp = () => {
           <Route path={"release-rapidly"} element={<ReleaseRapidly />} />
           <Route path={"release-complete"} element={<ReleaseComplete />} />
           <Route path={"class/:id"} element={<ClassPage />} />
+          <Route path={"personal/:id"} element={<PersonalPage />} />
           <Route path="*" element={<Navigate to="home" />} />
         </Routes>
       </Main>
@@ -87,6 +89,7 @@ const ToLogout = () => {
   return <DrowItem onClick={handleClick}>退出登录</DrowItem>;
 };
 const PageHeader = () => {
+  let navigate = useNavigate();
   const { user } = useAuth();
   const [path, setPath] = useState("");
   usePath(setPath);
@@ -109,12 +112,12 @@ const PageHeader = () => {
           >
             热榜
           </LinkItem>
-          {/* <LinkItem
+          <LinkItem
             to={"anonymous"}
             className={path === "anonymous" ? "active" : ""}
           >
             匿名
-          </LinkItem> */}
+          </LinkItem>
         </HeaderLeft>
         <HeaderRight>
           <CircleInput placeholder="搜索" suffix={suffix} />
@@ -123,7 +126,9 @@ const PageHeader = () => {
               overlay={
                 <Menu>
                   <Menu.Item key={"userpage"}>
-                    <DrowItem>个人主页</DrowItem>
+                    <DrowItem onClick={() => navigate(`/personal/${user._id}`)}>
+                      个人主页
+                    </DrowItem>
                   </Menu.Item>
                   <Menu.Item key={"logout"}>
                     <ToLogout />

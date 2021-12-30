@@ -90,7 +90,11 @@ export const TopicItem = ({
     <Comment
       actions={actions}
       author={<span>{topicItem.createBy.username}</span>}
-      avatar={<Avatar src={topicItem.createBy.avator} alt="Han Solo" />}
+      avatar={
+        <span onClick={() => navigate(`/personal/${topicItem.createBy._id}`)}>
+          <Avatar src={topicItem.createBy.avator} alt="" />
+        </span>
+      }
       content={
         <div>
           <h2
