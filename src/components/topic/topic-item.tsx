@@ -3,7 +3,6 @@ import { Comment, Avatar, Tooltip, Image } from "antd";
 import moment from "moment";
 import { Topic } from "types/topic";
 import styled from "@emotion/styled";
-import { StarOutlined } from "@ant-design/icons";
 import { useHttp } from "utils/http";
 import { useNavigate } from "react-router";
 import PariseImg from "assets/img/parise.png";
@@ -79,10 +78,10 @@ export const TopicItem = ({
         </PImg>
       </span>
     </Tooltip>,
-    <span key="comment-basic-reply-to">
-      回复
-      <span style={{ padding: "0 14px 0 2px" }}>{topicItem.replyCount}</span>
-    </span>,
+    <ReplyCart key="comment-basic-reply-to">
+      <i>回复</i>
+      <span>{topicItem.replyCount}</span>
+    </ReplyCart>,
   ];
 
   let navigate = useNavigate();
@@ -94,7 +93,14 @@ export const TopicItem = ({
       avatar={<Avatar src={topicItem.createBy.avator} alt="Han Solo" />}
       content={
         <div>
-          <h2 style={{ fontSize: "18px" }}>{topicItem.title}</h2>
+          <h2
+            style={{ fontSize: "18px", cursor: "pointer" }}
+            onClick={() => {
+              navigate(`/topic/${topicItem._id}`);
+            }}
+          >
+            {topicItem.title}
+          </h2>
           <ElliP
             onClick={() => {
               navigate(`/topic/${topicItem._id}`);
@@ -165,5 +171,21 @@ const PImg = styled.div`
     color: #999;
     float: right;
     line-height: 32px;
+  }
+`;
+
+const ReplyCart = styled.div`
+  height: 32px;
+  width: 40px;
+  font-size: 1.2rem;
+  position: relative;
+  cursor: pointer;
+  span,
+  i {
+    position: absolute;
+    top: 22px;
+  }
+  span {
+    right: 0;
   }
 `;

@@ -7,12 +7,9 @@ import moment from "moment";
 import { useAsync } from "utils/use-async";
 import { Reply, Topic } from "types/topic";
 import { UserMini } from "types/user";
-import {
-  LikeOutlined,
-  StarOutlined,
-  SmileOutlined,
-  PictureOutlined,
-} from "@ant-design/icons";
+import PariseImg from "assets/img/parise.png";
+import starImg from "assets/img/star.png";
+import { SmileOutlined, PictureOutlined } from "@ant-design/icons";
 import TextArea from "antd/lib/input/TextArea";
 import E from "wangeditor";
 import { useNavigate } from "react-router";
@@ -39,15 +36,7 @@ export const TopicDetail = () => {
   useDocumentTitle("文章详情");
 
   const id = window.location.pathname.split("topic/")[1];
-  let { data: topicItem, setData } = useDetails(id);
-
-  const TopicHandle = (param: ParamType) => {
-    const client = useHttp();
-    client(`/${param.type}`, {
-      data: { topicId: param.topicId },
-      method: "PATCH",
-    }).then(setData);
-  };
+  let { data: topicItem } = useDetails(id);
 
   useEffect(() => {
     // 注：class写法需要在componentDidMount 创建编辑器
@@ -69,92 +58,62 @@ export const TopicDetail = () => {
     };
   }, [topicItem]);
   let navigate = useNavigate();
-  const actions = topicItem
-    ? [
-        <Tooltip
-          key="comment-basic-like"
-          title={topicItem.hadParise ? "取消点赞" : "点赞"}
-        >
-          <span
-            onClick={() => {
-              TopicHandle({ topicId: topicItem?._id, type: "parise" });
-            }}
-          >
-            <LikeOutlined
-              style={{ color: topicItem.hadParise ? "#EA540B" : "" }}
-            />
-            <span style={{ padding: "0 14px 0 2px" }}>
-              {topicItem.praiseCount}
-            </span>
-          </span>
-        </Tooltip>,
-        <Tooltip
-          key="comment-basic-like"
-          title={topicItem.hadStar ? "取消收藏" : "收藏"}
-        >
-          <span
-            onClick={() => {
-              TopicHandle({ topicId: topicItem?._id, type: "star" });
-            }}
-          >
-            <StarOutlined
-              style={{ color: topicItem.hadStar ? "#EA540B" : "" }}
-            />
-            <span style={{ padding: "0 14px 0 2px" }}>
-              {topicItem.starCount}
-            </span>
-          </span>
-        </Tooltip>,
-      ]
-    : [<div></div>];
+  const actions = topicItem ? [<div></div>] : [<div></div>];
   return (
     <Main>
       <MainContainterLeft>
         <ContainerLeft>
           <div>
             {topicItem ? (
-              <Comment
-                actions={actions}
-                author={<span>{topicItem.createBy.username}</span>}
-                avatar={
-                  <Avatar src={topicItem.createBy.avator} alt="Han Solo" />
-                }
-                content={
-                  <>
-                    {topicItem.richContent ? (
-                      <>
-                        <h2 style={{ fontSize: "20px", marginTop: "20px" }}>
-                          {topicItem.title}
-                        </h2>
-                        <WEditor id="editor" />
-                      </>
-                    ) : (
-                      <>
-                        <p>{topicItem.content}</p>
-                        {topicItem.topicImage.map((img) => (
-                          <Image key={img._id} src={img.url} preview={false} />
-                        ))}
-                      </>
-                    )}
-                  </>
-                }
-                datetime={
-                  <span>
-                    <span style={{ paddingRight: "10px" }}>
-                      {moment(topicItem.createTime).fromNow()}
+              <>
+                <Comment
+                  actions={actions}
+                  author={<span>{topicItem.createBy.username}</span>}
+                  avatar={
+                    <Avatar src={topicItem.createBy.avator} alt="Han Solo" />
+                  }
+                  content={
+                    <>
+                      {topicItem.richContent ? (
+                        <>
+                          <h2 style={{ fontSize: "20px", marginTop: "20px" }}>
+                            {topicItem.title}
+                          </h2>
+                          <WEditor id="editor" />
+                        </>
+                      ) : (
+                        <>
+                          <p>{topicItem.content}</p>
+                          {topicItem.topicImage.map((img) => (
+                            <Image
+                              key={img._id}
+                              src={img.url}
+                              preview={false}
+                            />
+                          ))}
+                        </>
+                      )}
+                    </>
+                  }
+                  datetime={
+                    <span>
+                      <span style={{ paddingRight: "10px" }}>
+                        {moment(topicItem.createTime).fromNow()}
+                      </span>
+                      来自
+                      <span
+                        style={{ color: "#EA540B", cursor: "pointer" }}
+                        onClick={() =>
+                          navigate(`/class/${topicItem?.classFrom._id}`)
+                        }
+                      >
+                        {topicItem.classFrom.classname}
+                      </span>
                     </span>
-                    来自
-                    <span
-                      style={{ color: "#EA540B", cursor: "pointer" }}
-                      onClick={() =>
-                        navigate(`/class/${topicItem?.classFrom._id}`)
-                      }
-                    >
-                      {topicItem.classFrom.classname}
-                    </span>
-                  </span>
-                }
-              />
+                  }
+                />
+                <HandleBtn topicItem={topicItem}></HandleBtn>
+              </>
             ) : null}
           </div>
           {/* <Editor></Editor> */}
@@ -165,6 +124,71 @@ export const TopicDetail = () => {
         <Author user={topicItem?.createBy} />
       </MainContainterRight>
     </Main>
+  );
+};
+
+const HandleBtn = ({ topicItem }: { topicItem: Topic }) => {
+  let [topic, setTopic] = useState(topicItem);
+  const TopicHandle = (param: ParamType) => {
+    const client = useHttp();
+    client(`/${param.type}`, {
+      data: { topicId: param.topicId },
+      method: "PATCH",
+    }).then(setTopic);
+  };
+
+  return (
+    <div style={{ margin: "10px" }}>
+      <Tooltip
+        key="comment-basic-like"
+        title={topic.hadParise ? "取消点赞" : "点赞"}
+      >
+        <span
+          onClick={() => {
+            TopicHandle({ topicId: topic?._id, type: "parise" });
+          }}
+        >
+          {/* <LikeOutlined style={{ color: topic.hadParise ? "#EA540B" : "" }} /> */}
+          <PImg
+            style={
+              topic.hadParise
+                ? {
+                    border: "1px solid #EA540B",
+                    background: "rgba(255,125,65,.1)",
+                  }
+                : {}
+            }
+          >
+            <img src={PariseImg} alt="" />
+            <span>{topic.praiseCount}</span>
+          </PImg>
+        </span>
+      </Tooltip>
+      <Tooltip
+        key="comment-basic-like"
+        title={topic.hadStar ? "取消收藏" : "收藏"}
+      >
+        <span
+          onClick={() => {
+            TopicHandle({ topicId: topic?._id, type: "star" });
+          }}
+        >
+          <PImg
+            style={
+              topic.hadStar
+                ? {
+                    border: "1px solid #EA540B",
+                    background: "rgba(255,125,65,.1)",
+                  }
+                : {}
+            }
+          >
+            <img src={starImg} alt="" />
+            <span>{topic.starCount}</span>
+          </PImg>
+        </span>
+      </Tooltip>
+    </div>
   );
 };
 
@@ -403,5 +427,30 @@ const WEditor = styled.div`
     border: none !important;
     z-index: auto !important;
     height: auto !important;
+  }
+`;
+
+const PImg = styled.div`
+  width: 60px;
+  height: 32px;
+  display: inline-block;
+  margin-right: 12px;
+  border: 1px solid #eee;
+  border-radius: 16px;
+  padding: 0px 9px;
+  &:hover {
+    border: 1px solid #ea540b;
+  }
+
+  img {
+    width: 24px;
+    height: 24px;
+    margin: 3px 4px 0 0;
+  }
+
+  span {
+    color: #999;
+    float: right;
+    line-height: 32px;
   }
 `;
