@@ -219,7 +219,7 @@ const Author = ({ user }: { user?: UserMini }) => {
         {user?.username}
       </div>
       <div style={{ color: "#9B9B9B", fontSize: "1.2rem", margin: "5px" }}>
-        {user?.email || "13131451002@163.com"}
+        {user?.email || "暂无邮箱"}
       </div>
       <div style={{ marginTop: "20px" }}>
         <div style={{ width: "33.33%", display: "inline-block" }}>
