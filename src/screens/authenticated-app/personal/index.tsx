@@ -6,7 +6,7 @@ import { useAsync } from "utils/use-async";
 import styled from "@emotion/styled";
 import BGImage from "assets/img/personal-bg.png";
 import { WomanOutlined, ManOutlined } from "@ant-design/icons";
-import { Button, Descriptions, Divider, List } from "antd";
+import { Button, Descriptions, List } from "antd";
 import { useAuth } from "context/auth-context";
 import { Topic } from "types/topic";
 import { useNavigate } from "react-router";
@@ -152,13 +152,29 @@ const useTopic = (param: ParamType) => {
   return result;
 };
 
+interface StarType {
+  topicId: Topic;
+  _id: string;
+}
+const useStar = (id: string) => {
+  const client = useHttp();
+  const { run, ...result } = useAsync<StarType[]>();
+
+  useEffect(() => {
+    run(client("/star", { data: { userId: id } }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
+
+  return result;
+};
+
 const Tab = () => {
   const { user } = useAuth();
   const id = window.location.pathname.split("personal/")[1];
 
   const isOwner = user?._id === id;
 
-  let [param, setParam] = useState<ParamType>({
+  let [param] = useState<ParamType>({
     classFrom: "",
     createBy: id,
     sort: "createTime",
@@ -168,6 +184,8 @@ const Tab = () => {
   let { data: topicList } = useTopic(param);
 
   let navigate = useNavigate();
+
+  let { data: starList } = useStar(id);
 
   return (
     <TabContainer>
@@ -191,11 +209,11 @@ const Tab = () => {
       <ContainterRight>
         <List
           header={<CardTitle>收藏</CardTitle>}
-          dataSource={topicList || []}
+          dataSource={starList || []}
           split={false}
           renderItem={(item) => (
             <List.Item>
-              {/* <ElliP>{item.title || item.content}</ElliP> */}
+              <ElliP>{item.topicId.title || item.topicId.content}</ElliP>
             </List.Item>
           )}
         />
