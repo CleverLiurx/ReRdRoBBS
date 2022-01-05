@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { User } from "types/user";
 import { useDocumentTitle } from "utils";
 import { useHttp } from "utils/http";
@@ -6,7 +6,10 @@ import { useAsync } from "utils/use-async";
 import styled from "@emotion/styled";
 import BGImage from "assets/img/personal-bg.png";
 import { WomanOutlined, ManOutlined } from "@ant-design/icons";
-import { Button, Descriptions } from "antd";
+import { Button, Descriptions, Divider, List } from "antd";
+import { useAuth } from "context/auth-context";
+import { Topic } from "types/topic";
+import { useNavigate } from "react-router";
 
 const useDetails = (_id: string) => {
   const client = useHttp();
@@ -129,8 +132,76 @@ export const PersonalPage = () => {
   );
 };
 
+interface ParamType {
+  classFrom: string;
+  createBy: string;
+  sort: string;
+  page: number;
+  limit: number;
+}
+
+const useTopic = (param: ParamType) => {
+  const client = useHttp();
+  const { run, ...result } = useAsync<Topic[]>();
+
+  useEffect(() => {
+    run(client("/topic", { data: { ...param } }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [param]);
+
+  return result;
+};
+
 const Tab = () => {
-  return <TabContainer>hahah</TabContainer>;
+  const { user } = useAuth();
+  const id = window.location.pathname.split("personal/")[1];
+
+  const isOwner = user?._id === id;
+
+  let [param, setParam] = useState<ParamType>({
+    classFrom: "",
+    createBy: id,
+    sort: "createTime",
+    page: 1,
+    limit: 999,
+  });
+  let { data: topicList } = useTopic(param);
+
+  let navigate = useNavigate();
+
+  return (
+    <TabContainer>
+      <ContainterLeft>
+        <List
+          header={<CardTitle>{isOwner ? "我的文章" : "TA的文章"}</CardTitle>}
+          dataSource={topicList || []}
+          split={false}
+          renderItem={(item) => (
+            <List.Item onClick={() => navigate(`/topic/${item._id}`)}>
+              <ElliP>{item.title || item.content}</ElliP>
+            </List.Item>
+          )}
+        />
+      </ContainterLeft>
+      <ContainterRight>
+        <CardTitle style={{ padding: "12px 0" }}>
+          {isOwner ? "关于我" : "关于TA"}
+        </CardTitle>
+      </ContainterRight>
+      <ContainterRight>
+        <List
+          header={<CardTitle>收藏</CardTitle>}
+          dataSource={topicList || []}
+          split={false}
+          renderItem={(item) => (
+            <List.Item>
+              {/* <ElliP>{item.title || item.content}</ElliP> */}
+            </List.Item>
+          )}
+        />
+      </ContainterRight>
+    </TabContainer>
+  );
 };
 
 const Header = styled.div`
@@ -190,6 +261,33 @@ const RecordItem = styled.div`
 `;
 const TabContainer = styled.div`
   width: 1120px;
-  margin: 10px auto;
+  margin: 20px auto 0;
   background-color: #fff;
+`;
+const ContainterLeft = styled.div`
+  width: 740px;
+  float: left;
+  background-color: #fff;
+  margin-bottom: 15px;
+`;
+const ContainterRight = styled.div`
+  width: 360px;
+  float: right;
+  background-color: #fff;
+  margin-bottom: 15px;
+`;
+const ElliP = styled.p`
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  cursor: pointer;
+  margin: 0 12px;
+  font-size: 16px;
+`;
+const CardTitle = styled.div`
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+  margin-left: 20px;
 `;
