@@ -75,7 +75,7 @@ export const TopicDetail = () => {
                         navigate(`/personal/${topicItem?.createBy._id}`)
                       }
                     >
-                      <Avatar src={topicItem.createBy.avator} alt="Han Solo" />
+                      <Avatar src={topicItem.createBy.avator} alt="" />
                     </span>
                   }
                   content={
