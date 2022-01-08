@@ -146,7 +146,7 @@ const HandleBtn = ({ topicItem }: { topicItem: Topic }) => {
   return (
     <div style={{ margin: "10px" }}>
       <Tooltip
-        key="comment-basic-like"
+        key="comment-basic-parise"
         title={topic.hadParise ? "取消点赞" : "点赞"}
       >
         <span
@@ -171,7 +171,7 @@ const HandleBtn = ({ topicItem }: { topicItem: Topic }) => {
         </span>
       </Tooltip>
       <Tooltip
-        key="comment-basic-like"
+        key="comment-basic-star"
         title={topic.hadStar ? "取消收藏" : "收藏"}
       >
         <span
