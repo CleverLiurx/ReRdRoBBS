@@ -136,7 +136,7 @@ export const TopicList = ({ classFrom = "" }: { classFrom: string }) => {
   );
 
   return (
-    <div id="topic-list" style={{ width: "740px", margin: "20px 0" }}>
+    <div id="topic-list" style={{ width: "740px" }}>
       {topicList &&
         topicList.map((topic, idx) => {
           if (idx === 0) {

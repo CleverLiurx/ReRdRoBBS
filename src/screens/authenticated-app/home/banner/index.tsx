@@ -36,6 +36,7 @@ const BannerContainer = styled.div`
   padding: 20px 18px 20px 19px;
   background: #fff;
   border-radius: 4px;
+  margin-bottom: 20px;
 `;
 const Left = styled.div`
   float: left;
