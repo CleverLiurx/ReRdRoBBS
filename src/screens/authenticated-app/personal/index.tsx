@@ -6,10 +6,11 @@ import { useAsync } from "utils/use-async";
 import styled from "@emotion/styled";
 import BGImage from "assets/img/personal-bg.png";
 import { WomanOutlined, ManOutlined } from "@ant-design/icons";
-import { Button, Descriptions, List } from "antd";
+import { Descriptions, List } from "antd";
 import { useAuth } from "context/auth-context";
 import { Topic } from "types/topic";
 import { useNavigate } from "react-router";
+import { EditInfoModel } from "./edit";
 
 const useDetails = (_id: string) => {
   const client = useHttp();
@@ -39,12 +40,16 @@ export const PersonalPage = () => {
           <div className="avator">
             <img src={user?.avator} alt="" />
           </div>
-          <div className="edit">
-            <Button style={{ color: "#ea540b" }}>编辑个人资料</Button>
-          </div>
+          <EditInfoModel userInfo={user} />
           <div className="user-info">
             <div>
-              <span style={{ fontSize: "2.4rem", color: "#000" }}>
+              <span
+                style={{
+                  fontSize: "2.4rem",
+                  color: "#000",
+                  paddingRight: "8px",
+                }}
+              >
                 {user?.username}
               </span>
               {user?.sex ? (
@@ -205,6 +210,9 @@ const Tab = () => {
         <CardTitle style={{ padding: "12px 0" }}>
           {isOwner ? "关于我" : "关于TA"}
         </CardTitle>
+        <div style={{ padding: "12px", fontSize: "14px" }}>
+          这家伙很懒 什么都没写！
+        </div>
       </ContainterRight>
       <ContainterRight>
         <List
@@ -250,12 +258,6 @@ const Detail = styled.div`
       height: 100%;
       border: 3px solid #fff;
     }
-  }
-
-  .edit {
-    position: absolute;
-    right: 20px;
-    top: 20px;
   }
 
   .user-info {
