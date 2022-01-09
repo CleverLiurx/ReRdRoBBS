@@ -78,7 +78,8 @@ export const RegisterScreen = ({
       });
   };
 
-  const sendSMS = () => {
+  const sendSMS = async () => {
+    await form.validateFields(["phone"]);
     const phone = form.getFieldValue("phone");
     run(client("/un_auth/sms", { data: { phone }, method: "POST" }))
       .then(() => {
@@ -94,19 +95,32 @@ export const RegisterScreen = ({
     <Form onFinish={handleSubmit} form={form}>
       <Form.Item
         name="phone"
-        rules={[{ required: true, message: "请输入手机号" }]}
+        rules={[
+          { required: true, message: "请输入手机号" },
+          {
+            pattern:
+              /^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|18[0-9]|14[57])[0-9]{8}$/,
+            message: "请输入正确的手机号",
+          },
+        ]}
       >
         <Input placeholder={"手机号"} type="text" />
       </Form.Item>
       <Form.Item
         name="password"
-        rules={[{ required: true, message: "请输入密码" }]}
+        rules={[
+          { required: true, message: "请输入密码" },
+          { min: 6, max: 18, message: "请输入6-18位强密码" },
+        ]}
       >
         <Input placeholder={"密码"} type="password" />
       </Form.Item>
       <Form.Item
         name="username"
-        rules={[{ required: true, message: "请输入用户名" }]}
+        rules={[
+          { required: true, message: "请输入用户名" },
+          { min: 2, max: 10, message: "请输入2-10位用户名" },
+        ]}
       >
         <Input placeholder={"用户名"} type="text" />
       </Form.Item>

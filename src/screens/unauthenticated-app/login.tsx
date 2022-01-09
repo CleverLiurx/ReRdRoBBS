@@ -41,7 +41,14 @@ export const LoginScreen = ({
     <Form onFinish={handleSubmit}>
       <Form.Item
         name={"phone"}
-        rules={[{ required: true, message: "请输入手机号" }]}
+        rules={[
+          { required: true, message: "请输入手机号" },
+          {
+            pattern:
+              /^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|18[0-9]|14[57])[0-9]{8}$/,
+            message: "请输入正确的手机号",
+          },
+        ]}
       >
         <Input placeholder={"手机号"} type="text" id={"phone"} />
       </Form.Item>
