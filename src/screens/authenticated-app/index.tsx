@@ -41,7 +41,7 @@ export const AuthenticatedApp = () => {
   return (
     <Container>
       <PageHeader />
-      <Main id="main">
+      <Main>
         <Routes>
           <Route path={"home"} element={<HomePage />} />
           <Route path={"hot-search"} element={<HotSearchPage />} />

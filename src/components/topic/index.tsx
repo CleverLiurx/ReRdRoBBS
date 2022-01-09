@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Card, Dropdown, Menu } from "antd";
 import styled from "@emotion/styled";
 import { DownOutlined } from "@ant-design/icons";
@@ -6,8 +6,7 @@ import { TopicItem } from "./topic-item";
 import { Topic } from "types/topic";
 import { useHttp } from "utils/http";
 import { useAsync } from "utils/use-async";
-// import VirtualList from 'rc-virtual-list';
-import { isElInViewport, useDebounce } from "utils";
+import { isElInViewport } from "utils";
 
 enum Sort {
   createTime = "createTime",
@@ -23,17 +22,16 @@ interface ParamType {
   sort: Sort;
   page: number;
   limit: number;
-  key: number;
 }
-let limit = 0;
+
+// 获取文章列表
 const useProjects = (param: ParamType) => {
   const client = useHttp();
   const { run, ...result } = useAsync<Topic[]>();
 
   useEffect(() => {
     if (!result.isLoading) {
-      limit += 10;
-      run(client("/topic", { data: { ...param, limit } }));
+      run(client("/topic", { data: param }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [param]);
@@ -42,30 +40,45 @@ const useProjects = (param: ParamType) => {
 };
 
 export const TopicList = ({ classFrom = "" }: { classFrom: string }) => {
-  let [param, setParam] = useState<ParamType>({
+  // 监控的dom，此dom出现在视野时说明可能要加载
+  const listenerRef = useRef<HTMLElement>(null);
+
+  // 分页参数
+  const [param, setParam] = useState<ParamType>({
     classFrom,
     createBy: "",
     sort: Sort.createTime,
     page: 1,
     limit: 10,
-    key: 1,
   });
-  const debouncedParam = useDebounce(param, 500);
-  let { data: topicList, isLoading } = useProjects(debouncedParam);
-  const [dom, setDom] = useState<HTMLDivElement | null>(null);
 
-  const handleOnScroll = () => {
-    if (dom && isElInViewport(dom)) {
-      setParam({ ...param, key: param.key + 1 });
-    }
-  };
+  // 显示的总数据
+  const [lazyData, setLazyData] = useState<Topic[]>([]);
+
+  // 每次获取的数据
+  const { data: topicList, isLoading } = useProjects(param);
+
   useEffect(() => {
+    if (topicList && topicList.length > 0) {
+      setLazyData((old) => [...old, ...topicList]);
+    }
+  }, [topicList]);
+
+  useEffect(() => {
+    const handleOnScroll = () => {
+      if (
+        listenerRef.current &&
+        isElInViewport(listenerRef.current) &&
+        !isLoading
+      ) {
+        setParam({ ...param, page: param.page + 1 });
+      }
+    };
     document.addEventListener("scroll", handleOnScroll);
     return () => {
       document.removeEventListener("scroll", handleOnScroll);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dom]);
+  }, [param, isLoading]);
 
   const menu = (
     <Menu>
@@ -128,7 +141,6 @@ export const TopicList = ({ classFrom = "" }: { classFrom: string }) => {
   const HandleBtn = (
     <Dropdown overlay={menu}>
       <div style={{ fontSize: "1.4rem", cursor: "pointer", color: "#666" }}>
-        {/* @ts-ignore */}
         {sortName[param.sort]}
         <DownOutlined />
       </div>
@@ -136,9 +148,9 @@ export const TopicList = ({ classFrom = "" }: { classFrom: string }) => {
   );
 
   return (
-    <div id="topic-list" style={{ width: "740px" }}>
-      {topicList &&
-        topicList.map((topic, idx) => {
+    <div style={{ width: "740px" }}>
+      {lazyData &&
+        lazyData.map((topic, idx) => {
           if (idx === 0) {
             return (
               <Card
@@ -162,8 +174,7 @@ export const TopicList = ({ classFrom = "" }: { classFrom: string }) => {
             );
           }
         })}
-      {/* <LoadTip onClick={() => setParam({...param, page: param.page + 1})}>点击加载更多</LoadTip> */}
-      <LoadTip id="load-more" ref={(dom) => setDom(dom)}>
+      <LoadTip id="load-more" ref={listenerRef as any}>
         {isLoading ? "加载中～" : "没有更多啦"}
       </LoadTip>
     </div>

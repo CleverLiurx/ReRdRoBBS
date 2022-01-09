@@ -94,7 +94,7 @@ export const useDocumentTitle = (title: string, keepOnUnmount = true) => {
   const oldTitle = document.title;
 
   useEffect(() => {
-    document.title = title + "-Liurx";
+    document.title = title + "-刘容新的博客";
   }, [title]);
 
   useEffect(() => {
@@ -128,7 +128,7 @@ export const subset = <
 };
 
 //获取元素是否在可视区域
-export const isElInViewport = (el: HTMLDivElement) => {
+export const isElInViewport = (el: HTMLElement) => {
   var rect = el.getBoundingClientRect();
   return (
     rect.top >= 0 &&
