@@ -54,7 +54,7 @@ export const EditInfoModel = ({ userInfo }: { userInfo: User | null }) => {
             onFinish={handleOk}
             autoComplete="off"
           >
-            <Form.Item>
+            <Form.Item style={{ textAlign: "center", marginLeft: "112px" }}>
               <HeadUpload
                 defaultUrl={user.avator || ""}
                 setUrl={(url) => setUser({ ...user, avator: url })}
@@ -174,7 +174,7 @@ const HeadUpload = ({
   );
 
   return (
-    <Upload
+    <UploadNoBorder
       name="file"
       listType="picture-card"
       className="avatar-uploader"
@@ -185,11 +185,15 @@ const HeadUpload = ({
       withCredentials={true}
     >
       {imageUrl ? (
-        <img src={imageUrl} alt="avatar" style={{ width: "100%" }} />
+        <img
+          src={imageUrl}
+          alt="avatar"
+          style={{ width: "100%", borderRadius: "50%" }}
+        />
       ) : (
         uploadButton
       )}
-    </Upload>
+    </UploadNoBorder>
   );
 };
 
@@ -197,4 +201,10 @@ const Edit = styled(Button)`
   position: absolute;
   right: 20px;
   top: 20px;
+`;
+
+const UploadNoBorder = styled(Upload)`
+  .ant-upload {
+    border: none !important;
+  }
 `;
