@@ -4,7 +4,7 @@ import { Classes } from "types/classes";
 import { useHttp } from "utils/http";
 import { useAsync } from "utils/use-async";
 import styled from "@emotion/styled";
-import { Button, Select } from "antd";
+import { Button, message, Select, Tooltip } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { SmileOutlined, PictureOutlined } from "@ant-design/icons";
 import { useDocumentTitle } from "utils";
@@ -40,6 +40,7 @@ export const ReleaseRapidly = () => {
       data: { ...params },
       method: "POST",
     }).then(() => {
+      message.success("发布成功，审核通过后即可展示");
       navigate("/home");
     });
   };
@@ -100,9 +101,23 @@ export const ReleaseRapidly = () => {
         <div style={{ clear: "both" }}></div>
       </TextBody>
       <div style={{ margin: "20px", textAlign: "right" }}>
-        <Button type="primary" shape="round" onClick={handleSubmit}>
-          发布
-        </Button>
+        <Tooltip
+          title={
+            !params.content || !params.classFrom
+              ? "板块或内容都是必须的哦～"
+              : ""
+          }
+          arrowPointAtCenter
+        >
+          <Button
+            disabled={!params.content || !params.classFrom}
+            type="primary"
+            shape="round"
+            onClick={handleSubmit}
+          >
+            发布
+          </Button>
+        </Tooltip>
       </div>
     </Container>
   );

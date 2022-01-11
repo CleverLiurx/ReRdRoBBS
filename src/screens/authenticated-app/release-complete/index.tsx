@@ -4,7 +4,7 @@ import { Classes } from "types/classes";
 import { useHttp } from "utils/http";
 import { useAsync } from "utils/use-async";
 import styled from "@emotion/styled";
-import { Button, Input, Select } from "antd";
+import { Button, Input, message, Select, Tooltip } from "antd";
 import { useDocumentTitle } from "utils";
 import E from "wangeditor";
 
@@ -67,6 +67,11 @@ export const ReleaseComplete = () => {
   });
 
   const handleSubmit = async () => {
+    const text = editor?.txt.text();
+    if (!text) {
+      message.warning("写点内容吧～");
+      return;
+    }
     client("/topic", {
       data: {
         ...params,
@@ -75,6 +80,7 @@ export const ReleaseComplete = () => {
       },
       method: "POST",
     }).then(() => {
+      message.success("发布成功，审核通过后即可展示");
       navigate("/home");
     });
   };
@@ -138,9 +144,19 @@ export const ReleaseComplete = () => {
         </Select>
       </div>
       <div style={{ margin: "20px", textAlign: "right" }}>
-        <Button type="primary" shape="round" onClick={handleSubmit}>
-          发布
-        </Button>
+        <Tooltip
+          title={!params.classFrom ? "选择个合适的板块吧" : ""}
+          arrowPointAtCenter
+        >
+          <Button
+            disabled={!params.classFrom}
+            type="primary"
+            shape="round"
+            onClick={handleSubmit}
+          >
+            发布
+          </Button>
+        </Tooltip>
       </div>
     </Container>
   );
