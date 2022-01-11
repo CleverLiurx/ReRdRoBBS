@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { User } from "types/user";
-import { Modal, Button, Form, Input, Radio, DatePicker } from "antd";
+import { Modal, Button, Form, Input, Radio, DatePicker, Upload } from "antd";
 import moment from "moment";
 import { useHttp } from "utils/http";
+import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 
 export const EditInfoModel = ({ userInfo }: { userInfo: User | null }) => {
   const client = useHttp();
@@ -53,6 +54,12 @@ export const EditInfoModel = ({ userInfo }: { userInfo: User | null }) => {
             onFinish={handleOk}
             autoComplete="off"
           >
+            <Form.Item>
+              <HeadUpload
+                defaultUrl={user.avator || ""}
+                setUrl={(url) => setUser({ ...user, avator: url })}
+              />
+            </Form.Item>
             <Form.Item
               label="用户名"
               name="username"
@@ -121,6 +128,68 @@ export const EditInfoModel = ({ userInfo }: { userInfo: User | null }) => {
         ) : null}
       </Modal>
     </>
+  );
+};
+
+const HeadUpload = ({
+  setUrl,
+  defaultUrl,
+}: {
+  defaultUrl: string;
+  setUrl: (url: string) => void;
+}) => {
+  const action = process.env.REACT_APP_API_URL + "/file";
+  let [loading, setLoading] = useState(false);
+  let [imageUrl, setImageUrl] = useState(defaultUrl);
+
+  const getBase64 = (
+    img: Blob,
+    callback: { (imageUrl: any): any; (arg0: string | ArrayBuffer | null): any }
+  ) => {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => callback(reader.result));
+    reader.readAsDataURL(img);
+  };
+
+  // @ts-ignore
+  const handleChange = (info) => {
+    if (info.file.status === "uploading") {
+      setLoading(true);
+      return;
+    }
+    if (info.file.status === "done") {
+      setUrl(info.file.response.data.url);
+      getBase64(info.file.originFileObj, (url) => {
+        setLoading(false);
+        setImageUrl(url);
+      });
+    }
+  };
+
+  const uploadButton = (
+    <div>
+      {loading ? <LoadingOutlined /> : <PlusOutlined />}
+      <div style={{ marginTop: 8 }}>上传</div>
+    </div>
+  );
+
+  return (
+    <Upload
+      name="file"
+      listType="picture-card"
+      className="avatar-uploader"
+      showUploadList={false}
+      action={action}
+      accept="image/*"
+      onChange={handleChange}
+      withCredentials={true}
+    >
+      {imageUrl ? (
+        <img src={imageUrl} alt="avatar" style={{ width: "100%" }} />
+      ) : (
+        uploadButton
+      )}
+    </Upload>
   );
 };
 
