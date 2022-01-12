@@ -402,7 +402,12 @@ const Editor = ({
           发布
         </ReplyBtn>
       </Contral>
-      {emoSelect ? <Picker onSelect={(emo) => addEmo(emo)} /> : null}
+      {emoSelect ? (
+        <Picker
+          style={{ position: "absolute", top: "95px", zIndex: 1 }}
+          onSelect={(emo) => addEmo(emo)}
+        />
+      ) : null}
       <div style={{ clear: "both" }}></div>
     </TextBody>
   );
@@ -439,6 +444,7 @@ const ContainerLeft = styled.div`
 `;
 
 const TextBody = styled.div`
+  position: relative;
   border-radius: 5px;
   height: 95px;
   border: 1px solid #eee;
