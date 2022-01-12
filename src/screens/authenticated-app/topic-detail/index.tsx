@@ -9,10 +9,11 @@ import { Reply, Topic } from "types/topic";
 import { UserMini } from "types/user";
 import PariseImg from "assets/img/parise.png";
 import starImg from "assets/img/star.png";
-import { SmileOutlined, PictureOutlined } from "@ant-design/icons";
+import { SmileOutlined } from "@ant-design/icons";
 import TextArea from "antd/lib/input/TextArea";
 import E from "wangeditor";
 import { useNavigate } from "react-router";
+import { EmojiData, Picker } from "emoji-mart";
 
 let editor: E | null = null;
 
@@ -354,6 +355,33 @@ const Editor = ({
       callback && callback(data);
     });
   };
+
+  let [emoSelect, setEmoSelect] = useState(false);
+  const addEmo = (emo: EmojiData) => {
+    // @ts-ignore
+    const textEmo = emo.native;
+    const tc = document.getElementById("text-ip");
+    // @ts-ignore
+    const tclen = tc.value.length;
+    // @ts-ignore
+    tc.focus();
+    // @ts-ignore
+    if (typeof document.selection != "undefined") {
+      // @ts-ignore
+      document.selection.createRange().text = str;
+    } else {
+      // @ts-ignore
+      const text =
+        // @ts-ignore
+        tc.value.substr(0, tc.selectionStart) +
+        textEmo +
+        // @ts-ignore
+        tc.value.substring(tc.selectionStart, tclen);
+      setValue(text);
+    }
+    setEmoSelect(false);
+  };
+
   return (
     <TextBody>
       <TextArea
@@ -362,14 +390,19 @@ const Editor = ({
         placeholder="评论一下～"
         value={value}
         onChange={(e) => setValue(e.target.value)}
+        id="text-ip"
       />
       <Contral>
-        <SmileOutlined style={{ paddingRight: "20px" }} />
-        <PictureOutlined />
+        <SmileOutlined
+          onClick={() => setEmoSelect(!emoSelect)}
+          style={{ paddingRight: "20px" }}
+        />
+        {/* <PictureOutlined /> */}
         <ReplyBtn onClick={publishReply} type="primary" shape="round">
           发布
         </ReplyBtn>
       </Contral>
+      {emoSelect ? <Picker onSelect={(emo) => addEmo(emo)} /> : null}
       <div style={{ clear: "both" }}></div>
     </TextBody>
   );

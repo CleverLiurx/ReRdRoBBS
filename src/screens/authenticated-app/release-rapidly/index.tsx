@@ -8,6 +8,8 @@ import { Button, message, Select, Tooltip } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { SmileOutlined, PictureOutlined } from "@ant-design/icons";
 import { useDocumentTitle } from "utils";
+import "emoji-mart/css/emoji-mart.css";
+import { EmojiData, Picker } from "emoji-mart";
 
 const { Option } = Select;
 
@@ -43,6 +45,32 @@ export const ReleaseRapidly = () => {
       message.success("发布成功，审核通过后即可展示");
       navigate("/home");
     });
+  };
+
+  let [emoSelect, setEmoSelect] = useState(false);
+  const addEmo = (emo: EmojiData) => {
+    // @ts-ignore
+    const textEmo = emo.native;
+    const tc = document.getElementById("text-ip");
+    // @ts-ignore
+    const tclen = tc.value.length;
+    // @ts-ignore
+    tc.focus();
+    // @ts-ignore
+    if (typeof document.selection != "undefined") {
+      // @ts-ignore
+      document.selection.createRange().text = str;
+    } else {
+      // @ts-ignore
+      const text =
+        // @ts-ignore
+        tc.value.substr(0, tc.selectionStart) +
+        textEmo +
+        // @ts-ignore
+        tc.value.substring(tc.selectionStart, tclen);
+      setParams({ ...params, content: text });
+    }
+    setEmoSelect(false);
   };
 
   return (
@@ -87,11 +115,14 @@ export const ReleaseRapidly = () => {
           autoSize={{ minRows: 7, maxRows: 16 }}
           bordered={false}
           placeholder="客官～写点什么吧QAQ"
+          id="text-ip"
         />
         <Contral>
-          <SmileOutlined />
-          <span style={{ fontSize: "1.4rem", padding: "0 22px 0 5px" }}>
-            表情
+          <span onClick={() => setEmoSelect(!emoSelect)}>
+            <SmileOutlined />
+            <span style={{ fontSize: "1.4rem", padding: "0 22px 0 5px" }}>
+              表情
+            </span>
           </span>
           <PictureOutlined />
           <span style={{ fontSize: "1.4rem", padding: "0 22px 0 5px" }}>
@@ -119,6 +150,7 @@ export const ReleaseRapidly = () => {
           </Button>
         </Tooltip>
       </div>
+      {emoSelect ? <Picker onSelect={(emo) => addEmo(emo)} /> : null}
     </Container>
   );
 };

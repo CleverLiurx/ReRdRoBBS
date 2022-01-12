@@ -38,6 +38,12 @@ const editorConfig = {
     "redo",
   ],
   showFullScreen: false,
+  uploadImgMaxLength: 1,
+  withCredentials: true,
+  uploadImgServer: process.env.REACT_APP_API_URL + "/file",
+  uploadImgParams: { returnArray: "1" },
+  uploadFileName: "file",
+  showLinkImg: false,
 };
 
 const useData = () => {
@@ -86,17 +92,20 @@ export const ReleaseComplete = () => {
   };
 
   useEffect(() => {
-    // 注：class写法需要在componentDidMount 创建编辑器
     editor = new E("#editor");
 
     editor.config.menus = editorConfig.menus;
     editor.config.showFullScreen = editorConfig.showFullScreen;
+    editor.config.uploadImgMaxLength = editorConfig.uploadImgMaxLength;
+    editor.config.withCredentials = editorConfig.withCredentials;
+    editor.config.uploadImgServer = editorConfig.uploadImgServer;
+    editor.config.uploadImgParams = editorConfig.uploadImgParams;
+    editor.config.uploadFileName = editorConfig.uploadFileName;
+    editor.config.showLinkImg = editorConfig.showLinkImg;
 
-    /**一定要创建 */
     editor.create();
 
     return () => {
-      // 组件销毁时销毁编辑器  注：class写法需要在componentWillUnmount中调用
       editor?.destroy();
     };
   }, []);

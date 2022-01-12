@@ -8,8 +8,7 @@ import { Navigate, Route, Routes } from "react-router";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { resetRoute } from "utils";
 import { HomePage } from "./home";
-import { HotSearchPage } from "./hot-search";
-import { AnonymousPage } from "./anonymous";
+import { TerminalPage } from "./terminal";
 import { SearchOutlined } from "@ant-design/icons";
 import { TopicDetail } from "./topic-detail";
 import { ReleaseRapidly } from "./release-rapidly";
@@ -44,8 +43,7 @@ export const AuthenticatedApp = () => {
       <Main>
         <Routes>
           <Route path={"home"} element={<HomePage />} />
-          <Route path={"hot-search"} element={<HotSearchPage />} />
-          <Route path={"anonymous"} element={<AnonymousPage />} />
+          <Route path={"terminal"} element={<TerminalPage />} />
           <Route path={"topic/:id"} element={<TopicDetail />} />
           <Route path={"release-rapidly"} element={<ReleaseRapidly />} />
           <Route path={"release-complete"} element={<ReleaseComplete />} />
@@ -104,19 +102,13 @@ const PageHeader = () => {
             cursor={"pointer"}
           />
           <LinkItem to={"home"} className={path === "home" ? "active" : ""}>
-            全部
+            文章
           </LinkItem>
           <LinkItem
-            to={"hot-search"}
-            className={path === "hot-search" ? "active" : ""}
+            to={"terminal"}
+            className={path === "terminal" ? "active" : ""}
           >
-            热榜
-          </LinkItem>
-          <LinkItem
-            to={"anonymous"}
-            className={path === "anonymous" ? "active" : ""}
-          >
-            匿名
+            工具
           </LinkItem>
         </HeaderLeft>
         <HeaderRight>
