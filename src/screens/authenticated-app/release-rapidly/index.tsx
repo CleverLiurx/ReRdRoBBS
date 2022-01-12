@@ -4,7 +4,7 @@ import { Classes } from "types/classes";
 import { useHttp } from "utils/http";
 import { useAsync } from "utils/use-async";
 import styled from "@emotion/styled";
-import { Button, message, Select, Tooltip } from "antd";
+import { Button, message, Select, Tooltip, Upload, Image } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { SmileOutlined, PictureOutlined } from "@ant-design/icons";
 import { useDocumentTitle } from "utils";
@@ -35,6 +35,7 @@ export const ReleaseRapidly = () => {
     anon: false,
     classFrom: "",
     content: "",
+    topicImage: [],
   });
 
   const handleSubmit = async () => {
@@ -71,6 +72,35 @@ export const ReleaseRapidly = () => {
       setParams({ ...params, content: text });
     }
     setEmoSelect(false);
+  };
+
+  let [fileList, setFileList] = useState([]);
+  const props = {
+    name: "file",
+    action: process.env.REACT_APP_API_URL + "/file",
+    withCredentials: true,
+    accept: "image/*",
+    showUploadList: false,
+    // @ts-ignore
+    onChange(info) {
+      if (info.file.status === "done") {
+        // @ts-ignore
+        setParams({
+          ...params,
+          topicImage: [...fileList, info.file.response.data],
+        });
+        // @ts-ignore
+        setFileList((list) => [...list, info.file.response.data]);
+      }
+    },
+  };
+  const deleteImg = (idx: number) => {
+    const list = [
+      ...fileList.slice(0, idx),
+      ...fileList.slice(idx + 1, fileList.length),
+    ];
+    setParams({ ...params, topicImage: list });
+    setFileList(list);
   };
 
   return (
@@ -118,19 +148,49 @@ export const ReleaseRapidly = () => {
           id="text-ip"
         />
         <Contral>
-          <span onClick={() => setEmoSelect(!emoSelect)}>
+          <div>
+            <Image.PreviewGroup>
+              {fileList.map((img, idx) => (
+                <Image
+                  // @ts-ignore
+                  key={img.url}
+                  width={80}
+                  height={80}
+                  style={{ padding: "5px", borderRadius: "12px" }}
+                  // @ts-ignore
+                  src={img.url}
+                  preview={false}
+                  onClick={() => deleteImg(idx)}
+                />
+              ))}
+            </Image.PreviewGroup>
+          </div>
+          <span
+            style={{ cursor: "pointer" }}
+            onClick={() => setEmoSelect(!emoSelect)}
+          >
             <SmileOutlined />
             <span style={{ fontSize: "1.4rem", padding: "0 22px 0 5px" }}>
               表情
             </span>
           </span>
-          <PictureOutlined />
-          <span style={{ fontSize: "1.4rem", padding: "0 22px 0 5px" }}>
-            图片
-          </span>
+          <Upload {...props}>
+            <span style={{ cursor: "pointer" }}>
+              <PictureOutlined />
+              <span style={{ fontSize: "1.4rem", padding: "0 22px 0 5px" }}>
+                图片
+              </span>
+            </span>
+          </Upload>
         </Contral>
         <div style={{ clear: "both" }}></div>
       </TextBody>
+      {emoSelect ? (
+        <Picker
+          style={{ position: "absolute" }}
+          onSelect={(emo) => addEmo(emo)}
+        />
+      ) : null}
       <div style={{ margin: "20px", textAlign: "right" }}>
         <Tooltip
           title={
@@ -150,7 +210,6 @@ export const ReleaseRapidly = () => {
           </Button>
         </Tooltip>
       </div>
-      {emoSelect ? <Picker onSelect={(emo) => addEmo(emo)} /> : null}
     </Container>
   );
 };
