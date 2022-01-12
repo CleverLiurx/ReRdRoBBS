@@ -84,9 +84,9 @@ export const ReleaseRapidly = () => {
     // @ts-ignore
     onChange(info) {
       if (info.file.status === "done") {
-        // @ts-ignore
         setParams({
           ...params,
+          // @ts-ignore
           topicImage: [...fileList, info.file.response.data],
         });
         // @ts-ignore
