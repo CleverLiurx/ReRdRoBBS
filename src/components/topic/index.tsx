@@ -88,7 +88,8 @@ export const TopicList = ({
       if (
         listenerRef.current &&
         isElInViewport(listenerRef.current) &&
-        !isLoading
+        !isLoading &&
+        topicList?.length
       ) {
         setParam({ ...param, page: param.page + 1 });
       }
@@ -97,7 +98,7 @@ export const TopicList = ({
     return () => {
       document.removeEventListener("scroll", handleOnScroll);
     };
-  }, [param, isLoading]);
+  }, [param, isLoading, topicList]);
 
   const menu = (
     <Menu>

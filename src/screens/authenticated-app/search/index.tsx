@@ -7,6 +7,7 @@ import { TopicList } from "components/topic";
 
 const { Search } = Input;
 
+// 解析url参数
 const getQueryString = (name: string) => {
   var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
   var r = window.location.search.substr(1).match(reg);
@@ -14,6 +15,7 @@ const getQueryString = (name: string) => {
   return "";
 };
 
+// 获取替换url参数
 const replaceParamVal = (par: string, par_value: string) => {
   const destiny = window.location.href;
   var pattern = par + "=([^&]*)";
@@ -32,9 +34,9 @@ const replaceParamVal = (par: string, par_value: string) => {
   }
 };
 
+// 无感更新url
 const updateUrl = (key: string, value: string) => {
   var newurl = replaceParamVal(key, value);
-  //向当前url添加参数，没有历史记录
   window.history.replaceState(
     {
       path: newurl,
@@ -53,7 +55,7 @@ export const SearchPage = () => {
   };
 
   return (
-    <div style={{ width: "100%", minHeight: "100vh" }}>
+    <div style={{ width: "100%" }}>
       <SearchContainer>
         <SoftwareLogo
           onClick={resetRoute}
