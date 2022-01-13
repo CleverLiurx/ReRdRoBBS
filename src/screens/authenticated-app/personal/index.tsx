@@ -220,7 +220,7 @@ const Tab = () => {
           dataSource={starList || []}
           split={false}
           renderItem={(item) => (
-            <List.Item>
+            <List.Item onClick={() => navigate(`/topic/${item.topicId._id}`)}>
               <ElliP>{item.topicId.title || item.topicId.content}</ElliP>
             </List.Item>
           )}
