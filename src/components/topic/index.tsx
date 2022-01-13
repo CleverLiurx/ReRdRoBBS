@@ -22,6 +22,7 @@ interface ParamType {
   sort: Sort;
   page: number;
   limit: number;
+  kw: string;
 }
 
 // 获取文章列表
@@ -39,7 +40,13 @@ const useProjects = (param: ParamType) => {
   return result;
 };
 
-export const TopicList = ({ classFrom = "" }: { classFrom: string }) => {
+export const TopicList = ({
+  classFrom = "",
+  kw = "",
+}: {
+  classFrom?: string;
+  kw?: string;
+}) => {
   // 监控的dom，此dom出现在视野时说明可能要加载
   const listenerRef = useRef<HTMLElement>(null);
 
@@ -50,7 +57,12 @@ export const TopicList = ({ classFrom = "" }: { classFrom: string }) => {
     sort: Sort.createTime,
     page: 1,
     limit: 10,
+    kw,
   });
+
+  useEffect(() => {
+    setParam((old) => ({ ...old, kw }));
+  }, [kw]);
 
   // 显示的总数据
   const [lazyData, setLazyData] = useState<Topic[]>([]);

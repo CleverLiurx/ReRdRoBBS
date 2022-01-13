@@ -2,9 +2,6 @@
 import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
-import LeftImg from "assets/img/banner-1.png";
-import RighrImg1 from "assets/img/banner-2.jpg";
-import RighrImg2 from "assets/img/banner-3.jpg";
 import { useNavigate } from "react-router";
 import { useHttp } from "utils/http";
 import { useAsync } from "utils/use-async";

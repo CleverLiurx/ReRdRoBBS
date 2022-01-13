@@ -15,15 +15,7 @@ import { ReleaseRapidly } from "./release-rapidly";
 import { ReleaseComplete } from "./release-complete";
 import { ClassPage } from "./class";
 import { PersonalPage } from "./personal";
-const suffix = (
-  <SearchOutlined
-    style={{
-      fontSize: 16,
-      color: "#ccc",
-    }}
-    className="btn"
-  />
-);
+
 /**
  * grid 和 flex 各自的应用场景
  * 1. 要考虑，是一维布局 还是 二维布局
@@ -91,6 +83,24 @@ const PageHeader = () => {
   const { user } = useAuth();
   const [path, setPath] = useState("");
   usePath(setPath);
+
+  let [searchVal, setSearchVal] = useState("");
+
+  const suffix = (
+    <SearchOutlined
+      style={{
+        fontSize: 16,
+        color: "#ccc",
+      }}
+      onClick={() => openSearchPage(searchVal)}
+      className="btn"
+    />
+  );
+
+  const openSearchPage = (kw: string) => {
+    window.open(`/search?kw=${kw}`, "_black");
+  };
+
   return (
     <div style={{ height: "64px" }}>
       <Header between={true}>
@@ -112,7 +122,13 @@ const PageHeader = () => {
           </LinkItem>
         </HeaderLeft>
         <HeaderRight>
-          <CircleInput placeholder="搜索文章标题" suffix={suffix} />
+          <CircleInput
+            value={searchVal}
+            onChange={(e) => setSearchVal(e.target.value)}
+            onPressEnter={(e) => openSearchPage(searchVal)}
+            placeholder="搜索文章标题"
+            suffix={suffix}
+          />
           {user ? (
             <Dropdown
               overlay={

@@ -13,7 +13,7 @@ export const HomePage = () => {
     <Main>
       <MainContainterLeft>
         <Banner></Banner>
-        <TopicList classFrom="" />
+        <TopicList />
       </MainContainterLeft>
       <MainContainterRight>
         <EditAction />
