@@ -60,8 +60,15 @@ export const TopicList = ({ classFrom = "" }: { classFrom: string }) => {
 
   useEffect(() => {
     if (topicList && topicList.length > 0) {
-      setLazyData((old) => [...old, ...topicList]);
+      if (param.page === 1) {
+        // 切换排序
+        setLazyData(topicList);
+      } else {
+        // 加载更多
+        setLazyData((old) => [...old, ...topicList]);
+      }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [topicList]);
 
   useEffect(() => {
@@ -85,7 +92,7 @@ export const TopicList = ({ classFrom = "" }: { classFrom: string }) => {
       <Menu.Item key={"k1"}>
         <DrowItem
           onClick={() =>
-            setParam({ ...param, limit: 10, sort: Sort.repliedTime })
+            setParam({ ...param, page: 1, limit: 10, sort: Sort.repliedTime })
           }
         >
           最新回复
@@ -94,7 +101,7 @@ export const TopicList = ({ classFrom = "" }: { classFrom: string }) => {
       <Menu.Item key={"k2"}>
         <DrowItem
           onClick={() =>
-            setParam({ ...param, limit: 10, sort: Sort.createTime })
+            setParam({ ...param, page: 1, limit: 10, sort: Sort.createTime })
           }
         >
           发布时间
@@ -103,7 +110,7 @@ export const TopicList = ({ classFrom = "" }: { classFrom: string }) => {
       <Menu.Item key={"k3"}>
         <DrowItem
           onClick={() =>
-            setParam({ ...param, limit: 10, sort: Sort.replyCount })
+            setParam({ ...param, page: 1, limit: 10, sort: Sort.replyCount })
           }
         >
           回复数
@@ -112,7 +119,7 @@ export const TopicList = ({ classFrom = "" }: { classFrom: string }) => {
       <Menu.Item key={"k4"}>
         <DrowItem
           onClick={() =>
-            setParam({ ...param, limit: 10, sort: Sort.praiseCount })
+            setParam({ ...param, page: 1, limit: 10, sort: Sort.praiseCount })
           }
         >
           点赞数
@@ -121,7 +128,7 @@ export const TopicList = ({ classFrom = "" }: { classFrom: string }) => {
       <Menu.Item key={"k5"}>
         <DrowItem
           onClick={() =>
-            setParam({ ...param, limit: 10, sort: Sort.praiseCount })
+            setParam({ ...param, page: 1, limit: 10, sort: Sort.praiseCount })
           }
         >
           收藏数

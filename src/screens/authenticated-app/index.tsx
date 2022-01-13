@@ -112,7 +112,7 @@ const PageHeader = () => {
           </LinkItem>
         </HeaderLeft>
         <HeaderRight>
-          <CircleInput placeholder="搜索标题" suffix={suffix} />
+          <CircleInput placeholder="搜索文章标题" suffix={suffix} />
           {user ? (
             <Dropdown
               overlay={
