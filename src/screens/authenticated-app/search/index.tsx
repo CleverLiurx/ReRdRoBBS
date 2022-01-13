@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Input } from "antd";
 import { ReactComponent as SoftwareLogo } from "assets/img/logo-name.svg";
 import styled from "@emotion/styled";
 import { resetRoute } from "utils";
 import { TopicList } from "components/topic";
-import { Link } from "react-router-dom";
 
 const { Search } = Input;
 
 const getQueryString = (name: string) => {
   var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
   var r = window.location.search.substr(1).match(reg);
-  if (r != null) return unescape(r[2]);
+  if (r != null) return decodeURI(r[2]);
   return "";
 };
 
@@ -21,6 +20,7 @@ const replaceParamVal = (par: string, par_value: string) => {
   var replaceText = par + "=" + par_value;
   if (destiny.match(pattern)) {
     var tmp = "/\\" + par + "=[^&]*/";
+    // eslint-disable-next-line
     tmp = destiny.replace(eval(tmp), replaceText);
     return tmp;
   } else {
@@ -50,7 +50,6 @@ export const SearchPage = () => {
   const onSearch = (value: string) => {
     setKeywords(value);
     updateUrl("kw", value);
-    console.log(replaceParamVal("kw", value));
   };
 
   return (
