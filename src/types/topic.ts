@@ -37,4 +37,6 @@ export interface Topic {
 
   status: boolean;
   createTime: string;
+
+  focusUrl: string;
 }

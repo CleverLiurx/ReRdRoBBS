@@ -1,31 +1,61 @@
 /* @jsxImportSource @emotion/react */
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 import LeftImg from "assets/img/banner-1.png";
 import RighrImg1 from "assets/img/banner-2.jpg";
 import RighrImg2 from "assets/img/banner-3.jpg";
+import { useNavigate } from "react-router";
+import { useHttp } from "utils/http";
+import { useAsync } from "utils/use-async";
+import { Topic } from "types/topic";
 
 export const Banner = () => {
+  const navigate = useNavigate();
+  const client = useHttp();
+  const { run, ...result } = useAsync<Topic[]>();
+
+  useEffect(() => {
+    run(client("/topic", { data: { isFocus: true } }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const focusList = result.data;
+
   return (
     <BannerContainer>
-      <Left>
-        <div css={leftStyle}></div>
-        <Title>震惊！矿大某研究生竟然...</Title>
-      </Left>
-      <Right>
-        <div css={rightStyle} style={{ backgroundImage: `url(${RighrImg1})` }}>
-          <MiniTitle>
-            <span>恭喜我校某同学获得大奖</span>
-          </MiniTitle>
-        </div>
-        <div css={rightStyle} style={{ backgroundImage: `url(${RighrImg2})` }}>
-          <MiniTitle>
-            <span>校长你好呀</span>
-          </MiniTitle>
-        </div>
-      </Right>
-      <div style={{ clear: "both" }}></div>
+      {focusList && focusList.length >= 3 ? (
+        <>
+          <Left onClick={() => navigate(`/topic/${focusList[0]._id}`)}>
+            <div
+              css={leftStyle}
+              style={{ backgroundImage: `url(${focusList[0].focusUrl})` }}
+            ></div>
+            <Title>{focusList[0].title}</Title>
+          </Left>
+          <Right>
+            <div
+              css={rightStyle}
+              style={{ backgroundImage: `url(${focusList[1].focusUrl})` }}
+              onClick={() => navigate(`/topic/${focusList[1]._id}`)}
+            >
+              <MiniTitle>
+                <span>{focusList[1].title}</span>
+              </MiniTitle>
+            </div>
+            <div
+              css={rightStyle}
+              style={{ backgroundImage: `url(${focusList[2].focusUrl})` }}
+              onClick={() => navigate(`/topic/${focusList[2]._id}`)}
+            >
+              <MiniTitle>
+                <span>{focusList[2].title}</span>
+              </MiniTitle>
+            </div>
+          </Right>
+          <div style={{ clear: "both" }}></div>
+        </>
+      ) : null}
     </BannerContainer>
   );
 };
@@ -53,7 +83,6 @@ const Right = styled.div`
 const leftStyle = css`
   width: 100%;
   height: 100%;
-  background-image: url(${LeftImg});
   background-size: 100% 100%;
   border-radius: 5px;
 `;
