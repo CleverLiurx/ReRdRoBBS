@@ -1,5 +1,13 @@
 ## 关于
 
+我是一个研一前端小菜鸡\
+这是我的博客[<传送地址>](https://www.bayuechuqi.com)
+
+## 技术栈
+
+前端：`React17`、`antd`、`typesctipt` >>> [GitHub](https://github.com/CleverLiurx/ReRdRoBBS) [gitee](https://gitee.com/CleverLiurx/ReRdRoBBS)\
+后端：`Node`、`Koa2`、`MongoDB` >>> [GitHub](https://github.com/CleverLiurx/NoMoKoBBS) [gitee](https://gitee.com/CleverLiurx/NoMoKoBBS)
+
 ## 展望
 
 这里将有丰富的主题供你选用\
@@ -15,10 +23,10 @@
 - 完整发布 ✅
 - 个人主页 ✅
 - 主题色统一变量管理 ✅
-- API 统一管理
 - 评论功能以及评论框 style ✅
-- 工具
+- 工具 ✅
 - 搜索 ✅
+- API 统一管理
 - SEO
 
 ## 待解决的问题/bug
@@ -54,3 +62,7 @@ git commit -m "fix: some messag"
   'test'        #添加测试或者修改现有测试
 ];
 ```
+
+## 写在最后
+
+第一次学习 React 用于练习的项目，有很多问题，欢迎各路大佬指正！
