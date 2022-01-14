@@ -102,7 +102,7 @@ const PageHeader = () => {
   };
 
   return (
-    <div style={{ height: "64px" }}>
+    <div style={{ height: "64px", zIndex: 999 }}>
       <Header between={true}>
         <HeaderLeft gap={true}>
           <SoftwareLogo
