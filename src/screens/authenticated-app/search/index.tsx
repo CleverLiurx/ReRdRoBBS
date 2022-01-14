@@ -1,9 +1,11 @@
-import React, { useState } from "react";
-import { Input } from "antd";
+import React, { useEffect, useState } from "react";
+import { Input, List } from "antd";
 import { ReactComponent as SoftwareLogo } from "assets/img/logo-name.svg";
 import styled from "@emotion/styled";
 import { resetRoute } from "utils";
 import { TopicList } from "components/topic";
+import { useHttp } from "utils/http";
+import { useAsync } from "utils/use-async";
 
 const { Search } = Input;
 
@@ -46,13 +48,33 @@ const updateUrl = (key: string, value: string) => {
   );
 };
 
+interface HotSearch {
+  keywords: string;
+}
+// 获取热搜词
+const useHotSearch = () => {
+  const client = useHttp();
+  const { run, ...result } = useAsync<HotSearch[]>();
+
+  useEffect(() => {
+    run(client("/search"));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return result;
+};
+
 export const SearchPage = () => {
   let [keywords, setKeywords] = useState(getQueryString("kw"));
+  let [kw, setKw] = useState(getQueryString("kw"));
 
   const onSearch = (value: string) => {
+    setKw(value);
     setKeywords(value);
     updateUrl("kw", value);
   };
+
+  const { data: hotSearch } = useHotSearch();
 
   return (
     <div style={{ width: "100%" }}>
@@ -69,14 +91,41 @@ export const SearchPage = () => {
           enterButton="搜索一下"
           size="large"
           onSearch={onSearch}
-          defaultValue={keywords}
+          value={keywords}
+          onChange={(e) => setKeywords(e.target.value)}
         />
       </SearchContainer>
       <Main>
         <MainContainterLeft>
-          <TopicList kw={keywords} />
+          <TopicList kw={kw} />
         </MainContainterLeft>
-        <MainContainterRight>{/* 热搜 */}</MainContainterRight>
+        <MainContainterRight>
+          <List
+            style={{ backgroundColor: "#FFF" }}
+            size="small"
+            header={<h4 style={{ paddingLeft: "7px" }}>热搜词</h4>}
+            bordered={false}
+            dataSource={hotSearch || []}
+            renderItem={(item, idx) => (
+              <List.Item onClick={() => onSearch(item.keywords)}>
+                <span style={{ cursor: "pointer" }}>
+                  <span
+                    style={
+                      idx < 3
+                        ? { color: "#f26d5f", fontWeight: 800 }
+                        : { color: "#ff8200" }
+                    }
+                  >
+                    {idx + 1}
+                  </span>
+                  <span style={{ paddingLeft: "12px", fontSize: "12px" }}>
+                    {item.keywords}
+                  </span>
+                </span>
+              </List.Item>
+            )}
+          />
+        </MainContainterRight>
         <div style={{ clear: "both" }}></div>
       </Main>
     </div>

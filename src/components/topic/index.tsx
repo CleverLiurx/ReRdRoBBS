@@ -32,7 +32,7 @@ const useProjects = (param: ParamType) => {
 
   useEffect(() => {
     if (!result.isLoading) {
-      run(client("/topic", { data: param }));
+      run(client("/topic", { data: { ...param, kw: decodeURI(param.kw) } }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [param]);
