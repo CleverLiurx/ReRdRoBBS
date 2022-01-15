@@ -15,6 +15,8 @@
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "@wangeditor/editor": "^0.13.6",
+    "@wangeditor/editor-for-react": "^0.6.19",
     "antd": "^4.17.2",
     "antd-img-crop": "^4.0.2",
     "craco-less": "^1.20.0",
