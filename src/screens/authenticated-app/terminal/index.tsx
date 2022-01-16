@@ -135,6 +135,7 @@ const EditDialog = () => {
     client("/terminal", { data: term, method: "POST" }).then(() => {
       setVisible(false);
       setcCnfirmLoading(false);
+      message.success("新增成功，等待管理员审核");
     });
   };
 
@@ -187,7 +188,7 @@ const EditDialog = () => {
         />
       </PageFixed>
       <Modal
-        title="编辑个人资料"
+        title="新增命令"
         visible={visible}
         onCancel={() => setVisible(false)}
         width={520}
@@ -277,7 +278,7 @@ const EditDialog = () => {
               htmlType="submit"
               loading={confirmLoading}
             >
-              确认修改
+              确认
             </Button>
           </Form.Item>
         </Form>

@@ -11,7 +11,7 @@ import PariseImg from "assets/img/parise.png";
 import starImg from "assets/img/star.png";
 import { SmileOutlined } from "@ant-design/icons";
 import TextArea from "antd/lib/input/TextArea";
-import { MyEditor } from "components/editor";
+// import { MyEditor } from "components/editor";
 import { useNavigate } from "react-router";
 import { EmojiData, Picker } from "emoji-mart";
 
@@ -62,15 +62,27 @@ export const TopicDetail = () => {
                     <>
                       {topicItem.richContent ? (
                         <>
-                          <h2 style={{ fontSize: "20px", marginTop: "20px" }}>
+                          <h2
+                            style={{
+                              fontSize: "28px",
+                              margin: "20px 0",
+                              fontWeight: 800,
+                            }}
+                          >
                             {topicItem.title}
                           </h2>
-                          <MyEditor
+                          {/* <MyEditor
                             readOnly={true}
                             defaultText={
                               topicItem.richContent || topicItem.content
                             }
-                          />
+                          /> */}
+                          <p
+                            dangerouslySetInnerHTML={{
+                              __html:
+                                topicItem.richContent || topicItem.content,
+                            }}
+                          ></p>
                         </>
                       ) : (
                         <>
