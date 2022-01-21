@@ -34,14 +34,14 @@ export const AuthenticatedApp = () => {
       <PageHeader />
       <Main>
         <Routes>
-          <Route path={"home"} element={<HomePage />} />
+          <Route path={""} element={<HomePage />} />
           <Route path={"terminal"} element={<TerminalPage />} />
           <Route path={"topic/:id"} element={<TopicDetail />} />
           <Route path={"release-rapidly"} element={<ReleaseRapidly />} />
           <Route path={"release-complete"} element={<ReleaseComplete />} />
           <Route path={"class/:id"} element={<ClassPage />} />
           <Route path={"personal/:id"} element={<PersonalPage />} />
-          <Route path="*" element={<Navigate to="home" />} />
+          <Route path="*" element={<Navigate to="" />} />
         </Routes>
       </Main>
     </Container>

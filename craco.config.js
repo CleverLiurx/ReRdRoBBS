@@ -11,13 +11,6 @@ module.exports = {
           "^/api/v1": "",
         },
       },
-      "/image": {
-        target: "http://localhost:5000/image",
-        changeOrigin: true,
-        pathRewrite: {
-          "^/image": "",
-        },
-      },
     },
   },
   plugins: [

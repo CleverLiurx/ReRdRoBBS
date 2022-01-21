@@ -44,7 +44,7 @@ export const ReleaseRapidly = () => {
       method: "POST",
     }).then(() => {
       message.success("发布成功，审核通过后即可展示");
-      navigate("/home");
+      navigate("/");
     });
   };
 
