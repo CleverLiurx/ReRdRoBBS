@@ -14,6 +14,9 @@ import TextArea from "antd/lib/input/TextArea";
 // import { MyEditor } from "components/editor";
 import { useNavigate } from "react-router";
 import { EmojiData, Picker } from "emoji-mart";
+import E from "wangeditor";
+
+let editor: E | null = null;
 
 interface ParamType {
   topicId: string | undefined;
@@ -36,6 +39,26 @@ export const TopicDetail = () => {
 
   const id = window.location.pathname.split("topic/")[1];
   let { data: topicItem } = useDetails(id);
+
+  useEffect(() => {
+    // 注：class写法需要在componentDidMount 创建编辑器
+    if (!topicItem?.richContent) return;
+    editor = new E("#editor");
+
+    editor.config.menus = [];
+    editor.config.showFullScreen = false;
+
+    /**一定要创建 */
+    editor.create();
+    editor.disable();
+
+    editor.txt.html(topicItem?.richContent);
+
+    return () => {
+      // 组件销毁时销毁编辑器  注：class写法需要在componentWillUnmount中调用
+      editor?.destroy();
+    };
+  }, [topicItem]);
 
   let navigate = useNavigate();
   const actions = topicItem ? [<div></div>] : [<div></div>];
@@ -77,12 +100,13 @@ export const TopicDetail = () => {
                               topicItem.richContent || topicItem.content
                             }
                           /> */}
-                          <p
+                          {/* <p
                             dangerouslySetInnerHTML={{
                               __html:
                                 topicItem.richContent || topicItem.content,
                             }}
-                          ></p>
+                          ></p> */}
+                          <WEditor id="editor" />
                         </>
                       ) : (
                         <>
@@ -460,6 +484,19 @@ const ReplyBtn = styled(Button)`
   font-size: 1.4rem;
   float: right;
   margin-right: 20px;
+`;
+
+const WEditor = styled.div`
+  /* margin-top: 20px; */
+  & > .w-e-toolbar {
+    z-index: auto !important;
+    border: none !important;
+  }
+  & > .w-e-text-container {
+    border: none !important;
+    z-index: auto !important;
+    height: auto !important;
+  }
 `;
 
 const PImg = styled.div`

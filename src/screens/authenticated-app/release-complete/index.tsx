@@ -6,10 +6,46 @@ import { useAsync } from "utils/use-async";
 import styled from "@emotion/styled";
 import { Button, Input, message, Select, Tooltip } from "antd";
 import { useDocumentTitle } from "utils";
-import { MyEditor } from "components/editor";
-import { IDomEditor } from "@wangeditor/editor";
+// import { MyEditor } from "components/editor";
+// import { IDomEditor } from "@wangeditor/editor";
+import E from "wangeditor";
 
 const { Option } = Select;
+let editor: E | null = null;
+const editorConfig = {
+  menus: [
+    "head",
+    "bold",
+    "fontSize",
+    "fontName",
+    "italic",
+    "underline",
+    "strikeThrough",
+    "indent",
+    "lineHeight",
+    "foreColor",
+    "backColor",
+    "link",
+    "list",
+    "todo",
+    "justify",
+    "quote",
+    "emoticon",
+    "image",
+    // 'video',
+    "table",
+    "code",
+    "splitLine",
+    "undo",
+    "redo",
+  ],
+  showFullScreen: false,
+  uploadImgMaxLength: 1,
+  withCredentials: true,
+  uploadImgServer: process.env.REACT_APP_API_URL + "/file",
+  uploadFileName: "file",
+  showLinkImg: false,
+};
 
 const useData = () => {
   const client = useHttp();
@@ -37,10 +73,10 @@ export const ReleaseComplete = () => {
     content: "",
   });
 
-  const [editor, setEditor] = useState<IDomEditor | null>(null);
+  // const [editor, setEditor] = useState<IDomEditor | null>(null);
 
   const handleSubmit = async () => {
-    const text = editor?.getText();
+    const text = editor?.txt.text();
     if (!text) {
       message.warning("写点内容吧～");
       return;
@@ -48,15 +84,45 @@ export const ReleaseComplete = () => {
     client("/topic", {
       data: {
         ...params,
-        richContent: editor?.getHtml(),
-        content: text,
+        richContent: editor?.txt.html(),
+        content: editor?.txt.text(),
       },
       method: "POST",
     }).then(() => {
       message.success("发布成功，审核通过后即可展示");
-      navigate("/");
+      navigate("/home");
     });
   };
+
+  useEffect(() => {
+    editor = new E("#editor");
+
+    editor.config.menus = editorConfig.menus;
+    editor.config.showFullScreen = editorConfig.showFullScreen;
+    editor.config.uploadImgMaxLength = editorConfig.uploadImgMaxLength;
+    editor.config.withCredentials = editorConfig.withCredentials;
+    editor.config.uploadImgServer = editorConfig.uploadImgServer;
+    editor.config.uploadImgHooks = {
+      // @ts-ignore
+      customInsert: (insertImgFn, res) => {
+        if (res.errno === "0") {
+          // @ts-ignore
+          insertImgFn(res.data.url);
+        }
+      },
+    };
+    editor.config.uploadFileName = editorConfig.uploadFileName;
+    editor.config.showLinkImg = editorConfig.showLinkImg;
+
+    editor.create();
+
+    // @ts-ignore
+    window._editor = editor;
+
+    return () => {
+      editor?.destroy();
+    };
+  }, []);
 
   return (
     <Container>
@@ -75,7 +141,8 @@ export const ReleaseComplete = () => {
         }}
       />
 
-      <MyEditor editorApi={setEditor} />
+      {/* <MyEditor editorApi={setEditor} /> */}
+      <Editor id="editor" />
 
       <div style={{ margin: "12px 5px" }}>
         <span style={{ color: "#333", fontSize: "1.4rem", marginRight: "5px" }}>
@@ -125,4 +192,15 @@ const Container = styled.div`
   background-color: #fff;
   margin: 20px auto;
   padding: 30px 20px;
+`;
+
+const Editor = styled.div`
+  & > .w-e-toolbar {
+    z-index: auto !important;
+  }
+  & > .w-e-text-container {
+    z-index: auto !important;
+    height: auto !important;
+    min-height: 300px !important;
+  }
 `;
